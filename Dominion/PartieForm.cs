@@ -495,6 +495,7 @@ namespace Dominion
                     achatDispoTextBox.Text = JoueurActuel.AchatDispo.ToString() + " achat(s)";
                     JoueurActuel.MonnaieDispo -= mapListe[i].carte.Cout;
                     monnaieDispoTextBox.Text = JoueurActuel.MonnaieDispo.ToString() + " pièce(s)";
+
                 }
             }
         }
