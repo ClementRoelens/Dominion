@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PartieForm));
             this.mapLayout = new System.Windows.Forms.TableLayoutPanel();
             this.layout10eCarte = new System.Windows.Forms.TableLayoutPanel();
             this.pictureBox18 = new System.Windows.Forms.PictureBox();
@@ -57,13 +58,6 @@
             this.focusNom = new System.Windows.Forms.TextBox();
             this.focusPictureBox = new System.Windows.Forms.PictureBox();
             this.mainLayout = new System.Windows.Forms.TableLayoutPanel();
-            this.carteMain20 = new System.Windows.Forms.PictureBox();
-            this.carteMain19 = new System.Windows.Forms.PictureBox();
-            this.carteMain18 = new System.Windows.Forms.PictureBox();
-            this.carteMain17 = new System.Windows.Forms.PictureBox();
-            this.carteMain16 = new System.Windows.Forms.PictureBox();
-            this.carteMain15 = new System.Windows.Forms.PictureBox();
-            this.carteMain14 = new System.Windows.Forms.PictureBox();
             this.carteMain13 = new System.Windows.Forms.PictureBox();
             this.carteMain12 = new System.Windows.Forms.PictureBox();
             this.carteMain11 = new System.Windows.Forms.PictureBox();
@@ -83,6 +77,12 @@
             this.achatDispoTextBox = new System.Windows.Forms.TextBox();
             this.monnaieDispoTextBox = new System.Windows.Forms.TextBox();
             this.finDeTourButton = new System.Windows.Forms.Button();
+            this.defausseImage = new System.Windows.Forms.PictureBox();
+            this.defausseLabel = new System.Windows.Forms.TextBox();
+            this.deckLabel = new System.Windows.Forms.TextBox();
+            this.deckImage = new System.Windows.Forms.PictureBox();
+            this.jetonsTextBox = new System.Windows.Forms.TextBox();
+            this.infoActionTextBox = new System.Windows.Forms.TextBox();
             this.mapLayout.SuspendLayout();
             this.layout10eCarte.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox18)).BeginInit();
@@ -109,13 +109,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.focusCout)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.focusPictureBox)).BeginInit();
             this.mainLayout.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.carteMain20)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.carteMain19)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.carteMain18)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.carteMain17)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.carteMain16)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.carteMain15)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.carteMain14)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.carteMain13)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.carteMain12)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.carteMain11)).BeginInit();
@@ -129,6 +122,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.carteMain3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.carteMain2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.carteMain1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.defausseImage)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.deckImage)).BeginInit();
             this.SuspendLayout();
             // 
             // mapLayout
@@ -161,14 +156,14 @@
             this.mapLayout.Controls.Add(this.pictureBox1, 0, 0);
             this.mapLayout.Controls.Add(this.layout9eCarte, 0, 2);
             this.mapLayout.Cursor = System.Windows.Forms.Cursors.Default;
-            this.mapLayout.Location = new System.Drawing.Point(12, 12);
+            this.mapLayout.Location = new System.Drawing.Point(20, 15);
             this.mapLayout.Name = "mapLayout";
             this.mapLayout.RowCount = 3;
             this.mapLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.mapLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.mapLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.mapLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.mapLayout.Size = new System.Drawing.Size(833, 576);
+            this.mapLayout.Size = new System.Drawing.Size(843, 565);
             this.mapLayout.TabIndex = 0;
             // 
             // layout10eCarte
@@ -181,19 +176,19 @@
             this.layout10eCarte.Controls.Add(this.pictureBox18, 1, 0);
             this.layout10eCarte.Cursor = System.Windows.Forms.Cursors.Default;
             this.layout10eCarte.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.layout10eCarte.Location = new System.Drawing.Point(419, 387);
+            this.layout10eCarte.Location = new System.Drawing.Point(423, 379);
             this.layout10eCarte.Name = "layout10eCarte";
             this.layout10eCarte.RowCount = 1;
             this.layout10eCarte.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.layout10eCarte.Size = new System.Drawing.Size(411, 186);
+            this.layout10eCarte.Size = new System.Drawing.Size(417, 183);
             this.layout10eCarte.TabIndex = 17;
             // 
             // pictureBox18
             // 
             this.pictureBox18.Cursor = System.Windows.Forms.Cursors.Default;
-            this.pictureBox18.Location = new System.Drawing.Point(138, 3);
+            this.pictureBox18.Location = new System.Drawing.Point(140, 3);
             this.pictureBox18.Name = "pictureBox18";
-            this.pictureBox18.Size = new System.Drawing.Size(133, 180);
+            this.pictureBox18.Size = new System.Drawing.Size(133, 177);
             this.pictureBox18.TabIndex = 0;
             this.pictureBox18.TabStop = false;
             this.pictureBox18.Click += new System.EventHandler(this.Achat);
@@ -203,7 +198,7 @@
             // pictureBox16
             // 
             this.pictureBox16.Cursor = System.Windows.Forms.Cursors.Default;
-            this.pictureBox16.Location = new System.Drawing.Point(731, 195);
+            this.pictureBox16.Location = new System.Drawing.Point(738, 191);
             this.pictureBox16.Name = "pictureBox16";
             this.pictureBox16.Size = new System.Drawing.Size(90, 159);
             this.pictureBox16.TabIndex = 15;
@@ -215,7 +210,7 @@
             // pictureBox15
             // 
             this.pictureBox15.Cursor = System.Windows.Forms.Cursors.Default;
-            this.pictureBox15.Location = new System.Drawing.Point(627, 195);
+            this.pictureBox15.Location = new System.Drawing.Point(633, 191);
             this.pictureBox15.Name = "pictureBox15";
             this.pictureBox15.Size = new System.Drawing.Size(90, 145);
             this.pictureBox15.TabIndex = 14;
@@ -227,7 +222,7 @@
             // pictureBox14
             // 
             this.pictureBox14.Cursor = System.Windows.Forms.Cursors.Default;
-            this.pictureBox14.Location = new System.Drawing.Point(523, 195);
+            this.pictureBox14.Location = new System.Drawing.Point(528, 191);
             this.pictureBox14.Name = "pictureBox14";
             this.pictureBox14.Size = new System.Drawing.Size(90, 148);
             this.pictureBox14.TabIndex = 13;
@@ -239,7 +234,7 @@
             // pictureBox13
             // 
             this.pictureBox13.Cursor = System.Windows.Forms.Cursors.Default;
-            this.pictureBox13.Location = new System.Drawing.Point(419, 195);
+            this.pictureBox13.Location = new System.Drawing.Point(423, 191);
             this.pictureBox13.Name = "pictureBox13";
             this.pictureBox13.Size = new System.Drawing.Size(90, 145);
             this.pictureBox13.TabIndex = 12;
@@ -251,7 +246,7 @@
             // pictureBox12
             // 
             this.pictureBox12.Cursor = System.Windows.Forms.Cursors.Default;
-            this.pictureBox12.Location = new System.Drawing.Point(315, 195);
+            this.pictureBox12.Location = new System.Drawing.Point(318, 191);
             this.pictureBox12.Name = "pictureBox12";
             this.pictureBox12.Size = new System.Drawing.Size(90, 145);
             this.pictureBox12.TabIndex = 11;
@@ -263,7 +258,7 @@
             // pictureBox11
             // 
             this.pictureBox11.Cursor = System.Windows.Forms.Cursors.Default;
-            this.pictureBox11.Location = new System.Drawing.Point(211, 195);
+            this.pictureBox11.Location = new System.Drawing.Point(213, 191);
             this.pictureBox11.Name = "pictureBox11";
             this.pictureBox11.Size = new System.Drawing.Size(90, 159);
             this.pictureBox11.TabIndex = 10;
@@ -275,7 +270,7 @@
             // pictureBox10
             // 
             this.pictureBox10.Cursor = System.Windows.Forms.Cursors.Default;
-            this.pictureBox10.Location = new System.Drawing.Point(107, 195);
+            this.pictureBox10.Location = new System.Drawing.Point(108, 191);
             this.pictureBox10.Name = "pictureBox10";
             this.pictureBox10.Size = new System.Drawing.Size(90, 148);
             this.pictureBox10.TabIndex = 9;
@@ -287,7 +282,7 @@
             // pictureBox9
             // 
             this.pictureBox9.Cursor = System.Windows.Forms.Cursors.Default;
-            this.pictureBox9.Location = new System.Drawing.Point(3, 195);
+            this.pictureBox9.Location = new System.Drawing.Point(3, 191);
             this.pictureBox9.Name = "pictureBox9";
             this.pictureBox9.Size = new System.Drawing.Size(90, 145);
             this.pictureBox9.TabIndex = 8;
@@ -299,7 +294,7 @@
             // pictureBox8
             // 
             this.pictureBox8.Cursor = System.Windows.Forms.Cursors.Default;
-            this.pictureBox8.Location = new System.Drawing.Point(731, 3);
+            this.pictureBox8.Location = new System.Drawing.Point(738, 3);
             this.pictureBox8.Name = "pictureBox8";
             this.pictureBox8.Size = new System.Drawing.Size(90, 145);
             this.pictureBox8.TabIndex = 7;
@@ -311,7 +306,7 @@
             // pictureBox7
             // 
             this.pictureBox7.Cursor = System.Windows.Forms.Cursors.Default;
-            this.pictureBox7.Location = new System.Drawing.Point(627, 3);
+            this.pictureBox7.Location = new System.Drawing.Point(633, 3);
             this.pictureBox7.Name = "pictureBox7";
             this.pictureBox7.Size = new System.Drawing.Size(90, 145);
             this.pictureBox7.TabIndex = 6;
@@ -323,7 +318,7 @@
             // pictureBox6
             // 
             this.pictureBox6.Cursor = System.Windows.Forms.Cursors.Default;
-            this.pictureBox6.Location = new System.Drawing.Point(523, 3);
+            this.pictureBox6.Location = new System.Drawing.Point(528, 3);
             this.pictureBox6.Name = "pictureBox6";
             this.pictureBox6.Size = new System.Drawing.Size(90, 152);
             this.pictureBox6.TabIndex = 5;
@@ -335,7 +330,7 @@
             // pictureBox5
             // 
             this.pictureBox5.Cursor = System.Windows.Forms.Cursors.Default;
-            this.pictureBox5.Location = new System.Drawing.Point(419, 3);
+            this.pictureBox5.Location = new System.Drawing.Point(423, 3);
             this.pictureBox5.Name = "pictureBox5";
             this.pictureBox5.Size = new System.Drawing.Size(90, 145);
             this.pictureBox5.TabIndex = 4;
@@ -347,7 +342,7 @@
             // pictureBox4
             // 
             this.pictureBox4.Cursor = System.Windows.Forms.Cursors.Default;
-            this.pictureBox4.Location = new System.Drawing.Point(315, 3);
+            this.pictureBox4.Location = new System.Drawing.Point(318, 3);
             this.pictureBox4.Name = "pictureBox4";
             this.pictureBox4.Size = new System.Drawing.Size(90, 155);
             this.pictureBox4.TabIndex = 3;
@@ -359,7 +354,7 @@
             // pictureBox3
             // 
             this.pictureBox3.Cursor = System.Windows.Forms.Cursors.Default;
-            this.pictureBox3.Location = new System.Drawing.Point(211, 3);
+            this.pictureBox3.Location = new System.Drawing.Point(213, 3);
             this.pictureBox3.Name = "pictureBox3";
             this.pictureBox3.Size = new System.Drawing.Size(90, 145);
             this.pictureBox3.TabIndex = 2;
@@ -371,7 +366,7 @@
             // pictureBox2
             // 
             this.pictureBox2.Cursor = System.Windows.Forms.Cursors.Default;
-            this.pictureBox2.Location = new System.Drawing.Point(107, 3);
+            this.pictureBox2.Location = new System.Drawing.Point(108, 3);
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.Size = new System.Drawing.Size(90, 145);
             this.pictureBox2.TabIndex = 1;
@@ -386,7 +381,7 @@
             this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pictureBox1.Location = new System.Drawing.Point(3, 3);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(98, 186);
+            this.pictureBox1.Size = new System.Drawing.Size(99, 182);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
@@ -404,19 +399,19 @@
             this.layout9eCarte.Controls.Add(this.pictureBox17, 1, 0);
             this.layout9eCarte.Cursor = System.Windows.Forms.Cursors.Default;
             this.layout9eCarte.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.layout9eCarte.Location = new System.Drawing.Point(3, 387);
+            this.layout9eCarte.Location = new System.Drawing.Point(3, 379);
             this.layout9eCarte.Name = "layout9eCarte";
             this.layout9eCarte.RowCount = 1;
             this.layout9eCarte.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.layout9eCarte.Size = new System.Drawing.Size(410, 186);
+            this.layout9eCarte.Size = new System.Drawing.Size(414, 183);
             this.layout9eCarte.TabIndex = 16;
             // 
             // pictureBox17
             // 
             this.pictureBox17.Cursor = System.Windows.Forms.Cursors.Default;
-            this.pictureBox17.Location = new System.Drawing.Point(138, 3);
+            this.pictureBox17.Location = new System.Drawing.Point(139, 3);
             this.pictureBox17.Name = "pictureBox17";
-            this.pictureBox17.Size = new System.Drawing.Size(133, 180);
+            this.pictureBox17.Size = new System.Drawing.Size(133, 177);
             this.pictureBox17.TabIndex = 0;
             this.pictureBox17.TabStop = false;
             this.pictureBox17.Click += new System.EventHandler(this.Achat);
@@ -432,15 +427,15 @@
             this.focusLayout.Controls.Add(this.layoutDetailFocus, 1, 2);
             this.focusLayout.Controls.Add(this.focusPictureBox, 0, 1);
             this.focusLayout.Cursor = System.Windows.Forms.Cursors.Default;
-            this.focusLayout.Location = new System.Drawing.Point(905, 15);
+            this.focusLayout.Location = new System.Drawing.Point(1143, 15);
             this.focusLayout.Name = "focusLayout";
             this.focusLayout.RowCount = 4;
             this.focusLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.focusLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.focusLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 343F));
-            this.focusLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 92F));
+            this.focusLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 14F));
+            this.focusLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 358F));
+            this.focusLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 77F));
             this.focusLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.focusLayout.Size = new System.Drawing.Size(552, 514);
+            this.focusLayout.Size = new System.Drawing.Size(552, 495);
             this.focusLayout.TabIndex = 1;
             // 
             // focusNbPile
@@ -449,7 +444,7 @@
             this.focusNbPile.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.focusNbPile.Cursor = System.Windows.Forms.Cursors.Default;
             this.focusNbPile.Font = new System.Drawing.Font("Microsoft Sans Serif", 17F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.focusNbPile.Location = new System.Drawing.Point(3, 425);
+            this.focusNbPile.Location = new System.Drawing.Point(3, 421);
             this.focusNbPile.Multiline = true;
             this.focusNbPile.Name = "focusNbPile";
             this.focusNbPile.ReadOnly = true;
@@ -469,7 +464,7 @@
             this.layoutDetailFocus.Controls.Add(this.focusNom, 1, 0);
             this.layoutDetailFocus.Cursor = System.Windows.Forms.Cursors.Default;
             this.layoutDetailFocus.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.251F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.layoutDetailFocus.Location = new System.Drawing.Point(252, 82);
+            this.layoutDetailFocus.Location = new System.Drawing.Point(252, 63);
             this.layoutDetailFocus.Name = "layoutDetailFocus";
             this.layoutDetailFocus.RowCount = 7;
             this.focusLayout.SetRowSpan(this.layoutDetailFocus, 2);
@@ -527,38 +522,29 @@
             // focusPictureBox
             // 
             this.focusPictureBox.Cursor = System.Windows.Forms.Cursors.Default;
-            this.focusPictureBox.Location = new System.Drawing.Point(3, 52);
+            this.focusPictureBox.Location = new System.Drawing.Point(3, 49);
             this.focusPictureBox.Name = "focusPictureBox";
             this.focusLayout.SetRowSpan(this.focusPictureBox, 2);
-            this.focusPictureBox.Size = new System.Drawing.Size(243, 367);
+            this.focusPictureBox.Size = new System.Drawing.Size(243, 366);
             this.focusPictureBox.TabIndex = 0;
             this.focusPictureBox.TabStop = false;
             // 
             // mainLayout
             // 
-            this.mainLayout.ColumnCount = 10;
-            this.mainLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
-            this.mainLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
-            this.mainLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
-            this.mainLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
-            this.mainLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
-            this.mainLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
-            this.mainLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
-            this.mainLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
-            this.mainLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
-            this.mainLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
-            this.mainLayout.Controls.Add(this.carteMain20, 9, 1);
-            this.mainLayout.Controls.Add(this.carteMain19, 8, 1);
-            this.mainLayout.Controls.Add(this.carteMain18, 7, 1);
-            this.mainLayout.Controls.Add(this.carteMain17, 6, 1);
-            this.mainLayout.Controls.Add(this.carteMain16, 5, 1);
-            this.mainLayout.Controls.Add(this.carteMain15, 4, 1);
-            this.mainLayout.Controls.Add(this.carteMain14, 3, 1);
-            this.mainLayout.Controls.Add(this.carteMain13, 2, 1);
-            this.mainLayout.Controls.Add(this.carteMain12, 1, 1);
-            this.mainLayout.Controls.Add(this.carteMain11, 0, 1);
-            this.mainLayout.Controls.Add(this.carteMain10, 9, 0);
-            this.mainLayout.Controls.Add(this.carteMain9, 8, 0);
+            this.mainLayout.ColumnCount = 13;
+            this.mainLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 7.692307F));
+            this.mainLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 7.692307F));
+            this.mainLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 7.692307F));
+            this.mainLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 7.692307F));
+            this.mainLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 7.692307F));
+            this.mainLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 7.692307F));
+            this.mainLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 7.692307F));
+            this.mainLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 7.692307F));
+            this.mainLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 7.692307F));
+            this.mainLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 7.692307F));
+            this.mainLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 7.692307F));
+            this.mainLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 7.692307F));
+            this.mainLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 7.692307F));
             this.mainLayout.Controls.Add(this.carteMain8, 7, 0);
             this.mainLayout.Controls.Add(this.carteMain7, 6, 0);
             this.mainLayout.Controls.Add(this.carteMain6, 5, 0);
@@ -567,129 +553,28 @@
             this.mainLayout.Controls.Add(this.carteMain3, 2, 0);
             this.mainLayout.Controls.Add(this.carteMain2, 1, 0);
             this.mainLayout.Controls.Add(this.carteMain1, 0, 0);
+            this.mainLayout.Controls.Add(this.carteMain9, 8, 0);
+            this.mainLayout.Controls.Add(this.carteMain10, 9, 0);
+            this.mainLayout.Controls.Add(this.carteMain11, 10, 0);
+            this.mainLayout.Controls.Add(this.carteMain12, 11, 0);
+            this.mainLayout.Controls.Add(this.carteMain13, 12, 0);
             this.mainLayout.Cursor = System.Windows.Forms.Cursors.Default;
-            this.mainLayout.Location = new System.Drawing.Point(122, 611);
+            this.mainLayout.Location = new System.Drawing.Point(295, 618);
             this.mainLayout.Name = "mainLayout";
-            this.mainLayout.RowCount = 2;
+            this.mainLayout.RowCount = 1;
             this.mainLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.85995F));
-            this.mainLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 49.14005F));
-            this.mainLayout.Size = new System.Drawing.Size(1361, 407);
+            this.mainLayout.Size = new System.Drawing.Size(1597, 208);
             this.mainLayout.TabIndex = 2;
-            // 
-            // carteMain20
-            // 
-            this.carteMain20.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.carteMain20.Cursor = System.Windows.Forms.Cursors.Default;
-            this.carteMain20.Enabled = false;
-            this.carteMain20.Location = new System.Drawing.Point(1236, 210);
-            this.carteMain20.Name = "carteMain20";
-            this.carteMain20.Size = new System.Drawing.Size(112, 175);
-            this.carteMain20.TabIndex = 19;
-            this.carteMain20.TabStop = false;
-            this.carteMain20.Visible = false;
-            this.carteMain20.Click += new System.EventHandler(this.ActionMain);
-            this.carteMain20.MouseEnter += new System.EventHandler(this.Hover);
-            this.carteMain20.MouseLeave += new System.EventHandler(this.Unhover);
-            // 
-            // carteMain19
-            // 
-            this.carteMain19.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.carteMain19.Cursor = System.Windows.Forms.Cursors.Default;
-            this.carteMain19.Enabled = false;
-            this.carteMain19.Location = new System.Drawing.Point(1100, 210);
-            this.carteMain19.Name = "carteMain19";
-            this.carteMain19.Size = new System.Drawing.Size(112, 175);
-            this.carteMain19.TabIndex = 18;
-            this.carteMain19.TabStop = false;
-            this.carteMain19.Visible = false;
-            this.carteMain19.Click += new System.EventHandler(this.ActionMain);
-            this.carteMain19.MouseEnter += new System.EventHandler(this.Hover);
-            this.carteMain19.MouseLeave += new System.EventHandler(this.Unhover);
-            // 
-            // carteMain18
-            // 
-            this.carteMain18.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.carteMain18.Cursor = System.Windows.Forms.Cursors.Default;
-            this.carteMain18.Enabled = false;
-            this.carteMain18.Location = new System.Drawing.Point(964, 210);
-            this.carteMain18.Name = "carteMain18";
-            this.carteMain18.Size = new System.Drawing.Size(112, 175);
-            this.carteMain18.TabIndex = 17;
-            this.carteMain18.TabStop = false;
-            this.carteMain18.Visible = false;
-            this.carteMain18.Click += new System.EventHandler(this.ActionMain);
-            this.carteMain18.MouseEnter += new System.EventHandler(this.Hover);
-            this.carteMain18.MouseLeave += new System.EventHandler(this.Unhover);
-            // 
-            // carteMain17
-            // 
-            this.carteMain17.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.carteMain17.Cursor = System.Windows.Forms.Cursors.Default;
-            this.carteMain17.Enabled = false;
-            this.carteMain17.Location = new System.Drawing.Point(828, 210);
-            this.carteMain17.Name = "carteMain17";
-            this.carteMain17.Size = new System.Drawing.Size(112, 175);
-            this.carteMain17.TabIndex = 16;
-            this.carteMain17.TabStop = false;
-            this.carteMain17.Visible = false;
-            this.carteMain17.Click += new System.EventHandler(this.ActionMain);
-            this.carteMain17.MouseEnter += new System.EventHandler(this.Hover);
-            this.carteMain17.MouseLeave += new System.EventHandler(this.Unhover);
-            // 
-            // carteMain16
-            // 
-            this.carteMain16.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.carteMain16.Cursor = System.Windows.Forms.Cursors.Default;
-            this.carteMain16.Enabled = false;
-            this.carteMain16.Location = new System.Drawing.Point(692, 210);
-            this.carteMain16.Name = "carteMain16";
-            this.carteMain16.Size = new System.Drawing.Size(112, 175);
-            this.carteMain16.TabIndex = 15;
-            this.carteMain16.TabStop = false;
-            this.carteMain16.Visible = false;
-            this.carteMain16.Click += new System.EventHandler(this.ActionMain);
-            this.carteMain16.MouseEnter += new System.EventHandler(this.Hover);
-            this.carteMain16.MouseLeave += new System.EventHandler(this.Unhover);
-            // 
-            // carteMain15
-            // 
-            this.carteMain15.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.carteMain15.Cursor = System.Windows.Forms.Cursors.Default;
-            this.carteMain15.Enabled = false;
-            this.carteMain15.Location = new System.Drawing.Point(556, 210);
-            this.carteMain15.Name = "carteMain15";
-            this.carteMain15.Size = new System.Drawing.Size(112, 175);
-            this.carteMain15.TabIndex = 14;
-            this.carteMain15.TabStop = false;
-            this.carteMain15.Visible = false;
-            this.carteMain15.Click += new System.EventHandler(this.ActionMain);
-            this.carteMain15.MouseEnter += new System.EventHandler(this.Hover);
-            this.carteMain15.MouseLeave += new System.EventHandler(this.Unhover);
-            // 
-            // carteMain14
-            // 
-            this.carteMain14.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.carteMain14.Cursor = System.Windows.Forms.Cursors.Default;
-            this.carteMain14.Enabled = false;
-            this.carteMain14.Location = new System.Drawing.Point(420, 210);
-            this.carteMain14.Name = "carteMain14";
-            this.carteMain14.Size = new System.Drawing.Size(112, 175);
-            this.carteMain14.TabIndex = 13;
-            this.carteMain14.TabStop = false;
-            this.carteMain14.Visible = false;
-            this.carteMain14.Click += new System.EventHandler(this.ActionMain);
-            this.carteMain14.MouseEnter += new System.EventHandler(this.Hover);
-            this.carteMain14.MouseLeave += new System.EventHandler(this.Unhover);
             // 
             // carteMain13
             // 
             this.carteMain13.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.carteMain13.Cursor = System.Windows.Forms.Cursors.Default;
             this.carteMain13.Enabled = false;
-            this.carteMain13.Location = new System.Drawing.Point(284, 210);
+            this.carteMain13.Location = new System.Drawing.Point(1474, 3);
             this.carteMain13.Name = "carteMain13";
             this.carteMain13.Size = new System.Drawing.Size(112, 175);
-            this.carteMain13.TabIndex = 12;
+            this.carteMain13.TabIndex = 14;
             this.carteMain13.TabStop = false;
             this.carteMain13.Visible = false;
             this.carteMain13.Click += new System.EventHandler(this.ActionMain);
@@ -701,10 +586,10 @@
             this.carteMain12.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.carteMain12.Cursor = System.Windows.Forms.Cursors.Default;
             this.carteMain12.Enabled = false;
-            this.carteMain12.Location = new System.Drawing.Point(148, 210);
+            this.carteMain12.Location = new System.Drawing.Point(1347, 3);
             this.carteMain12.Name = "carteMain12";
             this.carteMain12.Size = new System.Drawing.Size(112, 175);
-            this.carteMain12.TabIndex = 11;
+            this.carteMain12.TabIndex = 13;
             this.carteMain12.TabStop = false;
             this.carteMain12.Visible = false;
             this.carteMain12.Click += new System.EventHandler(this.ActionMain);
@@ -716,10 +601,10 @@
             this.carteMain11.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.carteMain11.Cursor = System.Windows.Forms.Cursors.Default;
             this.carteMain11.Enabled = false;
-            this.carteMain11.Location = new System.Drawing.Point(12, 210);
+            this.carteMain11.Location = new System.Drawing.Point(1225, 3);
             this.carteMain11.Name = "carteMain11";
             this.carteMain11.Size = new System.Drawing.Size(112, 175);
-            this.carteMain11.TabIndex = 10;
+            this.carteMain11.TabIndex = 12;
             this.carteMain11.TabStop = false;
             this.carteMain11.Visible = false;
             this.carteMain11.Click += new System.EventHandler(this.ActionMain);
@@ -731,10 +616,10 @@
             this.carteMain10.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.carteMain10.Cursor = System.Windows.Forms.Cursors.Default;
             this.carteMain10.Enabled = false;
-            this.carteMain10.Location = new System.Drawing.Point(1236, 3);
+            this.carteMain10.Location = new System.Drawing.Point(1103, 3);
             this.carteMain10.Name = "carteMain10";
             this.carteMain10.Size = new System.Drawing.Size(112, 175);
-            this.carteMain10.TabIndex = 9;
+            this.carteMain10.TabIndex = 11;
             this.carteMain10.TabStop = false;
             this.carteMain10.Visible = false;
             this.carteMain10.Click += new System.EventHandler(this.ActionMain);
@@ -746,10 +631,10 @@
             this.carteMain9.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.carteMain9.Cursor = System.Windows.Forms.Cursors.Default;
             this.carteMain9.Enabled = false;
-            this.carteMain9.Location = new System.Drawing.Point(1100, 3);
+            this.carteMain9.Location = new System.Drawing.Point(981, 3);
             this.carteMain9.Name = "carteMain9";
             this.carteMain9.Size = new System.Drawing.Size(112, 175);
-            this.carteMain9.TabIndex = 8;
+            this.carteMain9.TabIndex = 10;
             this.carteMain9.TabStop = false;
             this.carteMain9.Visible = false;
             this.carteMain9.Click += new System.EventHandler(this.ActionMain);
@@ -761,7 +646,7 @@
             this.carteMain8.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.carteMain8.Cursor = System.Windows.Forms.Cursors.Default;
             this.carteMain8.Enabled = false;
-            this.carteMain8.Location = new System.Drawing.Point(964, 3);
+            this.carteMain8.Location = new System.Drawing.Point(859, 3);
             this.carteMain8.Name = "carteMain8";
             this.carteMain8.Size = new System.Drawing.Size(112, 175);
             this.carteMain8.TabIndex = 7;
@@ -776,7 +661,7 @@
             this.carteMain7.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.carteMain7.Cursor = System.Windows.Forms.Cursors.Default;
             this.carteMain7.Enabled = false;
-            this.carteMain7.Location = new System.Drawing.Point(828, 3);
+            this.carteMain7.Location = new System.Drawing.Point(737, 3);
             this.carteMain7.Name = "carteMain7";
             this.carteMain7.Size = new System.Drawing.Size(112, 175);
             this.carteMain7.TabIndex = 6;
@@ -791,7 +676,7 @@
             this.carteMain6.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.carteMain6.Cursor = System.Windows.Forms.Cursors.Default;
             this.carteMain6.Enabled = false;
-            this.carteMain6.Location = new System.Drawing.Point(692, 3);
+            this.carteMain6.Location = new System.Drawing.Point(615, 3);
             this.carteMain6.Name = "carteMain6";
             this.carteMain6.Size = new System.Drawing.Size(112, 175);
             this.carteMain6.TabIndex = 5;
@@ -806,7 +691,7 @@
             this.carteMain5.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.carteMain5.Cursor = System.Windows.Forms.Cursors.Default;
             this.carteMain5.Enabled = false;
-            this.carteMain5.Location = new System.Drawing.Point(556, 3);
+            this.carteMain5.Location = new System.Drawing.Point(493, 3);
             this.carteMain5.Name = "carteMain5";
             this.carteMain5.Size = new System.Drawing.Size(112, 175);
             this.carteMain5.TabIndex = 4;
@@ -821,7 +706,7 @@
             this.carteMain4.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.carteMain4.Cursor = System.Windows.Forms.Cursors.Default;
             this.carteMain4.Enabled = false;
-            this.carteMain4.Location = new System.Drawing.Point(420, 3);
+            this.carteMain4.Location = new System.Drawing.Point(371, 3);
             this.carteMain4.Name = "carteMain4";
             this.carteMain4.Size = new System.Drawing.Size(112, 175);
             this.carteMain4.TabIndex = 3;
@@ -836,7 +721,7 @@
             this.carteMain3.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.carteMain3.Cursor = System.Windows.Forms.Cursors.Default;
             this.carteMain3.Enabled = false;
-            this.carteMain3.Location = new System.Drawing.Point(284, 3);
+            this.carteMain3.Location = new System.Drawing.Point(249, 3);
             this.carteMain3.Name = "carteMain3";
             this.carteMain3.Size = new System.Drawing.Size(112, 175);
             this.carteMain3.TabIndex = 2;
@@ -851,7 +736,7 @@
             this.carteMain2.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.carteMain2.Cursor = System.Windows.Forms.Cursors.Default;
             this.carteMain2.Enabled = false;
-            this.carteMain2.Location = new System.Drawing.Point(148, 3);
+            this.carteMain2.Location = new System.Drawing.Point(127, 3);
             this.carteMain2.Name = "carteMain2";
             this.carteMain2.Size = new System.Drawing.Size(112, 175);
             this.carteMain2.TabIndex = 1;
@@ -866,7 +751,7 @@
             this.carteMain1.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.carteMain1.Cursor = System.Windows.Forms.Cursors.Default;
             this.carteMain1.Enabled = false;
-            this.carteMain1.Location = new System.Drawing.Point(12, 3);
+            this.carteMain1.Location = new System.Drawing.Point(5, 3);
             this.carteMain1.Name = "carteMain1";
             this.carteMain1.Size = new System.Drawing.Size(112, 175);
             this.carteMain1.TabIndex = 0;
@@ -880,11 +765,11 @@
             // 
             this.tourLabel.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.tourLabel.Cursor = System.Windows.Forms.Cursors.Default;
-            this.tourLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tourLabel.Location = new System.Drawing.Point(1202, 551);
+            this.tourLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 19F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tourLabel.Location = new System.Drawing.Point(1353, 526);
             this.tourLabel.Name = "tourLabel";
             this.tourLabel.ReadOnly = true;
-            this.tourLabel.Size = new System.Drawing.Size(252, 22);
+            this.tourLabel.Size = new System.Drawing.Size(173, 29);
             this.tourLabel.TabIndex = 3;
             this.tourLabel.TabStop = false;
             this.tourLabel.Text = "Tour de ";
@@ -894,7 +779,7 @@
             this.labelMain.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.labelMain.Cursor = System.Windows.Forms.Cursors.Default;
             this.labelMain.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelMain.Location = new System.Drawing.Point(12, 657);
+            this.labelMain.Location = new System.Drawing.Point(312, 854);
             this.labelMain.Name = "labelMain";
             this.labelMain.ReadOnly = true;
             this.labelMain.Size = new System.Drawing.Size(100, 23);
@@ -908,14 +793,14 @@
             this.actionDispoTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.actionDispoTextBox.Cursor = System.Windows.Forms.Cursors.Default;
             this.actionDispoTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.actionDispoTextBox.Location = new System.Drawing.Point(12, 762);
+            this.actionDispoTextBox.Location = new System.Drawing.Point(546, 850);
             this.actionDispoTextBox.Multiline = true;
             this.actionDispoTextBox.Name = "actionDispoTextBox";
             this.actionDispoTextBox.ReadOnly = true;
-            this.actionDispoTextBox.Size = new System.Drawing.Size(100, 59);
+            this.actionDispoTextBox.Size = new System.Drawing.Size(100, 27);
             this.actionDispoTextBox.TabIndex = 7;
             this.actionDispoTextBox.TabStop = false;
-            this.actionDispoTextBox.Text = "actions disponibles";
+            this.actionDispoTextBox.Text = "action";
             this.actionDispoTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // achatDispoTextBox
@@ -923,14 +808,14 @@
             this.achatDispoTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.achatDispoTextBox.Cursor = System.Windows.Forms.Cursors.Default;
             this.achatDispoTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.achatDispoTextBox.Location = new System.Drawing.Point(12, 846);
+            this.achatDispoTextBox.Location = new System.Drawing.Point(745, 850);
             this.achatDispoTextBox.Multiline = true;
             this.achatDispoTextBox.Name = "achatDispoTextBox";
             this.achatDispoTextBox.ReadOnly = true;
-            this.achatDispoTextBox.Size = new System.Drawing.Size(100, 52);
+            this.achatDispoTextBox.Size = new System.Drawing.Size(100, 27);
             this.achatDispoTextBox.TabIndex = 8;
             this.achatDispoTextBox.TabStop = false;
-            this.achatDispoTextBox.Text = "achats disponibles";
+            this.achatDispoTextBox.Text = "achat";
             this.achatDispoTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // monnaieDispoTextBox
@@ -938,21 +823,21 @@
             this.monnaieDispoTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.monnaieDispoTextBox.Cursor = System.Windows.Forms.Cursors.Default;
             this.monnaieDispoTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.monnaieDispoTextBox.Location = new System.Drawing.Point(12, 932);
+            this.monnaieDispoTextBox.Location = new System.Drawing.Point(957, 850);
             this.monnaieDispoTextBox.Multiline = true;
             this.monnaieDispoTextBox.Name = "monnaieDispoTextBox";
             this.monnaieDispoTextBox.ReadOnly = true;
-            this.monnaieDispoTextBox.Size = new System.Drawing.Size(100, 61);
+            this.monnaieDispoTextBox.Size = new System.Drawing.Size(100, 27);
             this.monnaieDispoTextBox.TabIndex = 9;
             this.monnaieDispoTextBox.TabStop = false;
-            this.monnaieDispoTextBox.Text = "pièces disponibles";
+            this.monnaieDispoTextBox.Text = "pièce";
             this.monnaieDispoTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // finDeTourButton
             // 
             this.finDeTourButton.Cursor = System.Windows.Forms.Cursors.Default;
             this.finDeTourButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.finDeTourButton.Location = new System.Drawing.Point(998, 543);
+            this.finDeTourButton.Location = new System.Drawing.Point(1236, 518);
             this.finDeTourButton.Name = "finDeTourButton";
             this.finDeTourButton.Size = new System.Drawing.Size(73, 45);
             this.finDeTourButton.TabIndex = 10;
@@ -960,11 +845,93 @@
             this.finDeTourButton.UseVisualStyleBackColor = true;
             this.finDeTourButton.Click += new System.EventHandler(this.FinDeTour);
             // 
+            // defausseImage
+            // 
+            this.defausseImage.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.defausseImage.Cursor = System.Windows.Forms.Cursors.Default;
+            this.defausseImage.Location = new System.Drawing.Point(142, 625);
+            this.defausseImage.Name = "defausseImage";
+            this.defausseImage.Size = new System.Drawing.Size(112, 175);
+            this.defausseImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.defausseImage.TabIndex = 11;
+            this.defausseImage.TabStop = false;
+            // 
+            // defausseLabel
+            // 
+            this.defausseLabel.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.defausseLabel.Cursor = System.Windows.Forms.Cursors.Default;
+            this.defausseLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.defausseLabel.Location = new System.Drawing.Point(152, 597);
+            this.defausseLabel.Name = "defausseLabel";
+            this.defausseLabel.ReadOnly = true;
+            this.defausseLabel.Size = new System.Drawing.Size(92, 16);
+            this.defausseLabel.TabIndex = 12;
+            this.defausseLabel.TabStop = false;
+            this.defausseLabel.Text = "Défausse";
+            // 
+            // deckLabel
+            // 
+            this.deckLabel.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.deckLabel.Cursor = System.Windows.Forms.Cursors.Default;
+            this.deckLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.deckLabel.Location = new System.Drawing.Point(22, 598);
+            this.deckLabel.Name = "deckLabel";
+            this.deckLabel.ReadOnly = true;
+            this.deckLabel.Size = new System.Drawing.Size(88, 16);
+            this.deckLabel.TabIndex = 14;
+            this.deckLabel.TabStop = false;
+            this.deckLabel.Text = "Deck";
+            // 
+            // deckImage
+            // 
+            this.deckImage.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.deckImage.Cursor = System.Windows.Forms.Cursors.Default;
+            this.deckImage.Image = ((System.Drawing.Image)(resources.GetObject("deckImage.Image")));
+            this.deckImage.Location = new System.Drawing.Point(12, 626);
+            this.deckImage.Name = "deckImage";
+            this.deckImage.Size = new System.Drawing.Size(112, 175);
+            this.deckImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.deckImage.TabIndex = 13;
+            this.deckImage.TabStop = false;
+            // 
+            // jetonsTextBox
+            // 
+            this.jetonsTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.jetonsTextBox.Cursor = System.Windows.Forms.Cursors.Default;
+            this.jetonsTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.jetonsTextBox.Location = new System.Drawing.Point(1166, 852);
+            this.jetonsTextBox.Multiline = true;
+            this.jetonsTextBox.Name = "jetonsTextBox";
+            this.jetonsTextBox.ReadOnly = true;
+            this.jetonsTextBox.Size = new System.Drawing.Size(100, 25);
+            this.jetonsTextBox.TabIndex = 15;
+            this.jetonsTextBox.TabStop = false;
+            this.jetonsTextBox.Text = "jeton";
+            this.jetonsTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // infoActionTextBox
+            // 
+            this.infoActionTextBox.Cursor = System.Windows.Forms.Cursors.Default;
+            this.infoActionTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 17F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.infoActionTextBox.Location = new System.Drawing.Point(892, 358);
+            this.infoActionTextBox.Multiline = true;
+            this.infoActionTextBox.Name = "infoActionTextBox";
+            this.infoActionTextBox.ReadOnly = true;
+            this.infoActionTextBox.Size = new System.Drawing.Size(226, 106);
+            this.infoActionTextBox.TabIndex = 16;
+            this.infoActionTextBox.TabStop = false;
+            // 
             // PartieForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1495, 1030);
+            this.ClientSize = new System.Drawing.Size(1904, 921);
+            this.Controls.Add(this.infoActionTextBox);
+            this.Controls.Add(this.jetonsTextBox);
+            this.Controls.Add(this.deckLabel);
+            this.Controls.Add(this.deckImage);
+            this.Controls.Add(this.defausseLabel);
+            this.Controls.Add(this.defausseImage);
             this.Controls.Add(this.finDeTourButton);
             this.Controls.Add(this.monnaieDispoTextBox);
             this.Controls.Add(this.achatDispoTextBox);
@@ -1005,13 +972,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.focusCout)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.focusPictureBox)).EndInit();
             this.mainLayout.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.carteMain20)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.carteMain19)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.carteMain18)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.carteMain17)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.carteMain16)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.carteMain15)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.carteMain14)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.carteMain13)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.carteMain12)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.carteMain11)).EndInit();
@@ -1025,6 +985,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.carteMain3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.carteMain2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.carteMain1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.defausseImage)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.deckImage)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1062,13 +1024,6 @@
         private System.Windows.Forms.TableLayoutPanel mainLayout;
         private System.Windows.Forms.TextBox tourLabel;
         private System.Windows.Forms.PictureBox focusCout;
-        private System.Windows.Forms.PictureBox carteMain20;
-        private System.Windows.Forms.PictureBox carteMain19;
-        private System.Windows.Forms.PictureBox carteMain18;
-        private System.Windows.Forms.PictureBox carteMain17;
-        private System.Windows.Forms.PictureBox carteMain16;
-        private System.Windows.Forms.PictureBox carteMain15;
-        private System.Windows.Forms.PictureBox carteMain14;
         private System.Windows.Forms.PictureBox carteMain13;
         private System.Windows.Forms.PictureBox carteMain12;
         private System.Windows.Forms.PictureBox carteMain11;
@@ -1087,5 +1042,11 @@
         private System.Windows.Forms.TextBox achatDispoTextBox;
         private System.Windows.Forms.TextBox monnaieDispoTextBox;
         private System.Windows.Forms.Button finDeTourButton;
+        private System.Windows.Forms.PictureBox defausseImage;
+        private System.Windows.Forms.TextBox defausseLabel;
+        private System.Windows.Forms.TextBox deckLabel;
+        private System.Windows.Forms.PictureBox deckImage;
+        private System.Windows.Forms.TextBox jetonsTextBox;
+        private System.Windows.Forms.TextBox infoActionTextBox;
     }
 }

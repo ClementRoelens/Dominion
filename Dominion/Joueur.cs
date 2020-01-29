@@ -77,14 +77,19 @@ namespace Dominion
                         continuer = false;
                         break;
                     }
-
                 }
                 //On supprime la première carte du deck si le deck n'est pas vide, donc si continuer est vrai
                 if (continuer)
                 { this.Deck.RemoveAt(0); }
             }
+            //Si c'est au tour du joueur piochant, on met à jour la main et on actualise la PictureBox du deck si celui-ci est vide
             if (this == PartieForm.JoueurActuel)
-            { this.MAJMain(); }
+            {
+                this.MAJMain();
+                if (this.Deck.Count == 0)
+                { PartieForm.deckPB.ImageLocation = ""; }
+                PartieForm.deckTB.Text = "Deck : " + this.Deck.Count.ToString();
+            }
         }
 
         public void Defausser(Carte cible)
@@ -93,6 +98,21 @@ namespace Dominion
             this.Defausse.Add(cible);
             this.Main.RemoveAt(this.Main.FindIndex(x => x.Nom == cible.Nom));
 
+            //Si le joueur qui défausse a la main, on doit supprimer l'image de sa main et l'ajouter dans la défausse
+            if (this == PartieForm.JoueurActuel)
+            {
+                this.MAJMain();
+                PartieForm.defaussePB.ImageLocation = cible.Image;
+                PartieForm.defausseTB.Text = "Défausse : " + this.Defausse.Count.ToString();
+            }
+        }
+
+        public void Ecarter(Carte cible)
+        {
+            //On retire la carte de la main
+            this.Main.RemoveAt(this.Main.FindIndex(x => x.Nom == cible.Nom));
+
+            //Si le joueur qui défausse a la main, on doit supprimer l'image de sa main
             if (this == PartieForm.JoueurActuel)
             { this.MAJMain(); }
         }
@@ -119,9 +139,12 @@ namespace Dominion
             //TO DO
             //TO DO
             //TO DO
-            //Problème ici : la 6ème carte est supprimée, pas les autres
+            //Bordel quand on active
+            //TO DO
+            //TO DO
+            //TO DO
             bool flag = false;
-            while ((i < 20) & (!flag))
+            while ((i < listPictureBoxMain.Count) & (!flag))
             {
                 if (listPictureBoxMain[i].ImageLocation == default)
                 { flag = true; }
@@ -135,10 +158,25 @@ namespace Dominion
             }
         }
 
-        public void MAJpossibilites()
+        public Carte ChoisirUneCarte()
         {
-            
+            //On lance le formulaire de choix en sélectionnant le joueur
+            ChoixForm choix = new ChoixForm();
+            PartieForm.tempJoueur = this;
+            choix.ShowDialog();
+            Carte retour = new Carte();
+            //On récupère la carte choisie avec l'adresse de l'image
+            foreach (Carte carte in this.Main)
+            {
+                if (carte.Image == ChoixForm.carteChoisie)
+                { retour = carte; }
+                break;
+            }
+
+            return retour;
         }
+
+
     }
 }
 

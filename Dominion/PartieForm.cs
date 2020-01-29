@@ -22,6 +22,14 @@ namespace Dominion
         bool finDePartie = false;
         public static Joueur JoueurActuel;
         public static List<PictureBox> listPictureBoxMain = new List<PictureBox>();
+        public static PictureBox defaussePB;
+        public static TextBox defausseTB;
+        public static PictureBox deckPB;
+        public static TextBox deckTB;
+        public static TextBox infoActionTB;
+        public static string Clic = "Action";
+        public static Joueur tempJoueur;
+        public static bool obligation;
 
         public PartieForm()
         {
@@ -112,6 +120,7 @@ namespace Dominion
 
             #region Initialisation de la partie
 
+
             //D'abord on mélange les dekcs et on pioche la première main
             //On commence par faire une List des PictureBox qui seront utilisées pour afficher les cartes de la main
             listPictureBoxMain.Add(carteMain1);
@@ -127,13 +136,7 @@ namespace Dominion
             listPictureBoxMain.Add(carteMain11);
             listPictureBoxMain.Add(carteMain12);
             listPictureBoxMain.Add(carteMain13);
-            listPictureBoxMain.Add(carteMain14);
-            listPictureBoxMain.Add(carteMain15);
-            listPictureBoxMain.Add(carteMain16);
-            listPictureBoxMain.Add(carteMain17);
-            listPictureBoxMain.Add(carteMain18);
-            listPictureBoxMain.Add(carteMain19);
-            listPictureBoxMain.Add(carteMain20);
+
             //Puis on lance les méthodes correspondantes
             foreach (Joueur joueur in listeJoueurs)
             {
@@ -160,6 +163,13 @@ namespace Dominion
 
             JoueurActuel = listeJoueurs[main];
 
+            //Enfin, avant de commencer, on affecte nos variables globales
+            deckPB = deckImage;
+            deckTB = deckLabel;
+            defaussePB = defausseImage;
+            defausseTB = defausseLabel;
+            infoActionTB = infoActionTextBox;
+
             //Les tours vont se succéder jusqu'à ce qu'un événement déclenche la fin de la partie
             NouveauTour();
 
@@ -176,7 +186,7 @@ namespace Dominion
                 box.Anchor = AnchorStyles.Top;
             }
             //On affiche qui a la main, et sa main
-            tourLabel.Text = "Tour de " + JoueurActuel.Nom;
+            tourLabel.Text = JoueurActuel.Nom;
             JoueurActuel.MAJMain();
             //On réinitialise les possibilités, et on les affiche
             JoueurActuel.AchatDispo = 1;
@@ -185,6 +195,15 @@ namespace Dominion
             actionDispoTextBox.Text = JoueurActuel.ActionDispo.ToString() + " action(s)";
             JoueurActuel.MonnaieDispo = 0;
             monnaieDispoTextBox.Text = JoueurActuel.MonnaieDispo.ToString() + " pièce(s)";
+
+            //Et on met également à jour les affichages du deck et de la défausse
+            if (JoueurActuel.Deck.Count > 0)
+            { deckImage.ImageLocation = default; }
+            else
+            { deckImage.ImageLocation = ""; }
+            deckLabel.Text = "Deck : " + JoueurActuel.Deck.Count.ToString();
+            defausseLabel.Text = "Défausse : " + JoueurActuel.Defausse.Count.ToString();
+
         }
 
         private void Hover(object sender, EventArgs e)
@@ -389,7 +408,10 @@ namespace Dominion
             else
             { tempJoueur = listeJoueurs[main - 1]; }
             for (int i = 0, c = tempJoueur.Main.Count; i < c; i++)
-            { tempJoueur.Defausser(tempJoueur.Main[0]); }
+            {
+                tempJoueur.Main[0].EnJeu = false;
+                tempJoueur.Defausser(tempJoueur.Main[0]);
+            }
             tempJoueur.Piocher(5);
             //On vide également la List des cartes en jeu
             tempJoueur.EnJeu.Clear();
@@ -411,45 +433,67 @@ namespace Dominion
                 {
                     //Une fois trouvé, on lève le flag pour sortir de la boucle
                     flag = true;
-                    //On a donc trouvé notre carte. On va tester si cette carte est une carte Victoire, car ces cartes ne peuvent être jouées
-                    if (JoueurActuel.Main[i].Type != "Victoire")
+                    //On a donc trouvé notre carte. Maintenant on détermine ce que ça va déclencher
+                    switch (Clic)
                     {
-                        //Ensuite, une carte trésor peut toujours être jouée, mais une carte Action nécessite qu'il y ait encore au moins une Action disponible
-                        if (JoueurActuel.Main[i].Type.Contains("Action"))
-                        {
-                            //On teste donc si une action est disponible. Sinon on le dit au joueur et on sort de la boucle
-                            if (JoueurActuel.ActionDispo < 1)
+                        case "Action":
+                            //On va tester si cette carte est une carte Victoire, car ces cartes ne peuvent être jouées
+                            if (JoueurActuel.Main[i].Type != "Victoire")
                             {
-                                MessageBox.Show("Vous n'avez plus d'action disponible");
-                                break;
+                                //Ensuite, une carte trésor peut toujours être jouée, mais une carte Action nécessite qu'il y ait encore au moins une Action disponible
+                                if (JoueurActuel.Main[i].Type.Contains("Action"))
+                                {
+                                    //On teste donc si une action est disponible. Sinon on le dit au joueur et on sort de la boucle
+                                    if (JoueurActuel.ActionDispo < 1)
+                                    {
+                                        MessageBox.Show("Vous n'avez plus d'action disponible");
+                                        break;
+                                    }
+                                    //Si oui, on désincrémente le nombre d'actions disponibles, puis on passe à l'instruction plus générale
+                                    JoueurActuel.ActionDispo--;
+                                    //Et on le signale
+                                    actionDispoTextBox.Text = JoueurActuel.ActionDispo.ToString() + " action(s)";
+                                }
+                                //Si on n'est pas sorti de la boucle, on peut ajouter la carte à la List des cartes en jeu, et donc la supprimer de la main
+                                JoueurActuel.EnJeu.Add(JoueurActuel.Main[i]);
+                                JoueurActuel.Main[i].EnJeu = true;
+                                JoueurActuel.Main.RemoveAt(i);
+                                //Et on le signale graphiquement en la décalant vers le bas
+                                selectedPB.Anchor = AnchorStyles.Bottom;
+                                //Puis on ajoute les possibilités données
+                                JoueurActuel.MonnaieDispo += JoueurActuel.Main[i].MonnaieDonnee;
+                                monnaieDispoTextBox.Text = JoueurActuel.MonnaieDispo.ToString() + " pièce(s)";
+                                JoueurActuel.AchatDispo += JoueurActuel.Main[i].AchatDonne;
+                                achatDispoTextBox.Text = JoueurActuel.AchatDispo.ToString() + " achat(s)";
+                                JoueurActuel.ActionDispo += JoueurActuel.Main[i].ActionDonnee;
+                                actionDispoTextBox.Text = JoueurActuel.ActionDispo.ToString() + " action(s)";
+                                JoueurActuel.JetonVictoireDispo += JoueurActuel.Main[i].JetonPointDonne;
+                                JoueurActuel.Piocher(JoueurActuel.Main[i].CarteDonnee);
+                                //Et on lance l'effet
+                                JoueurActuel.Main[i].Effet();
                             }
-                            //Si oui, on désincrémente le nombre d'actions disponibles, puis on passe à l'instruction plus générale
-                            JoueurActuel.ActionDispo--;
-                            //Et on le signale
-                            actionDispoTextBox.Text = JoueurActuel.ActionDispo.ToString() + " action(s)";
-                        }
-                        //Si on n'est pas sorti de la boucle, on peut ajouter la carte à la List des cartes en jeu
-                        JoueurActuel.EnJeu.Add(JoueurActuel.Main[i]);
-                        //Et on le signale graphiquement en la décalant vers le bas
-                        selectedPB.Anchor = AnchorStyles.Bottom;
-                        //Puis on ajoute les possibilités données
-                        JoueurActuel.MonnaieDispo += JoueurActuel.Main[i].MonnaieDonnee;
-                        monnaieDispoTextBox.Text = JoueurActuel.MonnaieDispo.ToString() + " pièce(s)";
-                        JoueurActuel.AchatDispo += JoueurActuel.Main[i].AchatDonne;
-                        achatDispoTextBox.Text = JoueurActuel.AchatDispo.ToString() + " achat(s)";
-                        JoueurActuel.ActionDispo += JoueurActuel.Main[i].ActionDonnee;
-                        actionDispoTextBox.Text = JoueurActuel.ActionDispo.ToString() + " action(s)";
-                        JoueurActuel.JetonVictoireDispo += JoueurActuel.Main[i].JetonPointDonne;
-                        JoueurActuel.Piocher(JoueurActuel.Main[i].CarteDonnee);
-                        //Puis l'effet
-                        //TO DO
-                        //TO DO
-                        //TO DO
-                        //Coder l'effet
-                        //TO DO
-                        //TO DO
-                        //TO DO
+                            break;
+                        case "Defausser":
+                            JoueurActuel.Defausser(JoueurActuel.Main[i]);
+                            break;
+                        case "Ecarter":
+                            JoueurActuel.Ecarter(JoueurActuel.Main[i]);
+                            break;
+
                     }
+
+
+                    //Puis l'effet
+                    //TO DO
+                    //TO DO
+                    //TO DO
+                    //Coder les événements quand une pile ou quand le deck est vide (et éventuellement quand une carte donne un bonus définitif)
+
+                    //Coder l'effet
+                    //TO DO
+                    //TO DO
+                    //TO DO
+
 
                 }
                 else
@@ -485,10 +529,12 @@ namespace Dominion
                 {
                     MessageBox.Show("Vous n'avez pas assez de monnaie");
                 }
-                //Si les contrôles sont passés, on ajoute cette carte à sa main et réduit la Pile de 1
+                //Si les contrôles sont passés, on ajoute cette carte à sa défausse et réduit la Pile de 1
                 else
                 {
                     JoueurActuel.Defausse.Add(mapListe[i].carte);
+                    defausseImage.ImageLocation = selectedPB.ImageLocation;
+                    defausseLabel.Text = "Défausse : " + JoueurActuel.Defausse.Count.ToString();
                     mapListe[i].nombre--;
                     //Et bien sûr on désincrémente le nombre d'achats et la monnaie disponibles et on met à jour l'affichage
                     JoueurActuel.AchatDispo--;

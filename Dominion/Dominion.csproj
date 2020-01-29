@@ -48,6 +48,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Carte.cs" />
+    <Compile Include="ChoixForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ChoixForm.Designer.cs">
+      <DependentUpon>ChoixForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Effet.cs" />
     <Compile Include="LancementForm.cs">
       <SubType>Form</SubType>
@@ -65,6 +71,9 @@
     <Compile Include="Pile.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="ChoixForm.resx">
+      <DependentUpon>ChoixForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="LancementForm.resx">
       <DependentUpon>LancementForm.cs</DependentUpon>
     </EmbeddedResource>
