@@ -7,7 +7,7 @@ using System.Windows.Forms;
 
 namespace Dominion
 {
-    public class Carte
+    public class Carte : ICloneable
     {
         int id;
         public string Nom;
@@ -42,7 +42,7 @@ namespace Dominion
             this.JetonPointDonne = pJetonPointDonne;
             this.PointDonne = pPointDonne;
 
-           
+
         }
 
         public void Effet()
@@ -102,5 +102,11 @@ namespace Dominion
             }
         }
 
+        public object Clone()
+        {
+            return new Carte
+                (this.id, this.Nom, this.Image, this.Cout, this.Type, this.EffetText, this.MonnaieDonnee, this.CarteDonnee, this.ActionDonnee,
+                this.AchatDonne, this.JetonPointDonne, this.PointDonne); ;
+        }
     }
 }

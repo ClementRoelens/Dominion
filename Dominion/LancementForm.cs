@@ -117,7 +117,10 @@ namespace Dominion
             { tempCarte = carte; }
             //Et on l'ajoute 7 fois au deck
             for (int i = 0; i < 7; i++)
-            { DeckGenerique.Add(tempCarte); }
+            {
+                Carte carteAjoutee = (Carte)tempCarte.Clone();
+                DeckGenerique.Add(carteAjoutee);
+            }
             //Ensuite on fait de même avec le Domaine, mais 3 fois
             var domaineQuery = 
                 from carte in listeCartes
@@ -126,7 +129,10 @@ namespace Dominion
             foreach (Carte carte in domaineQuery)
             { tempCarte = carte; }
             for (int i = 0; i < 3; i++)
-            { DeckGenerique.Add(tempCarte); }
+            {
+                Carte carteAjoutee = (Carte)tempCarte.Clone();
+                DeckGenerique.Add(tempCarte);
+            }
 
             //Et on donne ce même deck à chaque joueur
             foreach (Joueur joueur in listeJoueurs)

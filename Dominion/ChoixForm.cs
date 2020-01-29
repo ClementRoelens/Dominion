@@ -19,7 +19,7 @@ namespace Dominion
             InitializeComponent();
         }
 
-    
+
         private void ChoixForm_Load(object sender, EventArgs e)
         {
             //On fait une List de PictureBox comme d'hab
@@ -39,8 +39,12 @@ namespace Dominion
             int i = 0;
             foreach (Carte carte in PartieForm.JoueurActuel.Main)
             {
-                listPB[i].ImageLocation = carte.Image;
-                i++;
+                //On n'affiche pas les cartes en jeu
+                if (!carte.EnJeu)
+                {
+                    listPB[i].ImageLocation = carte.Image;
+                    i++;
+                }
             }
 
             //On dit aussi qui va choisir

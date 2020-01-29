@@ -12,7 +12,7 @@ namespace Dominion
         public string Nom;
         public List<Carte> Deck;
         public List<Carte> Main = new List<Carte>();
-        public List<Carte> EnJeu = new List<Carte>();
+        //public List<Carte> EnJeu = new List<Carte>();
         public List<Carte> Defausse = new List<Carte>();
         public int ActionDispo = 1;
         public int AchatDispo = 1;
@@ -53,49 +53,57 @@ namespace Dominion
 
         public void Piocher(int nombre)
         {
-            //On ajoute à la main la première carte du deck, puis on supprime celle-ci du deck, vu qu'elle n'est plus dans le deck mais dans la main
-            //On répète l'action pour le nombre de carte à piocher
-            for (int i = 0; i < nombre; i++)
+            //Si on pioche 0 carte, pas la peine de perdre du temps
+            if (nombre != 0)
             {
-                bool continuer = true;
-                //Cependant, on doit gérer le cas où le deck est vide
-                try
-                { this.Main.Add(this.Deck[0]); }
-                //Si le deck est vide, il y a deux cas possibles
-                catch (ArgumentOutOfRangeException)
+                //On ajoute à la main la première carte du deck, puis on supprime celle-ci du deck, vu qu'elle n'est plus dans le deck mais dans la main
+                //On répète l'action pour le nombre de carte à piocher
+                for (int i = 0; i < nombre; i++)
                 {
-                    //Soit la défausse n'est pas vide, et on la mélange donc pour constituer un nouveau deck
-                    if (this.Defausse.Count > 0)
+                    bool continuer = true;
+                    //Cependant, on doit gérer le cas où le deck est vide
+                    try
+                    { this.Main.Add(this.Deck[0]); }
+                    //Si le deck est vide, il y a deux cas possibles
+                    catch (ArgumentOutOfRangeException)
                     {
-                        this.MelangerLeDeck();
-                        this.Main.Add(this.Deck[0]);
+                        //Soit la défausse n'est pas vide, et on la mélange donc pour constituer un nouveau deck
+                        if (this.Defausse.Count > 0)
+                        {
+                            this.MelangerLeDeck();
+                            this.Main.Add(this.Deck[0]);
+                        }
+                        //Soit elle est vide, et donc l'action s'arrête car on ne peut plus piocher
+                        else
+                        {
+                            MessageBox.Show("Il n'y a plus de carte à piocher, votre défausse et votre deck sont vides.");
+                            continuer = false;
+                            break;
+                        }
                     }
-                    //Soit elle est vide, et donc l'action s'arrête car on ne peut plus piocher
-                    else
-                    {
-                        MessageBox.Show("Il n'y a plus de carte à piocher, votre défausse et votre deck sont vides.");
-                        continuer = false;
-                        break;
-                    }
+                    //On supprime la première carte du deck si le deck n'est pas vide, donc si continuer est vrai
+                    if (continuer)
+                    { this.Deck.RemoveAt(0); }
                 }
-                //On supprime la première carte du deck si le deck n'est pas vide, donc si continuer est vrai
-                if (continuer)
-                { this.Deck.RemoveAt(0); }
-            }
-            //Si c'est au tour du joueur piochant, on met à jour la main et on actualise la PictureBox du deck si celui-ci est vide
-            if (this == PartieForm.JoueurActuel)
-            {
-                this.MAJMain();
-                if (this.Deck.Count == 0)
-                { PartieForm.deckPB.ImageLocation = ""; }
-                PartieForm.deckTB.Text = "Deck : " + this.Deck.Count.ToString();
+                //Si c'est au tour du joueur piochant, on met à jour la main et on actualise la PictureBox du deck si celui-ci est vide
+                if (this == PartieForm.JoueurActuel)
+                {
+                    this.MAJMain();
+                    if (this.Deck.Count == 0)
+                    { PartieForm.deckPB.ImageLocation = ""; }
+                    PartieForm.deckTB.Text = "Deck : " + this.Deck.Count.ToString();
+                }
             }
         }
 
         public void Defausser(Carte cible)
         {
-            //On ajoute la carte à la List de défausse, et on la retire de la main
+            //On ajoute la carte à la List de défausse
             this.Defausse.Add(cible);
+            //Puis on supprime de la main
+            //Si la carte est en jeu, on doit d'abord passer le "En Jeu" à false
+            if (cible.EnJeu)
+            { cible.EnJeu = false; }
             this.Main.RemoveAt(this.Main.FindIndex(x => x.Nom == cible.Nom));
 
             //Si le joueur qui défausse a la main, on doit supprimer l'image de sa main et l'ajouter dans la défausse
