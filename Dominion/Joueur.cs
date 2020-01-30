@@ -98,12 +98,12 @@ namespace Dominion
 
         public void Defausser(Carte cible)
         {
-            //On ajoute la carte à la List de défausse
-            this.Defausse.Add(cible);
-            //Puis on supprime de la main
             //Si la carte est en jeu, on doit d'abord passer le "En Jeu" à false
             if (cible.EnJeu)
             { cible.EnJeu = false; }
+            //On ajoute la carte à la List de défausse
+            this.Defausse.Add(cible);
+            //Puis on supprime de la main
             this.Main.RemoveAt(this.Main.FindIndex(x => x.Nom == cible.Nom));
 
             //Si le joueur qui défausse a la main, on doit supprimer l'image de sa main et l'ajouter dans la défausse
@@ -144,13 +144,6 @@ namespace Dominion
                 i++;
             }
             //Puis on supprime les images restantes s'il y en a
-            //TO DO
-            //TO DO
-            //TO DO
-            //Bordel quand on active
-            //TO DO
-            //TO DO
-            //TO DO
             bool flag = false;
             while ((i < listPictureBoxMain.Count) & (!flag))
             {
@@ -166,23 +159,37 @@ namespace Dominion
             }
         }
 
-        public Carte ChoisirUneCarte()
+        public Carte ChoisirUneCarte(string type , List<Carte> choix , bool obligation)
         {
-            //On lance le formulaire de choix en sélectionnant le joueur
-            ChoixForm choix = new ChoixForm();
+            //On assigne les variables nécessaires 
             PartieForm.tempJoueur = this;
-            choix.ShowDialog();
-            Carte retour = new Carte();
-            //On récupère la carte choisie avec l'adresse de l'image
-            foreach (Carte carte in this.Main)
-            {
-                if (carte.Image == ChoixForm.carteChoisie)
-                { retour = carte; }
-                break;
-            }
+            PartieForm.typeChoix = type;
+            PartieForm.listeChoix = choix;
+            PartieForm.obligation = obligation;
+            PartieForm.nbCarte = 1;
 
-            return retour;
+            ChoixForm choixForm = new ChoixForm();
+            choixForm.ShowDialog();
+
+            return ChoixForm.carteChoisie;
         }
+
+        public List<Carte> ChoisirDesCartes(string type, List<Carte> choix, int nbCarte , bool obligation)
+        {
+            //On assigne les variables nécessaires 
+            PartieForm.tempJoueur = this;
+            PartieForm.typeChoix = type;
+            PartieForm.listeChoix = choix;
+            PartieForm.obligation = obligation;
+            PartieForm.nbCarte = nbCarte;
+
+            ChoixForm choixForm = new ChoixForm();
+            choixForm.ShowDialog();
+
+            return ChoixForm.listeCartesChoisies;
+        }
+
+
 
 
     }

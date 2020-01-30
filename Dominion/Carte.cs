@@ -59,7 +59,7 @@ namespace Dominion
                         for (int i = 0, c = listeJoueurs.Count; i < c; i++)
                         {
                             //On utilise la méthode pour choisir une carte dans la main
-                            carteEcartee = listeJoueurs[i].ChoisirUneCarte();
+                            carteEcartee = listeJoueurs[i].ChoisirUneCarte("Ecarter", listeJoueurs[i].Main,true);
                             //Puis on écarte
                             listeJoueurs[i].Ecarter(carteEcartee);
                             //Et on passe soit au joueur suivant, soit au premier si ce joueur est le dernier
@@ -69,8 +69,10 @@ namespace Dominion
                             { listeJoueurs[i + 1].Main.Add(carteEcartee); }
                         }
                         //Puis le deuxième effet
-                        carteEcartee = PartieForm.JoueurActuel.ChoisirUneCarte();
+                        carteEcartee = PartieForm.JoueurActuel.ChoisirUneCarte("Ecarter", PartieForm.JoueurActuel.Main, true);
                         PartieForm.JoueurActuel.Ecarter(carteEcartee);
+                        //Après ça, il faut mettre à jour la main
+                        PartieForm.JoueurActuel.MAJMain();
                     }
                     break;
 
@@ -80,20 +82,19 @@ namespace Dominion
                         Joueur JoueurActuel = PartieForm.JoueurActuel;
                         List<Joueur> listeJoueurs = LancementForm.listeJoueurs;
                         //On fait choisir la carte puis on l'écarte
-                        carteEcartee = JoueurActuel.ChoisirUneCarte();
+                        carteEcartee = JoueurActuel.ChoisirUneCarte("Ecarter", JoueurActuel.Main , true);
                         JoueurActuel.Ecarter(carteEcartee);
                         //Puis on ajoute le bon nombre de jetons de victoire
                         double tempCout = carteEcartee.Cout / 2;
                         JoueurActuel.JetonVictoireDispo += (int)Math.Floor(tempCout);
 
                         //Puis on boucle sur les autres joueurs pour qu'ils écartent
-                        PartieForm.obligation = true;
                         for (int i = 0; i < listeJoueurs.Count; i++)
                         {
                             if (listeJoueurs[i] != JoueurActuel)
                             {
                                 //Gérer le cas d'annulation
-                                carteEcartee = listeJoueurs[i].ChoisirUneCarte();
+                                carteEcartee = listeJoueurs[i].ChoisirUneCarte("Ecarter", listeJoueurs[i].Main , false);
                                 listeJoueurs[i].Ecarter(carteEcartee);
                             }
                         }

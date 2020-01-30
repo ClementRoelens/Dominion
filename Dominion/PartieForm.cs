@@ -13,6 +13,17 @@ namespace Dominion
 {
     public partial class PartieForm : Form
     {
+
+        //TO DO
+        //TO DO
+        //TO DO
+        //=======> L'achat d'un Argent préselectionne bien 3 Cuivres                              <==========
+        //=======> Mais ensuite 4 Cuivres sont activés et la monnaie dispo tombe à 0 au lieu de 1 <===========
+        //TO DO
+        //TO DO
+        //TO DO
+
+
         //La "map" du jeu est composée d'une List de Pile de cartes. 
         List<Pile> mapListe = new List<Pile>();
         Pile focusPile = new Pile();
@@ -27,8 +38,15 @@ namespace Dominion
         public static PictureBox deckPB;
         public static TextBox deckTB;
         public static TextBox infoActionTB;
+       
+        //Pour les choix de cartes
         public static Joueur tempJoueur;
         public static bool obligation;
+        public static string typeChoix = "Défaut";
+        public static int nbCarte = int.MaxValue;
+        public static List<Carte> listeChoix = new List<Carte>();
+        public static bool estValide;
+        public static Carte carteAacheter;
 
         public PartieForm()
         {
@@ -113,8 +131,6 @@ namespace Dominion
             }
             #endregion
 
-
-
             //On constitue les decks, les mélange et pioche la première main pour chaque joueur
 
             #region Initialisation de la partie
@@ -173,7 +189,6 @@ namespace Dominion
             NouveauTour();
 
             #endregion
-
 
         }
 
@@ -478,45 +493,74 @@ namespace Dominion
                 else
                 { i++; }
             }
-            //On vérifie ensuite si le joueur a un achat dispo
+            //On vérifie ensuite si le joueur a au moins un achat dispo
             if (JoueurActuel.AchatDispo < 1)
             { MessageBox.Show("Vous n'avez plus d'achat disponible"); }
+            //Si oui, on lance la procédure d'achat avec les différentes vérifications
             else
             {
-                //Et également s'il a assez de monnaie
-                //TO DO
-                //TO DO
-                //TO DO
-                //=============>   RECODER LE SYSTEME D'ACHAT   <===============
-                //____________________________
-                //Une fois qu'on a cliqué sur la carte qu'on veut acheter, on demande de sélectionner la monnaie (si on n'a pas déjà la monnaie dispo)
-                //_____________________________
-                //TO DO
-                //TO DO
-                //TO DO
-                if (JoueurActuel.MonnaieDispo < mapListe[i].carte.Cout)
-                {
-                    MessageBox.Show("Vous n'avez pas assez de monnaie");
-                }
-                //Si les contrôles sont passés, on ajoute cette carte à sa défausse et réduit la Pile de 1
+                bool continuer = false;
+                //Puis on teste si le joueur n'a pas déjà assez de monnaie disponible. Si oui, l'achat est validé
+                if (JoueurActuel.MonnaieDispo >= mapListe[i].carte.Cout)
+                { continuer = true; }
                 else
                 {
-                    //On crée une nouvelle instance de la carte
+                    //S'il n'a pas assez de monnaie déjà disponible, on fait choisir au joueur les cartes Trésor de sa main qu'il veut utiliser
+                    carteAacheter = mapListe[i].carte;
+                    List<Carte> tresorsSelectionnes = JoueurActuel.ChoisirDesCartes("Achat", JoueurActuel.Main, int.MaxValue, false);
+                    //Ensuite, on continue l'action seulement si le formulaire a bien été validé
+                    if (estValide)
+                    {
+                        //On vérifie d'abord si le joueur a bien sélectionné assez de monnaie
+                        int monnaieSelectionnee = 0;
+                        foreach (Carte carte in tresorsSelectionnes)
+                        { monnaieSelectionnee += carte.MonnaieDonnee; }
+
+                        if (monnaieSelectionnee < mapListe[i].carte.Cout)
+                        {
+                            //Si ce n'est pas le cas, on le dit et on arrête l'action, sans valider l'achat, sans mettre en jeu
+                            MessageBox.Show("Vous n'avez pas assez de monnaie");
+                        }
+                        else
+                        {
+                            //Si oui, on refait une boucle pour trouver les PictureBox correspondantes et les déplacer vers le bas, ainsi que pour activer les cartes
+                            foreach (Carte carte in tresorsSelectionnes)
+                            {
+                                carte.EnJeu = true;
+                                //On doit chercher une image correspondante dans la main
+                                for (int j = 0, c = JoueurActuel.Main.Count; j < c; j++)
+                                {
+                                    //On cherche l'image correspondante oui, mais elle ne doit pas déjà avoir été activée
+                                    if ((listPictureBoxMain[j].ImageLocation == carte.Image) && (listPictureBoxMain[j].Anchor != AnchorStyles.Bottom))
+                                    { listPictureBoxMain[j].Anchor = AnchorStyles.Bottom; }
+                                }
+                            }
+                            //On ajoute le total de monnaie des cartes activées à la monnaie dispo du joueur
+                            JoueurActuel.MonnaieDispo += monnaieSelectionnee;
+                            //Et on peut valider le booléen pour continuer l'achat
+                            continuer = true;
+                        }
+                    }
+                }
+                if (continuer)
+                {
+                    //On crée une nouvelle instance de la carte qu'on va ajouter à la défausse
                     Carte tempCarte = (Carte)mapListe[i].carte.Clone();
                     JoueurActuel.Defausse.Add(tempCarte);
+                    //Bien entendu on met à jour l'affichage de la défausse
                     defausseImage.ImageLocation = selectedPB.ImageLocation;
                     defausseLabel.Text = "Défausse : " + JoueurActuel.Defausse.Count.ToString();
+                    //Et on désincrémente le nombre de cartes dans la pile
                     mapListe[i].nombre--;
-                    //Et bien sûr on désincrémente le nombre d'achats et la monnaie disponibles et on met à jour l'affichage
+                    //Et bien sûr on désincrémente également le nombre d'achats et la monnaie disponibles et on met à jour l'affichage
                     JoueurActuel.AchatDispo--;
                     achatDispoTextBox.Text = JoueurActuel.AchatDispo.ToString() + " achat(s)";
                     JoueurActuel.MonnaieDispo -= mapListe[i].carte.Cout;
                     monnaieDispoTextBox.Text = JoueurActuel.MonnaieDispo.ToString() + " pièce(s)";
-
                 }
             }
         }
-
+        
         private void FinDeTour(object sender, EventArgs e)
         {
             //D'abord on détermine l'index du joueur ayant la main dans la List
