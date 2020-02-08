@@ -71,7 +71,7 @@ namespace Dominion
                             { listeJoueurs[i + 1].Main.Add(carteEcartee); }
                         }
                         //Puis le deuxième effet : le joueur qui joue peut écarter une carte de sa main
-                        carteEcartee = JoueurActuel.ChoisirUneCarte("Ecarter", JoueurActuel.Main, true);
+                        carteEcartee = JoueurActuel.ChoisirUneCarte("Ecarter", JoueurActuel.Main, false);
                         JoueurActuel.Ecarter(carteEcartee);
                         //Après ça, il faut mettre à jour la main
                         JoueurActuel.MAJMain();
@@ -93,12 +93,19 @@ namespace Dominion
                         //Puis on boucle sur les autres joueurs pour qu'ils écartent
                         for (int i = 0; i < listeJoueurs.Count; i++)
                         {
-                            if (listeJoueurs[i] != JoueurActuel)
-                            {
-                                //Gérer le cas d'annulation
-                                carteEcartee = listeJoueurs[i].ChoisirUneCarte("Ecarter", listeJoueurs[i].Main, false);
-                                listeJoueurs[i].Ecarter(carteEcartee);
-                            }
+                            carteEcartee = null;
+                            //DEBUG
+                            Console.WriteLine("________\nEntrée dans l'écartement optionnel de l'évèque");
+                            Console.Write("carteEcartee vaut normalement null.\nElle vaut réellement : ");
+                            if (carteEcartee is null)
+                            { Console.WriteLine("null."); }
+                            else
+                            { Console.WriteLine(carteEcartee.Nom); }
+                            //DEBUG
+                            //Gérer le cas d'annulation
+                            carteEcartee = listeJoueurs[i].ChoisirUneCarte("Ecarter", listeJoueurs[i].Main, false);
+                            if (!(carteEcartee is null))
+                            { listeJoueurs[i].Ecarter(carteEcartee); }
                         }
                     }
                     break;
@@ -153,22 +160,22 @@ namespace Dominion
                     {
                         //On écarte une carte de la main et reçoit une carte coûtant jusqu'à 3 de plus
                         JoueurActuel.ChoisirUneCarte("Ecarter", JoueurActuel.Main, true);
-                        JoueurActuel.Ecarter(ChoixForm.carteChoisie);
+                        JoueurActuel.Ecarter(ChoixForm.listeCartesChoisies[0]);
                         MessageBox.Show("Choisissez une carte coûtant jusqu'à 3 de plus que la carte écartée");
                         List<Carte> piles = new List<Carte>();
                         foreach (Pile pile in PartieForm.mapListe)
                         {
-                            if ((pile.nombre > 0) && (pile.carte.Cout <= ChoixForm.carteChoisie.Cout + 3))
+                            if ((pile.nombre > 0) && (pile.carte.Cout <= ChoixForm.listeCartesChoisies[0].Cout + 3))
                             { piles.Add(pile.carte); }
                         }
                         JoueurActuel.ChoisirUneCarte("Recevoir", piles, true);
-                        JoueurActuel.Defausse.Add(ChoixForm.carteChoisie);
+                        JoueurActuel.Defausse.Add(ChoixForm.listeCartesChoisies[0]);
                         //On lance la vérification pour savoir si on achève la partie
                         bool flag = false;
                         int i = 0;
                         while (!flag)
                         {
-                            if (PartieForm.mapListe[i].carte == ChoixForm.carteChoisie)
+                            if (PartieForm.mapListe[i].carte == ChoixForm.listeCartesChoisies[0])
                             {
                                 PartieForm.mapListe[i].nombre--;
                                 flag = true;

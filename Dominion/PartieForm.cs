@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Input;
@@ -20,6 +21,7 @@ namespace Dominion
         List<TextBox> focusDetailsList = new List<TextBox>();
         List<PictureBox> focusIcones = new List<PictureBox>();
         List<Joueur> listeJoueurs = LancementForm.listeJoueurs;
+        public static Random rand = new Random();
         public static Joueur JoueurActuel;
         public static List<PictureBox> listPictureBoxMain = new List<PictureBox>();
         public static PictureBox defaussePB;
@@ -91,7 +93,6 @@ namespace Dominion
 
             //Maintenant que nous avons ajouté toutes les cartes Trésor et Victoire, on va mélanger la List des Actions et ajouter les 10 premières.
             //Pour ce faire, on va rajouter aléatoirement une carte de notre première List à une List temporaire de cartes Action (pour ensuite les trier)
-            Random rand = new Random();
             List<Carte> tempActions = new List<Carte>();
             for (int j = 0; j < 10; j++)
             {
@@ -436,6 +437,9 @@ namespace Dominion
                                 JoueurActuel.ActionDispo += JoueurActuel.Main[i].ActionDonnee;
                                 JoueurActuel.JetonVictoireDispo += JoueurActuel.Main[i].JetonPointDonne;
                                 JoueurActuel.Piocher(JoueurActuel.Main[i].CarteDonnee);
+                                //DEBUG
+                                Console.WriteLine(JoueurActuel.Nom + " joue " + JoueurActuel.Main[i].Nom);
+                                //DEBUG
                                 //Et on lance l'effet
                                 JoueurActuel.Main[i].Effet();
                                 //Et on met à jour les infos
@@ -495,26 +499,37 @@ namespace Dominion
                         bool grandMarche = true;
                         if (carteAacheter.Nom == "Grand marché")
                         {
-                            foreach (Carte carte in JoueurActuel.Main)
+                            //Les trésors sélectionnés ne doivent pas contenir de carte Cuivre
+                            if (!(tresorsSelectionnes.Find(x => x.Nom == "Cuivre") is null))
+                            { grandMarche = false; }
+                            //On fait le deuxième test seulement si le premier n'a pas déjà échoué
+                            if (grandMarche)
                             {
-                                if (carte.EnJeu && (carte.Nom == "Cuivre"))
+                                //Aucune carte en jeu dans la main ne doit être un cuivre non plus
+                                foreach (Carte carte in JoueurActuel.Main)
                                 {
-                                    //La carte ne peut être achetée si des cuivres sont en jeu.
-                                    //Si on en détecte un, on sort de la fonction d'achat
-                                    MessageBox.Show("Vous ne pouvez pas acheter cette carte avec des cuivres.");
-                                    grandMarche = false;
-                                    break;
+                                    if (carte.EnJeu && (carte.Nom == "Cuivre"))
+                                    {
+                                        grandMarche = false;
+                                        break;
+                                    }
                                 }
                             }
                         }
-                        if (grandMarche)
+                        if (!grandMarche)
+                        {
+                            //La carte ne peut être achetée si des cuivres sont en jeu.
+                            //Si on en détecte un, on sort de la fonction d'achat
+                            MessageBox.Show("Vous ne pouvez pas acheter cette carte avec des cuivres en jeu.");
+                        }
+                        else
                         {
                             //On vérifie d'abord si le joueur a bien sélectionné assez de monnaie
                             int monnaieSelectionnee = 0;
                             foreach (Carte carte in tresorsSelectionnes)
                             { monnaieSelectionnee += carte.MonnaieDonnee; }
 
-                            if (monnaieSelectionnee < mapListe[i].carte.Cout)
+                            if ((monnaieSelectionnee + JoueurActuel.MonnaieDispo) < mapListe[i].carte.Cout)
                             {
                                 //Si ce n'est pas le cas, on le dit et on arrête l'action, sans valider l'achat, sans mettre en jeu, toujours car continuer == false
                                 MessageBox.Show("Vous n'avez pas assez de monnaie");
@@ -614,8 +629,112 @@ namespace Dominion
 
         private void Button1_Click_1(object sender, EventArgs e)
         {
-            Carte test = new Carte("Evèque", "", 0, "Action", "gfreg", 0, 0, 0, 0, 0, 0);
+            Carte test = new Carte("Evèque", @"C:\Users\ohne6\Desktop\Dominion\Images\6GrandMarche.png", 6, "Action", "gfreg", 0, 0, 0, 0, 0, 0);
+            JoueurActuel.Main.Add(new Carte("Or", @"C:\Users\ohne6\Desktop\Dominion\Images\Or.jpg", 0, "Trésor", "rgr", 6, 0, 0, 0, 0, 0));
             test.Effet();
+
+            ////Ce booléen va déterminer si oui ou non on saute l'étape de sélection de la monnaie
+            //bool continuer = false;
+
+            ////On vérifie ensuite si le joueur a au moins un achat dispo
+            //if (JoueurActuel.AchatDispo < 1)
+            //{ MessageBox.Show("Vous n'avez plus d'achat disponible"); }
+            ////Si oui, on lance la procédure d'achat avec les différentes vérifications
+            ////Si non, l'achat va pas être validé puisque continuer == false
+            //else
+            //{
+            //    //On teste si le joueur n'a pas déjà assez de monnaie disponible. Si oui, continuer = true et on va pouvoir valider l'achat directement
+            //    if (JoueurActuel.MonnaieDispo >= test.Cout)
+            //    { continuer = true; }
+            //    //Si non, notre booléen va rester à faux et on va donc devoir demander au joueur de sélectionner des cartes Trésor
+            //    else
+            //    {
+            //        //On va appeler une fonction ouvrant notre formulaire de choix, et on doit donc lui passer la carte devant être achetée, pour avoir son coût
+            //        carteAacheter = test;
+            //        //La fonction retourne une liste de carte, on crée donc une nouvelle List
+            //        List<Carte> tresorsSelectionnes = JoueurActuel.ChoisirDesCartes("Achat", JoueurActuel.Main, int.MaxValue, false);
+            //        //Ensuite, on continue l'action seulement si le formulaire a bien été validé (si non, continuer == false et donc l'achat ne sera pas finalisé)
+            //        if (ChoixForm.estValide)
+            //        {
+            //            //Vérification nécessaire pour la carte Grand marché
+            //            bool grandMarche = true;
+            //            if (carteAacheter.Nom == "Grand marché")
+            //            {
+            //                if (!(tresorsSelectionnes.Find(x => x.Nom == "Cuivre") is null))
+            //                { grandMarche = false; }
+            //                if (grandMarche)
+            //                {
+            //                    foreach (Carte carte in JoueurActuel.Main)
+            //                    {
+            //                        if (carte.EnJeu && (carte.Nom == "Cuivre"))
+            //                        {
+            //                            grandMarche = false;
+            //                            break;
+            //                        }
+            //                    }
+            //                }
+            //            }
+            //            if (!grandMarche)
+            //            {
+            //                //La carte ne peut être achetée si des cuivres sont en jeu.
+            //                //Si on en détecte un, on sort de la fonction d'achat
+            //                MessageBox.Show("Vous ne pouvez pas acheter cette carte avec des cuivres en jeu.");
+            //            }
+            //            else
+            //            {
+            //                //On vérifie d'abord si le joueur a bien sélectionné assez de monnaie
+            //                int monnaieSelectionnee = 0;
+            //                foreach (Carte carte in tresorsSelectionnes)
+            //                { monnaieSelectionnee += carte.MonnaieDonnee; }
+
+            //                if ((monnaieSelectionnee + JoueurActuel.MonnaieDispo) < test.Cout)
+            //                {
+            //                    //Si ce n'est pas le cas, on le dit et on arrête l'action, sans valider l'achat, sans mettre en jeu, toujours car continuer == false
+            //                    MessageBox.Show("Vous n'avez pas assez de monnaie");
+            //                }
+            //                else
+            //                {
+
+            //                    //Si oui, on refait une boucle pour trouver les PictureBox correspondantes et les déplacer vers le bas, ainsi que pour activer les cartes
+            //                    foreach (Carte carte in tresorsSelectionnes)
+            //                    {
+            //                        carte.EnJeu = true;
+            //                        //On doit chercher une image correspondante dans la main
+            //                        for (int j = 0, c = JoueurActuel.Main.Count; j < c; j++)
+            //                        {
+            //                            //On cherche l'image correspondante oui, mais elle ne doit pas déjà avoir été activée
+            //                            if ((listPictureBoxMain[j].ImageLocation == carte.Image) && (listPictureBoxMain[j].Anchor != AnchorStyles.Bottom))
+            //                            {
+            //                                listPictureBoxMain[j].Anchor = AnchorStyles.Bottom;
+            //                                //On utilise un break pour sortir de la boucle dès qu'une carte a été sélectionnée, afin de ne bien décaler qu'une PictureBox par carte...
+            //                                break;
+            //                            }
+            //                        }
+            //                    }
+            //                    //On ajoute le total de monnaie des cartes activées à la monnaie dispo du joueur
+            //                    JoueurActuel.MonnaieDispo += monnaieSelectionnee;
+            //                    //Et on peut valider le booléen pour continuer l'achat
+            //                    continuer = true;
+            //                }
+            //            }
+            //        }
+            //        if (continuer)
+            //        {
+            //            //On crée une nouvelle instance de la carte qu'on va ajouter à la défausse
+            //            Carte tempCarte = (Carte)test.Clone();
+            //            JoueurActuel.Defausse.Add(tempCarte);
+            //            //Bien entendu on met à jour l'affichage de la défausse
+            //            defausseImage.ImageLocation = test.Image;
+            //            defausseLabel.Text = "Défausse : " + JoueurActuel.Defausse.Count.ToString();
+
+
+            //            //Et bien sûr on désincrémente également le nombre d'achats et la monnaie disponibles et on met à jour l'affichage
+            //            JoueurActuel.AchatDispo--;
+            //            JoueurActuel.MonnaieDispo -= test.Cout;
+            //            MAJInfos();
+            //        }
+            //    }
+            //}
         }
     }
 }

@@ -18,7 +18,6 @@ namespace Dominion
         public int AchatDispo = 1;
         public int MonnaieDispo = 0;
         public int JetonVictoireDispo = 0;
-        Random rand = new Random();
 
         public Joueur(string pNom)
         {
@@ -41,7 +40,7 @@ namespace Dominion
                 {
                     //On prend un index au hasard parmi les index du deck, puis on ajoute la carte correspondante au deck mélangé
                     //Puis on la supprime du deck d'origine pour ne pas dédoubler les cartes
-                    int index = rand.Next(0, this.Deck.Count);
+                    int index = PartieForm.rand.Next(0, this.Deck.Count);
                     deckMelange.Add(this.Deck[index]);
                     this.Deck.RemoveAt(index);
                 }
@@ -127,6 +126,10 @@ namespace Dominion
             //Si le joueur qui défausse a la main, on doit supprimer l'image de sa main
             if (this == PartieForm.JoueurActuel)
             { this.MAJMain(); }
+            //DEBUG
+            Console.WriteLine("_________\nFonction d'écartement");
+            Console.WriteLine(this.Nom + " écarte " + cible.Nom+"\n______________");
+            //DEBUG
         }
 
         public void MAJMain()
@@ -144,6 +147,10 @@ namespace Dominion
                     listPictureBoxMain[i].Visible = true;
                     listPictureBoxMain[i].Enabled = true;
                     listPictureBoxMain[i].SizeMode = PictureBoxSizeMode.StretchImage;
+                    if (carte.EnJeu)
+                    { listPictureBoxMain[i].Anchor = AnchorStyles.Bottom; }
+                    else
+                    { listPictureBoxMain[i].Anchor = AnchorStyles.Top; }
                 }
                 i++;
             }
@@ -175,7 +182,7 @@ namespace Dominion
             ChoixForm choixForm = new ChoixForm();
             choixForm.ShowDialog();
 
-            return ChoixForm.carteChoisie;
+            return ChoixForm.listeCartesChoisies[0];
         }
 
         public List<Carte> ChoisirDesCartes(string type, List<Carte> choix, int nbCarte, bool obligation)

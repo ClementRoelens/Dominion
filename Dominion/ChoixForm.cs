@@ -12,10 +12,10 @@ namespace Dominion
 {
     public partial class ChoixForm : Form
     {
-        public static Carte carteChoisie;
         public static List<Carte> listeCartesChoisies = new List<Carte>();
         List<PictureBox> listPB = new List<PictureBox>();
         public static bool estValide;
+        List<Carte> listeChoix = new List<Carte>();
 
         public ChoixForm()
         {
@@ -67,10 +67,10 @@ namespace Dominion
             listPB.Add(pictureBox15);
             listPB.Add(pictureBox16);
             //Et on affiche la main (ou autre liste de cartes) comme d'hab aussi , et sans afficher les cartes en jeu
-            List<Carte> listeChoix = PartieForm.listeChoix.FindAll(x => x.EnJeu == false);
+            listeChoix = PartieForm.listeChoix.FindAll(x => x.EnJeu == false);
             //Si c'est un achat, on n'affiche également que les cartes Trésor
             if (PartieForm.typeChoix == "Achat")
-            { listeChoix = listeChoix.FindAll(x => x.Type.Contains("Trésor")); }
+            { listeChoix = listeChoix.FindAll(x => x.Type == "Trésor"); }
             int i = 0;
             foreach (Carte carte in listeChoix)
             {
@@ -130,17 +130,23 @@ namespace Dominion
             //Si le joueur ne peut choisir qu'une seule carte, on transmet la carte et on ferme la Form
             if (PartieForm.nbCarte == 1)
             {
+                listeCartesChoisies[0] = listeChoix[i];
                 estValide = true;
-                carteChoisie = PartieForm.listeChoix[i];
+                //DEBUG
+                Console.WriteLine("_____________\nChoix fait");
+                Console.Write(PartieForm.tempJoueur.Nom + " choisit ");
+                if (!(listeCartesChoisies is null))
+                { Console.WriteLine(listeCartesChoisies[0].Nom); }
+                //DEBUG
                 this.Close();
             }
             //Sinon, on ajoute juste la carte à la List qui sera transmise quand le joueur appuie sur le bouton de validation
             //...ou on la retire si la carte a déjà été choisie!
             else
             {
-                if (!listeCartesChoisies.Contains(PartieForm.listeChoix[i]))
+                if (!listeCartesChoisies.Contains(listeChoix[i]))
                 {
-                    listeCartesChoisies.Add(PartieForm.listeChoix[i]);
+                    listeCartesChoisies.Add(listeChoix[i]);
                     //Si la carte est ajoutée dans la List de choix, on le signale en décalant la PB vers le bas (comme les cartes jouées dans la main)
                     pb.Anchor = AnchorStyles.Bottom;
                 }
@@ -152,7 +158,7 @@ namespace Dominion
                     flag = false;
                     while (!flag)
                     {
-                        if (listeCartesChoisies[j] == PartieForm.listeChoix[i])
+                        if (listeCartesChoisies[j] == listeChoix[i])
                         { flag = true; }
                         else { j++; }
                     }
@@ -172,6 +178,14 @@ namespace Dominion
         private void ButtonCancel_Click(object sender, EventArgs e)
         {
             estValide = false;
+            listeCartesChoisies = null;
+            //DEBUG
+            Console.WriteLine("______________\nAnnulation du choix");
+            Console.WriteLine(PartieForm.tempJoueur.Nom + " ne choisit rien.");
+            if (!(listeCartesChoisies[0] is null))
+            { Console.WriteLine("Problème : la carte choisie est " + listeCartesChoisies[0].Nom+"\n______________"); }
+            else { Console.WriteLine("_____________"); }
+            //DEBUG
             this.Close();
         }
     }
