@@ -15,6 +15,7 @@ namespace Dominion
         public static Carte carteChoisie;
         public static List<Carte> listeCartesChoisies = new List<Carte>();
         List<PictureBox> listPB = new List<PictureBox>();
+        public static bool estValide;
 
         public ChoixForm()
         {
@@ -23,26 +24,27 @@ namespace Dominion
 
         private void ChoixForm_Load(object sender, EventArgs e)
         {
+            //Avant-tout, on réinitialise notre List de cartes choisis
+            listeCartesChoisies.Clear();
             //On indique qui va choisir et ce qu'il doit choisir
             joueurLabel.Text = PartieForm.tempJoueur.Nom.ToString() + " : choisissez";
+            if (PartieForm.nbCarte == 1)
+            { joueurLabel.Text += " la carte "; }
+            else
+            { joueurLabel.Text += " les cartes "; }
             switch (PartieForm.typeChoix)
             {
                 case "Achat":
-                    joueurLabel.Text += " les trésors à utiliser pour payer.";
+                    joueurLabel.Text = PartieForm.tempJoueur.Nom.ToString() + " : choisissez les trésors à utiliser pour payer.";
                     break;
                 case "Ecarter":
-                    if (PartieForm.nbCarte == 1)
-                    { joueurLabel.Text += " la carte "; }
-                    else
-                    { joueurLabel.Text += " les cartes "; }
                     joueurLabel.Text += "à écarter.";
                     break;
                 case "Défausser":
-                    if (PartieForm.nbCarte == 1)
-                    { joueurLabel.Text += " la carte "; }
-                    else
-                    { joueurLabel.Text += " les cartes "; }
                     joueurLabel.Text += "à défausser.";
+                    break;
+                case "Recevoir":
+                    joueurLabel.Text += "que vous voulez.";
                     break;
             }
 
@@ -58,6 +60,12 @@ namespace Dominion
             listPB.Add(pictureBox8);
             listPB.Add(pictureBox9);
             listPB.Add(pictureBox10);
+            listPB.Add(pictureBox11);
+            listPB.Add(pictureBox12);
+            listPB.Add(pictureBox13);
+            listPB.Add(pictureBox14);
+            listPB.Add(pictureBox15);
+            listPB.Add(pictureBox16);
             //Et on affiche la main (ou autre liste de cartes) comme d'hab aussi , et sans afficher les cartes en jeu
             List<Carte> listeChoix = PartieForm.listeChoix.FindAll(x => x.EnJeu == false);
             //Si c'est un achat, on n'affiche également que les cartes Trésor
@@ -67,6 +75,7 @@ namespace Dominion
             foreach (Carte carte in listeChoix)
             {
                 listPB[i].ImageLocation = carte.Image;
+                listPB[i].Enabled = true;
                 i++;
             }
             //On désactive le bouton d'annulation si le choix est obligatoire
@@ -76,25 +85,28 @@ namespace Dominion
             if (PartieForm.nbCarte == 1)
             { validerButton.Enabled = false; }
             //Et par défaut on remet la valeur de validation à false
-            PartieForm.estValide = false;
+            estValide = false;
 
             #region Présélection des trésors
 
-            //Mais on va également présélectionner les cartes pour le joueur
-            int monnaiePreSelectionnee = 0;
-            bool flag = false;
-            i = 0;
-            while (!flag)
+            //Mais en cas d'achat, on va également présélectionner les trésors pour le joueur
+            if (PartieForm.typeChoix == "Achat")
             {
-                if (monnaiePreSelectionnee < PartieForm.carteAacheter.Cout)
+                int monnaiePreSelectionnee = 0;
+                bool flag = false;
+                i = 0;
+                while ((!flag) && (i < listeChoix.Count))
                 {
-                    listPB[i].Anchor = AnchorStyles.Bottom;
-                    listeCartesChoisies.Add(listeChoix[i]);
-                    monnaiePreSelectionnee += listeChoix[i].MonnaieDonnee;
-                    i++;
+                    if (monnaiePreSelectionnee < PartieForm.carteAacheter.Cout)
+                    {
+                        listPB[i].Anchor = AnchorStyles.Bottom;
+                        listeCartesChoisies.Add(listeChoix[i]);
+                        monnaiePreSelectionnee += listeChoix[i].MonnaieDonnee;
+                        i++;
+                    }
+                    else
+                    { flag = true; }
                 }
-                else
-                { flag = true; }
             }
 
             #endregion
@@ -118,7 +130,7 @@ namespace Dominion
             //Si le joueur ne peut choisir qu'une seule carte, on transmet la carte et on ferme la Form
             if (PartieForm.nbCarte == 1)
             {
-                PartieForm.estValide = true;
+                estValide = true;
                 carteChoisie = PartieForm.listeChoix[i];
                 this.Close();
             }
@@ -153,13 +165,13 @@ namespace Dominion
 
         private void ValiderButton_Click(object sender, EventArgs e)
         {
-            PartieForm.estValide = true;
+            estValide = true;
             this.Close();
         }
 
         private void ButtonCancel_Click(object sender, EventArgs e)
         {
-            PartieForm.estValide = false;
+            estValide = false;
             this.Close();
         }
     }

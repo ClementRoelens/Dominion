@@ -47,6 +47,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AffichageCartesDevoilees.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AffichageCartesDevoilees.Designer.cs">
+      <DependentUpon>AffichageCartesDevoilees.cs</DependentUpon>
+    </Compile>
     <Compile Include="Carte.cs" />
     <Compile Include="ChoixForm.cs">
       <SubType>Form</SubType>
@@ -54,7 +60,12 @@
     <Compile Include="ChoixForm.Designer.cs">
       <DependentUpon>ChoixForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Effet.cs" />
+    <Compile Include="FinDePartie.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FinDePartie.Designer.cs">
+      <DependentUpon>FinDePartie.cs</DependentUpon>
+    </Compile>
     <Compile Include="LancementForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -71,8 +82,14 @@
     <Compile Include="Pile.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="AffichageCartesDevoilees.resx">
+      <DependentUpon>AffichageCartesDevoilees.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ChoixForm.resx">
       <DependentUpon>ChoixForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FinDePartie.resx">
+      <DependentUpon>FinDePartie.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="LancementForm.resx">
       <DependentUpon>LancementForm.cs</DependentUpon>

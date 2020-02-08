@@ -18,7 +18,7 @@ namespace Dominion
         public int AchatDispo = 1;
         public int MonnaieDispo = 0;
         public int JetonVictoireDispo = 0;
-        public bool ALaMain = false;
+        Random rand = new Random();
 
         public Joueur(string pNom)
         {
@@ -35,7 +35,6 @@ namespace Dominion
             //S'il n'y a qu'une carte dans le deck, nul besoin de le mélanger...
             if (Deck.Count > 1)
             {
-                Random rand = new Random();
                 List<Carte> deckMelange = new List<Carte>();
                 //On copie la valeur de deck.Count puisque celle-ci va baisser à chaque itération, vu que nous allons supprimer progressivement les cartes
                 for (int i = 0, c = this.Deck.Count; i < c; i++)
@@ -96,6 +95,11 @@ namespace Dominion
             }
         }
 
+        public void Devoiler(int nombre)
+        {
+
+        }
+
         public void Defausser(Carte cible)
         {
             //Si la carte est en jeu, on doit d'abord passer le "En Jeu" à false
@@ -104,7 +108,7 @@ namespace Dominion
             //On ajoute la carte à la List de défausse
             this.Defausse.Add(cible);
             //Puis on supprime de la main
-            this.Main.RemoveAt(this.Main.FindIndex(x => x.Nom == cible.Nom));
+            this.Main.RemoveAt(this.Main.FindIndex(x => (x.Nom == cible.Nom) && (x.EnJeu == false)));
 
             //Si le joueur qui défausse a la main, on doit supprimer l'image de sa main et l'ajouter dans la défausse
             if (this == PartieForm.JoueurActuel)
@@ -118,7 +122,7 @@ namespace Dominion
         public void Ecarter(Carte cible)
         {
             //On retire la carte de la main
-            this.Main.RemoveAt(this.Main.FindIndex(x => x.Nom == cible.Nom));
+            this.Main.RemoveAt(this.Main.FindIndex(x => (x.Nom == cible.Nom) && (x.EnJeu == false)));
 
             //Si le joueur qui défausse a la main, on doit supprimer l'image de sa main
             if (this == PartieForm.JoueurActuel)
@@ -159,7 +163,7 @@ namespace Dominion
             }
         }
 
-        public Carte ChoisirUneCarte(string type , List<Carte> choix , bool obligation)
+        public Carte ChoisirUneCarte(string type, List<Carte> choix, bool obligation)
         {
             //On assigne les variables nécessaires 
             PartieForm.tempJoueur = this;
@@ -174,7 +178,7 @@ namespace Dominion
             return ChoixForm.carteChoisie;
         }
 
-        public List<Carte> ChoisirDesCartes(string type, List<Carte> choix, int nbCarte , bool obligation)
+        public List<Carte> ChoisirDesCartes(string type, List<Carte> choix, int nbCarte, bool obligation)
         {
             //On assigne les variables nécessaires 
             PartieForm.tempJoueur = this;

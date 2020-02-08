@@ -43,14 +43,13 @@ namespace Dominion
             //Puis on passe à la carte suivante
             while (dataRead.Read())
             {
-                tempCarte = new Carte(int.Parse(dataRead["id"].ToString()), dataRead["Nom"].ToString(), dataRead["Image"].ToString(), int.Parse(dataRead["Cout"].ToString()), dataRead["Type"].ToString()
+                tempCarte = new Carte(dataRead["Nom"].ToString(), dataRead["Image"].ToString(), int.Parse(dataRead["Cout"].ToString()), dataRead["Type"].ToString()
                     , dataRead["Effet"].ToString(), int.Parse(dataRead["MonnaieDonne"].ToString()), int.Parse(dataRead["CarteDonnee"].ToString()), int.Parse(dataRead["ActionDonnee"].ToString()),
                     int.Parse(dataRead["AchatDonne"].ToString()), int.Parse(dataRead["JetonPointDonne"].ToString()), int.Parse(dataRead["PointDonne"].ToString()));
                 listeCartes.Add(tempCarte);
             }
             dataRead.Close();
         }
-
 
         private void CheckBoxJoueur3_CheckedChanged(object sender, EventArgs e)
         {
@@ -143,6 +142,71 @@ namespace Dominion
             partie.Show();
 
 
+        }
+
+        private void Button1_Click(object sender, EventArgs e)
+        {
+            #region Initialisation normale comme dans le Go
+            //On constitue la liste des joueurs selon le nombre
+            Joueur tempJoueur = new Joueur(nomJoueur1.Text);
+            listeJoueurs.Add(tempJoueur);
+            tempJoueur = new Joueur(nomJoueur2.Text);
+            listeJoueurs.Add(tempJoueur);
+            if (checkBoxJoueur3.Checked)
+            {
+                tempJoueur = new Joueur(nomJoueur3.Text);
+                listeJoueurs.Add(tempJoueur);
+
+                if (checkBoxJoueur4.Checked)
+                {
+                    tempJoueur = new Joueur(nomJoueur4.Text);
+                    listeJoueurs.Add(tempJoueur);
+                }
+            }
+
+            //On constitue également le deck de base
+            List<Carte> DeckGenerique = new List<Carte>();
+
+            //On crée une carte pour stocker le résultat de nos requêtes
+            Carte tempCarte = new Carte();
+            //On crée une requête pour le cuivre
+            var cuivreQuery =
+                    from carte in listeCartes
+                    where carte.Nom == "Cuivre"
+                    select carte;
+            //Puis on stocke son résultat dans notre tempCarte
+            foreach (Carte carte in cuivreQuery)
+            { tempCarte = carte; }
+            //Et on l'ajoute 7 fois au deck
+            for (int i = 0; i < 7; i++)
+            {
+                Carte carteAjoutee = (Carte)tempCarte.Clone();
+                DeckGenerique.Add(carteAjoutee);
+            }
+            //Ensuite on fait de même avec le Domaine, mais 3 fois
+            var domaineQuery =
+                from carte in listeCartes
+                where carte.Nom == "Domaine"
+                select carte;
+            foreach (Carte carte in domaineQuery)
+            { tempCarte = carte; }
+            for (int i = 0; i < 3; i++)
+            {
+                Carte carteAjoutee = (Carte)tempCarte.Clone();
+                DeckGenerique.Add(tempCarte);
+            }
+
+            //Et on donne ce même deck à chaque joueur
+            foreach (Joueur joueur in listeJoueurs)
+            { joueur.Deck = new List<Carte>(DeckGenerique); }
+
+            #endregion
+
+            listeJoueurs[0].MelangerLeDeck();
+            listeJoueurs[0].Piocher(5);
+            PartieForm.JoueurActuel = listeJoueurs[0];
+            Carte test = new Carte("Agrandissement", "", 0, "Action", "gfreg", 0, 0, 0, 0, 0, 0);
+            test.Effet();
         }
     }
 }
