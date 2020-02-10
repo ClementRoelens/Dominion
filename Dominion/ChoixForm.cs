@@ -12,7 +12,7 @@ namespace Dominion
 {
     public partial class ChoixForm : Form
     {
-        public static List<Carte> listeCartesChoisies = new List<Carte>();
+        public static List<Carte> listeCartesChoisies;
         List<PictureBox> listPB = new List<PictureBox>();
         public static bool estValide;
         List<Carte> listeChoix = new List<Carte>();
@@ -25,7 +25,7 @@ namespace Dominion
         private void ChoixForm_Load(object sender, EventArgs e)
         {
             //Avant-tout, on réinitialise notre List de cartes choisis
-            listeCartesChoisies.Clear();
+            listeCartesChoisies = new List<Carte>();
             //On indique qui va choisir et ce qu'il doit choisir
             joueurLabel.Text = PartieForm.tempJoueur.Nom.ToString() + " : choisissez";
             if (PartieForm.nbCarte == 1)
@@ -72,12 +72,17 @@ namespace Dominion
             if (PartieForm.typeChoix == "Achat")
             { listeChoix = listeChoix.FindAll(x => x.Type == "Trésor"); }
             int i = 0;
-            foreach (Carte carte in listeChoix)
+            try
             {
-                listPB[i].ImageLocation = carte.Image;
-                listPB[i].Enabled = true;
-                i++;
+                foreach (Carte carte in listeChoix)
+                {
+                    listPB[i].ImageLocation = carte.Image;
+                    listPB[i].Enabled = true;
+                    i++;
+                }
             }
+            catch (ArgumentOutOfRangeException)
+            { MessageBox.Show("Oups, il n'y a pas assez de places pour afficher toutes les cartes... Shame on the developer!"); }
             //On désactive le bouton d'annulation si le choix est obligatoire
             if (PartieForm.obligation)
             { buttonCancel.Enabled = false; }
@@ -130,7 +135,7 @@ namespace Dominion
             //Si le joueur ne peut choisir qu'une seule carte, on transmet la carte et on ferme la Form
             if (PartieForm.nbCarte == 1)
             {
-                listeCartesChoisies[0] = listeChoix[i];
+                listeCartesChoisies.Add(listeChoix[i]);
                 estValide = true;
                 //DEBUG
                 Console.WriteLine("_____________\nChoix fait");
@@ -182,8 +187,8 @@ namespace Dominion
             //DEBUG
             Console.WriteLine("______________\nAnnulation du choix");
             Console.WriteLine(PartieForm.tempJoueur.Nom + " ne choisit rien.");
-            if (!(listeCartesChoisies[0] is null))
-            { Console.WriteLine("Problème : la carte choisie est " + listeCartesChoisies[0].Nom+"\n______________"); }
+            if (!(listeCartesChoisies is null))
+            { Console.WriteLine("Problème : la carte choisie est " + listeCartesChoisies[0].Nom + "\n______________"); }
             else { Console.WriteLine("_____________"); }
             //DEBUG
             this.Close();

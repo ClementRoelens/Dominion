@@ -83,7 +83,6 @@ namespace Dominion
                 if ((carte.Type == "Trésor") || (carte.Type == "Victoire"))
                 {
                     Pile pile = new Pile(carte);
-                    pile.pictureBox = listPicturebox[i];
                     i++;
                     mapListe.Add(pile);
                 }
@@ -106,17 +105,18 @@ namespace Dominion
             for (int j = 0; j < 10; j++)
             {
                 Pile pile = new Pile(tempActions[j]);
-                pile.pictureBox = listPicturebox[i];
-                i++;
                 mapListe.Add(pile);
             }
 
             //On remplit les PictureBox
+            i = 0;
             foreach (Pile pile in mapListe)
             {
-                pile.pictureBox.ImageLocation = pile.carte.Image;
-                pile.pictureBox.Dock = DockStyle.Fill;
-                pile.pictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
+                pile.carte.PictureBox = listPicturebox[i];
+                pile.carte.PictureBox.ImageLocation = pile.carte.Image;
+                pile.carte.PictureBox.Dock = DockStyle.Fill;
+                pile.carte.PictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
+                i++;
             }
             #endregion
 
@@ -203,16 +203,13 @@ namespace Dominion
             { deckImage.ImageLocation = default; }
             else
             { deckImage.ImageLocation = ""; }
-            deckLabel.Text = "Deck : " + JoueurActuel.Deck.Count.ToString();
+            deckLabel.Text = $"Deck : +{JoueurActuel.Deck.Count.ToString()}";
             if (JoueurActuel.Defausse.Count > 0)
             { defausseImage.ImageLocation = JoueurActuel.Defausse[JoueurActuel.Defausse.Count - 1].Image; }
             else
             { defausseImage.ImageLocation = ""; }
 
-            defausseLabel.Text = "Défausse : " + JoueurActuel.Defausse.Count.ToString();
-
-
-
+            defausseLabel.Text = $"Défausse : +{JoueurActuel.Defausse.Count.ToString()}";
         }
 
         private void Hover(object sender, EventArgs e)
@@ -221,14 +218,15 @@ namespace Dominion
 
             //On commence par sélectionner la PictureBox pointée
             PictureBox selectedPictureBox = (PictureBox)sender;
-            string imageCarte = selectedPictureBox.ImageLocation;
             //Puis on va boucler sur toute la liste de Pile jusqu'à trouver la PictureBox pointée
             //Une fois trouvée, notre variable globale focusPile prendra la valeur de cette Pile
             bool flag = false;
             int i = 0;
             while (!flag)
             {
-                if (mapListe[i].carte.Image == imageCarte)
+                //On utilise la propriété ImageLocation de la PictureBox et non pas l'instance elle-même
+                //car la fonction s'applique autant aux cartes de la map qu'aux cartes dans la main
+                if (mapListe[i].carte.Image == selectedPictureBox.ImageLocation)
                 {
                     flag = true;
                     focusPile = mapListe[i];
@@ -464,10 +462,8 @@ namespace Dominion
             int i = 0;
             while (!flag)
             {
-                if (selectedPB == mapListe[i].pictureBox)
-                {
-                    flag = true;
-                }
+                if (selectedPB == mapListe[i].carte.PictureBox)
+                { flag = true; }
                 else
                 { i++; }
             }
@@ -540,18 +536,28 @@ namespace Dominion
                                 //Si oui, on refait une boucle pour trouver les PictureBox correspondantes et les déplacer vers le bas, ainsi que pour activer les cartes
                                 foreach (Carte carte in tresorsSelectionnes)
                                 {
-                                    carte.EnJeu = true;
-                                    //On doit chercher une image correspondante dans la main
-                                    for (int j = 0, c = JoueurActuel.Main.Count; j < c; j++)
+                                   //On doit chercher une image correspondante dans la main
+                                    foreach(Carte carte2 in JoueurActuel.Main)
                                     {
                                         //On cherche l'image correspondante oui, mais elle ne doit pas déjà avoir été activée
-                                        if ((listPictureBoxMain[j].ImageLocation == carte.Image) && (listPictureBoxMain[j].Anchor != AnchorStyles.Bottom))
+                                        if ((carte2.Image == carte.Image) && !(carte2.EnJeu))
                                         {
-                                            listPictureBoxMain[j].Anchor = AnchorStyles.Bottom;
-                                            //On utilise un break pour sortir de la boucle dès qu'une carte a été sélectionnée, afin de ne bien décaler qu'une PictureBox par carte...
+                                            carte2.EnJeu = true;
+                                            carte2.MAJpb();
                                             break;
                                         }
                                     }
+
+                                    //for (int j = 0, c = JoueurActuel.Main.Count; j < c; j++)
+                                    //{
+                                    //    //On cherche l'image correspondante oui, mais elle ne doit pas déjà avoir été activée
+                                    //    if ((listPictureBoxMain[j].ImageLocation == carte.Image) && (listPictureBoxMain[j].Anchor != AnchorStyles.Bottom))
+                                    //    {
+                                    //        listPictureBoxMain[j].Anchor = AnchorStyles.Bottom;
+                                    //        //On utilise un break pour sortir de la boucle dès qu'une carte a été sélectionnée, afin de ne bien décaler qu'une PictureBox par carte...
+                                    //        break;
+                                    //    }
+                                    //}
                                 }
                                 //On ajoute le total de monnaie des cartes activées à la monnaie dispo du joueur
                                 JoueurActuel.MonnaieDispo += monnaieSelectionnee;
@@ -560,36 +566,38 @@ namespace Dominion
                             }
                         }
                     }
-                    if (continuer)
-                    {
-                        //On crée une nouvelle instance de la carte qu'on va ajouter à la défausse
-                        Carte tempCarte = (Carte)mapListe[i].carte.Clone();
-                        JoueurActuel.Defausse.Add(tempCarte);
-                        //Bien entendu on met à jour l'affichage de la défausse
-                        defausseImage.ImageLocation = selectedPB.ImageLocation;
-                        defausseLabel.Text = "Défausse : " + JoueurActuel.Defausse.Count.ToString();
-                        //Et on désincrémente le nombre de cartes dans la pile
-                        mapListe[i].nombre--;
-                        //Et on lance la vérification pour savoir si on achève la partie
-                        if (mapListe[i].nombre == 0)
-                        {
-                            mapListe[i].pictureBox.ImageLocation = "";
-                            if ((mapListe[i].carte.Nom == "Province") || (mapListe[i].carte.Nom == "Colonie") || (nbPileVide == 3))
-                            {
-                                FinDePartie finDePartie = new FinDePartie();
-                                finDePartie.ShowDialog();
-                            }
-                        }
-                        //Et bien sûr on désincrémente également le nombre d'achats et la monnaie disponibles et on met à jour l'affichage
-                        JoueurActuel.AchatDispo--;
-                        JoueurActuel.MonnaieDispo -= mapListe[i].carte.Cout;
-                        MAJInfos();
-                    }
+                }
+
+                if (continuer)
+                {
+                    JoueurActuel.Recevoir(mapListe[i].carte);
+                    ////On crée une nouvelle instance de la carte qu'on va ajouter à la défausse
+                    //Carte tempCarte = (Carte)PartieForm.mapListe[i].carte.Clone();
+                    //JoueurActuel.Defausse.Add(tempCarte);
+                    ////Bien entendu on met à jour l'affichage de la défausse
+                    //defausseImage.ImageLocation = selectedPB.ImageLocation;
+                    //defausseLabel.Text = "Défausse : " + JoueurActuel.Defausse.Count.ToString();
+                    ////Et on désincrémente le nombre de cartes dans la pile
+                    //mapListe[i].nombre--;
+                    ////Et on lance la vérification pour savoir si on achève la partie
+                    //if (mapListe[i].nombre == 0)
+                    //{
+                    //    mapListe[i].pictureBox.ImageLocation = "";
+                    //    if ((mapListe[i].carte.Nom == "Province") || (mapListe[i].carte.Nom == "Colonie") || (nbPileVide == 3))
+                    //    {
+                    //        FinDePartie finDePartie = new FinDePartie();
+                    //        finDePartie.ShowDialog();
+                    //    }
+                    //}
+                    //Et bien sûr on désincrémente également le nombre d'achats et la monnaie disponibles et on met à jour l'affichage
+                    JoueurActuel.AchatDispo--;
+                    JoueurActuel.MonnaieDispo -= mapListe[i].carte.Cout;
+                    MAJInfos();
                 }
             }
         }
 
-        public void MAJInfos()
+        private void MAJInfos()
         {
             tourLabel.Text = "Tour de " + JoueurActuel.Nom;
             achatDispoTextBox.Text = JoueurActuel.AchatDispo.ToString() + " achat(s)";
@@ -629,8 +637,10 @@ namespace Dominion
 
         private void Button1_Click_1(object sender, EventArgs e)
         {
-            Carte test = new Carte("Evèque", @"C:\Users\ohne6\Desktop\Dominion\Images\6GrandMarche.png", 6, "Action", "gfreg", 0, 0, 0, 0, 0, 0);
-            JoueurActuel.Main.Add(new Carte("Or", @"C:\Users\ohne6\Desktop\Dominion\Images\Or.jpg", 0, "Trésor", "rgr", 6, 0, 0, 0, 0, 0));
+            Carte test = new Carte("Agrandissement", @"C:\Users\ohne6\Desktop\Dominion\Images\6GrandMarche.png", 6, "Action", "gfreg", 0, 0, 0, 0, 0, 0);
+            JoueurActuel.Main.Add(new Carte("Or", @"C:\Users\ohne6\Desktop\Dominion\Images\Or.jpg", 6, "Trésor", "rgr", 6, 0, 0, 0, 0, 0));
+            JoueurActuel.Main.Add(new Carte("Domaine", @"C:\Users\ohne6\Desktop\Dominion\Images\Domaine.jpg", 0, "Trésor", "rgr", 6, 0, 0, 0, 0, 0));
+            JoueurActuel.Main.Add(new Carte("Or", @"C:\Users\ohne6\Desktop\Dominion\Images\Or.jpg", 6, "Trésor", "rgr", 6, 0, 0, 0, 0, 0));
             test.Effet();
 
             ////Ce booléen va déterminer si oui ou non on saute l'étape de sélection de la monnaie

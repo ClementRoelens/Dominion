@@ -636,6 +636,7 @@
             this.carteMain32.Location = new System.Drawing.Point(1464, 163);
             this.carteMain32.Name = "carteMain32";
             this.carteMain32.Size = new System.Drawing.Size(88, 135);
+            this.carteMain32.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.carteMain32.TabIndex = 33;
             this.carteMain32.TabStop = false;
             this.carteMain32.Visible = false;
@@ -651,6 +652,7 @@
             this.carteMain31.Location = new System.Drawing.Point(1362, 163);
             this.carteMain31.Name = "carteMain31";
             this.carteMain31.Size = new System.Drawing.Size(88, 135);
+            this.carteMain31.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.carteMain31.TabIndex = 32;
             this.carteMain31.TabStop = false;
             this.carteMain31.Visible = false;
@@ -666,6 +668,7 @@
             this.carteMain30.Location = new System.Drawing.Point(1265, 163);
             this.carteMain30.Name = "carteMain30";
             this.carteMain30.Size = new System.Drawing.Size(88, 135);
+            this.carteMain30.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.carteMain30.TabIndex = 31;
             this.carteMain30.TabStop = false;
             this.carteMain30.Visible = false;
@@ -681,6 +684,7 @@
             this.carteMain29.Location = new System.Drawing.Point(1168, 163);
             this.carteMain29.Name = "carteMain29";
             this.carteMain29.Size = new System.Drawing.Size(88, 135);
+            this.carteMain29.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.carteMain29.TabIndex = 30;
             this.carteMain29.TabStop = false;
             this.carteMain29.Visible = false;
@@ -696,6 +700,7 @@
             this.carteMain28.Location = new System.Drawing.Point(1071, 163);
             this.carteMain28.Name = "carteMain28";
             this.carteMain28.Size = new System.Drawing.Size(88, 135);
+            this.carteMain28.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.carteMain28.TabIndex = 29;
             this.carteMain28.TabStop = false;
             this.carteMain28.Visible = false;
@@ -711,6 +716,7 @@
             this.carteMain27.Location = new System.Drawing.Point(974, 163);
             this.carteMain27.Name = "carteMain27";
             this.carteMain27.Size = new System.Drawing.Size(88, 135);
+            this.carteMain27.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.carteMain27.TabIndex = 28;
             this.carteMain27.TabStop = false;
             this.carteMain27.Visible = false;
@@ -726,6 +732,7 @@
             this.carteMain26.Location = new System.Drawing.Point(877, 163);
             this.carteMain26.Name = "carteMain26";
             this.carteMain26.Size = new System.Drawing.Size(88, 135);
+            this.carteMain26.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.carteMain26.TabIndex = 27;
             this.carteMain26.TabStop = false;
             this.carteMain26.Visible = false;
@@ -741,6 +748,7 @@
             this.carteMain25.Location = new System.Drawing.Point(780, 163);
             this.carteMain25.Name = "carteMain25";
             this.carteMain25.Size = new System.Drawing.Size(88, 135);
+            this.carteMain25.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.carteMain25.TabIndex = 26;
             this.carteMain25.TabStop = false;
             this.carteMain25.Visible = false;
@@ -756,6 +764,7 @@
             this.carteMain24.Location = new System.Drawing.Point(683, 163);
             this.carteMain24.Name = "carteMain24";
             this.carteMain24.Size = new System.Drawing.Size(88, 135);
+            this.carteMain24.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.carteMain24.TabIndex = 25;
             this.carteMain24.TabStop = false;
             this.carteMain24.Visible = false;
@@ -771,6 +780,7 @@
             this.carteMain23.Location = new System.Drawing.Point(586, 163);
             this.carteMain23.Name = "carteMain23";
             this.carteMain23.Size = new System.Drawing.Size(88, 135);
+            this.carteMain23.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.carteMain23.TabIndex = 24;
             this.carteMain23.TabStop = false;
             this.carteMain23.Visible = false;
@@ -786,6 +796,7 @@
             this.carteMain22.Location = new System.Drawing.Point(489, 163);
             this.carteMain22.Name = "carteMain22";
             this.carteMain22.Size = new System.Drawing.Size(88, 135);
+            this.carteMain22.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.carteMain22.TabIndex = 23;
             this.carteMain22.TabStop = false;
             this.carteMain22.Visible = false;
@@ -801,6 +812,7 @@
             this.carteMain21.Location = new System.Drawing.Point(392, 163);
             this.carteMain21.Name = "carteMain21";
             this.carteMain21.Size = new System.Drawing.Size(88, 135);
+            this.carteMain21.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.carteMain21.TabIndex = 22;
             this.carteMain21.TabStop = false;
             this.carteMain21.Visible = false;
@@ -813,9 +825,10 @@
             this.carteMain20.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.carteMain20.Cursor = System.Windows.Forms.Cursors.Default;
             this.carteMain20.Enabled = false;
-            this.carteMain20.Location = new System.Drawing.Point(295, 163);
+            this.carteMain20.Location = new System.Drawing.Point(294, 163);
             this.carteMain20.Name = "carteMain20";
-            this.carteMain20.Size = new System.Drawing.Size(88, 135);
+            this.carteMain20.Size = new System.Drawing.Size(91, 135);
+            this.carteMain20.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.carteMain20.TabIndex = 21;
             this.carteMain20.TabStop = false;
             this.carteMain20.Visible = false;
@@ -831,6 +844,7 @@
             this.carteMain19.Location = new System.Drawing.Point(198, 163);
             this.carteMain19.Name = "carteMain19";
             this.carteMain19.Size = new System.Drawing.Size(88, 135);
+            this.carteMain19.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.carteMain19.TabIndex = 20;
             this.carteMain19.TabStop = false;
             this.carteMain19.Visible = false;
@@ -846,6 +860,7 @@
             this.carteMain18.Location = new System.Drawing.Point(101, 163);
             this.carteMain18.Name = "carteMain18";
             this.carteMain18.Size = new System.Drawing.Size(88, 135);
+            this.carteMain18.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.carteMain18.TabIndex = 19;
             this.carteMain18.TabStop = false;
             this.carteMain18.Visible = false;
@@ -861,6 +876,7 @@
             this.carteMain17.Location = new System.Drawing.Point(4, 163);
             this.carteMain17.Name = "carteMain17";
             this.carteMain17.Size = new System.Drawing.Size(88, 135);
+            this.carteMain17.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.carteMain17.TabIndex = 18;
             this.carteMain17.TabStop = false;
             this.carteMain17.Visible = false;
@@ -876,6 +892,7 @@
             this.carteMain16.Location = new System.Drawing.Point(1464, 3);
             this.carteMain16.Name = "carteMain16";
             this.carteMain16.Size = new System.Drawing.Size(88, 135);
+            this.carteMain16.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.carteMain16.TabIndex = 17;
             this.carteMain16.TabStop = false;
             this.carteMain16.Visible = false;
@@ -891,6 +908,7 @@
             this.carteMain15.Location = new System.Drawing.Point(1362, 3);
             this.carteMain15.Name = "carteMain15";
             this.carteMain15.Size = new System.Drawing.Size(88, 135);
+            this.carteMain15.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.carteMain15.TabIndex = 17;
             this.carteMain15.TabStop = false;
             this.carteMain15.Visible = false;
@@ -906,6 +924,7 @@
             this.carteMain14.Location = new System.Drawing.Point(1265, 3);
             this.carteMain14.Name = "carteMain14";
             this.carteMain14.Size = new System.Drawing.Size(88, 135);
+            this.carteMain14.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.carteMain14.TabIndex = 15;
             this.carteMain14.TabStop = false;
             this.carteMain14.Visible = false;
@@ -921,6 +940,7 @@
             this.carteMain8.Location = new System.Drawing.Point(682, 3);
             this.carteMain8.Name = "carteMain8";
             this.carteMain8.Size = new System.Drawing.Size(91, 135);
+            this.carteMain8.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.carteMain8.TabIndex = 7;
             this.carteMain8.TabStop = false;
             this.carteMain8.Visible = false;
@@ -936,6 +956,7 @@
             this.carteMain7.Location = new System.Drawing.Point(585, 3);
             this.carteMain7.Name = "carteMain7";
             this.carteMain7.Size = new System.Drawing.Size(91, 135);
+            this.carteMain7.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.carteMain7.TabIndex = 6;
             this.carteMain7.TabStop = false;
             this.carteMain7.Visible = false;
@@ -951,6 +972,7 @@
             this.carteMain6.Location = new System.Drawing.Point(488, 3);
             this.carteMain6.Name = "carteMain6";
             this.carteMain6.Size = new System.Drawing.Size(91, 135);
+            this.carteMain6.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.carteMain6.TabIndex = 5;
             this.carteMain6.TabStop = false;
             this.carteMain6.Visible = false;
@@ -966,6 +988,7 @@
             this.carteMain5.Location = new System.Drawing.Point(391, 3);
             this.carteMain5.Name = "carteMain5";
             this.carteMain5.Size = new System.Drawing.Size(91, 135);
+            this.carteMain5.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.carteMain5.TabIndex = 4;
             this.carteMain5.TabStop = false;
             this.carteMain5.Visible = false;
@@ -981,6 +1004,7 @@
             this.carteMain4.Location = new System.Drawing.Point(294, 3);
             this.carteMain4.Name = "carteMain4";
             this.carteMain4.Size = new System.Drawing.Size(91, 135);
+            this.carteMain4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.carteMain4.TabIndex = 3;
             this.carteMain4.TabStop = false;
             this.carteMain4.Visible = false;
@@ -996,6 +1020,7 @@
             this.carteMain3.Location = new System.Drawing.Point(197, 3);
             this.carteMain3.Name = "carteMain3";
             this.carteMain3.Size = new System.Drawing.Size(91, 135);
+            this.carteMain3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.carteMain3.TabIndex = 2;
             this.carteMain3.TabStop = false;
             this.carteMain3.Visible = false;
@@ -1011,6 +1036,7 @@
             this.carteMain2.Location = new System.Drawing.Point(100, 3);
             this.carteMain2.Name = "carteMain2";
             this.carteMain2.Size = new System.Drawing.Size(91, 135);
+            this.carteMain2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.carteMain2.TabIndex = 1;
             this.carteMain2.TabStop = false;
             this.carteMain2.Visible = false;
@@ -1020,12 +1046,12 @@
             // 
             // carteMain1
             // 
-            this.carteMain1.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.carteMain1.Cursor = System.Windows.Forms.Cursors.Default;
             this.carteMain1.Enabled = false;
             this.carteMain1.Location = new System.Drawing.Point(3, 3);
             this.carteMain1.Name = "carteMain1";
             this.carteMain1.Size = new System.Drawing.Size(91, 135);
+            this.carteMain1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.carteMain1.TabIndex = 0;
             this.carteMain1.TabStop = false;
             this.carteMain1.Visible = false;
@@ -1041,6 +1067,7 @@
             this.carteMain9.Location = new System.Drawing.Point(779, 3);
             this.carteMain9.Name = "carteMain9";
             this.carteMain9.Size = new System.Drawing.Size(91, 135);
+            this.carteMain9.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.carteMain9.TabIndex = 10;
             this.carteMain9.TabStop = false;
             this.carteMain9.Visible = false;
@@ -1056,6 +1083,7 @@
             this.carteMain10.Location = new System.Drawing.Point(876, 3);
             this.carteMain10.Name = "carteMain10";
             this.carteMain10.Size = new System.Drawing.Size(91, 135);
+            this.carteMain10.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.carteMain10.TabIndex = 11;
             this.carteMain10.TabStop = false;
             this.carteMain10.Visible = false;
@@ -1071,6 +1099,7 @@
             this.carteMain11.Location = new System.Drawing.Point(973, 3);
             this.carteMain11.Name = "carteMain11";
             this.carteMain11.Size = new System.Drawing.Size(91, 135);
+            this.carteMain11.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.carteMain11.TabIndex = 12;
             this.carteMain11.TabStop = false;
             this.carteMain11.Visible = false;
@@ -1086,6 +1115,7 @@
             this.carteMain12.Location = new System.Drawing.Point(1070, 3);
             this.carteMain12.Name = "carteMain12";
             this.carteMain12.Size = new System.Drawing.Size(91, 135);
+            this.carteMain12.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.carteMain12.TabIndex = 13;
             this.carteMain12.TabStop = false;
             this.carteMain12.Visible = false;
@@ -1101,6 +1131,7 @@
             this.carteMain13.Location = new System.Drawing.Point(1167, 3);
             this.carteMain13.Name = "carteMain13";
             this.carteMain13.Size = new System.Drawing.Size(91, 135);
+            this.carteMain13.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.carteMain13.TabIndex = 14;
             this.carteMain13.TabStop = false;
             this.carteMain13.Visible = false;

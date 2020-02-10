@@ -19,10 +19,12 @@ namespace Dominion
         public int MonnaieDispo = 0;
         public int JetonVictoireDispo = 0;
 
-        public Joueur(string pNom)
+
+        public Joueur(string Nom)
         {
-            this.Nom = pNom;
+            this.Nom = Nom;
         }
+
 
         public void MelangerLeDeck()
         {
@@ -87,9 +89,7 @@ namespace Dominion
                 if (this == PartieForm.JoueurActuel)
                 {
                     this.MAJMain();
-                    if (this.Deck.Count == 0)
-                    { PartieForm.deckPB.ImageLocation = ""; }
-                    PartieForm.deckTB.Text = "Deck : " + this.Deck.Count.ToString();
+                    this.MAJInfos();
                 }
             }
         }
@@ -113,22 +113,60 @@ namespace Dominion
             if (this == PartieForm.JoueurActuel)
             {
                 this.MAJMain();
-                PartieForm.defaussePB.ImageLocation = cible.Image;
-                PartieForm.defausseTB.Text = "Défausse : " + this.Defausse.Count.ToString();
+                this.MAJInfos();
+            }
+        }
+
+        public void Recevoir(Carte cible)
+        {
+
+            //On crée une nouvelle instance de la carte qu'on va ajouter à la défausse
+            Carte tempCarte = (Carte)cible.Clone();
+            this.Defausse.Add(tempCarte);
+            //Bien entendu on met à jour l'affichage de la défausse
+            PartieForm.defaussePB.ImageLocation = cible.Image;
+            PartieForm.defausseTB.Text = $"Défausse : {this.Defausse.Count.ToString()}";
+            //Et on désincrémente le nombre de cartes dans la pile
+            //En cherchant la carte avant-tout...
+            List<Pile> mapListe = PartieForm.mapListe;
+            bool flag = false;
+            int i = 0;
+            while (!flag)
+            {
+                if (mapListe[i].carte.Nom == cible.Nom)
+                { flag = true; }
+                else
+                { i++; }
+            }
+            mapListe[i].nombre--;
+
+            //Et on lance la vérification pour savoir si on achève la partie
+            //La partie s'achève quand : une des piles Colonie ou Province est vide, ou quand 3 piles au total sont vides
+            if (mapListe[i].nombre == 0)
+            {
+                //Tout d'abord, si la pile de la carte venant d'être reçue tombe à 0, alors on efface l'image et on incrémente le compteur de piles vides
+                mapListe[i].carte.PictureBox.ImageLocation = "";
+                PartieForm.nbPileVide++;
+                //Et ensuite on teste si la partie s'arrête
+                if ((mapListe[i].carte.Nom == "Province") || (mapListe[i].carte.Nom == "Colonie") || (PartieForm.nbPileVide == 3))
+                {
+                    FinDePartie finDePartie = new FinDePartie();
+                    finDePartie.ShowDialog();
+                }
             }
         }
 
         public void Ecarter(Carte cible)
         {
             //On retire la carte de la main
-            this.Main.RemoveAt(this.Main.FindIndex(x => (x.Nom == cible.Nom) && (x.EnJeu == false)));
+            this.Main.Remove(cible);
 
             //Si le joueur qui défausse a la main, on doit supprimer l'image de sa main
             if (this == PartieForm.JoueurActuel)
             { this.MAJMain(); }
             //DEBUG
             Console.WriteLine("_________\nFonction d'écartement");
-            Console.WriteLine(this.Nom + " écarte " + cible.Nom+"\n______________");
+            Console.WriteLine(this.Nom + " écarte " + cible.Nom + "\n______________");
             //DEBUG
         }
 
@@ -141,24 +179,15 @@ namespace Dominion
             //On commence par afficher les cartes de la main
             foreach (Carte carte in this.Main)
             {
-                if (listPictureBoxMain[i].ImageLocation != carte.Image)
-                {
-                    listPictureBoxMain[i].ImageLocation = carte.Image;
-                    listPictureBoxMain[i].Visible = true;
-                    listPictureBoxMain[i].Enabled = true;
-                    listPictureBoxMain[i].SizeMode = PictureBoxSizeMode.StretchImage;
-                    if (carte.EnJeu)
-                    { listPictureBoxMain[i].Anchor = AnchorStyles.Bottom; }
-                    else
-                    { listPictureBoxMain[i].Anchor = AnchorStyles.Top; }
-                }
+                carte.PictureBox = listPictureBoxMain[i];
+                carte.MAJpb();
                 i++;
             }
             //Puis on supprime les images restantes s'il y en a
             bool flag = false;
             while ((i < listPictureBoxMain.Count) & (!flag))
             {
-                if (listPictureBoxMain[i].ImageLocation == default)
+                if (listPictureBoxMain[i].ImageLocation == "")
                 { flag = true; }
                 else
                 {
@@ -168,6 +197,14 @@ namespace Dominion
                     i++;
                 }
             }
+        }
+
+        public void MAJInfos()
+        {
+            PartieForm.deckPB.ImageLocation = (this.Deck.Count > 0) ? default : "";
+            PartieForm.deckTB.Text = $"Deck : {this.Deck.Count}";
+            PartieForm.defaussePB.ImageLocation = (this.Defausse.Count > 0) ? this.Defausse[this.Defausse.Count - 1].Image : "";
+            PartieForm.defausseTB.Text = $"Défausse : {this.Defausse.Count}";
         }
 
         public Carte ChoisirUneCarte(string type, List<Carte> choix, bool obligation)
@@ -181,8 +218,12 @@ namespace Dominion
 
             ChoixForm choixForm = new ChoixForm();
             choixForm.ShowDialog();
-
-            return ChoixForm.listeCartesChoisies[0];
+            try
+            { return ChoixForm.listeCartesChoisies[0]; }
+            catch (NullReferenceException)
+            {
+                return null;
+            }
         }
 
         public List<Carte> ChoisirDesCartes(string type, List<Carte> choix, int nbCarte, bool obligation)
@@ -199,9 +240,6 @@ namespace Dominion
 
             return ChoixForm.listeCartesChoisies;
         }
-
-
-
 
     }
 }
