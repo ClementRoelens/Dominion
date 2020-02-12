@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -49,6 +50,8 @@ namespace Dominion
             this.PictureBox.Anchor = (this.EnJeu) ? AnchorStyles.Bottom : AnchorStyles.Top; ;
             this.PictureBox.Visible = true;
             this.PictureBox.Enabled = true;
+            TableLayoutPanel layout = this.PictureBox.Parent;
+            
         }
 
         public void Effet()
@@ -158,26 +161,32 @@ namespace Dominion
                         //Le compteur sera incrémenté par les trésors uniquement
                         while (i < 2)
                         {
-                            //Si la première carte du deck n'est pas un trésor, elle est ajoutée à la défausse
-                            if (JoueurActuel.Deck[0].Type != "Trésor")
-                            { JoueurActuel.Defausse.Add(JoueurActuel.Deck[0]); }
-                            else
+                            //Pour ne pas lever d'erreur, on vérifie que le deck contient au moins une carte
+                            if (JoueurActuel.Deck.Count > 0)
                             {
-                                //Sinon, elle est ajoutée à la main et le compteur est incrémenté
-                                JoueurActuel.Main.Add(JoueurActuel.Deck[0]);
-                                i++;
+                                //Si la première carte du deck n'est pas un trésor, elle est ajoutée à la défausse
+                                if (JoueurActuel.Deck[0].Type != "Trésor")
+                                { JoueurActuel.Defausse.Add(JoueurActuel.Deck[0]); }
+                                else
+                                {
+                                    //Sinon, elle est ajoutée à la main et le compteur est incrémenté
+                                    JoueurActuel.Main.Add(JoueurActuel.Deck[0]);
+                                    i++;
+                                }
+                                //Dans tous les cas, la carte est ajoutée à la List des cartes dévoilées, puis supprimée du Deck
+                                cartesDevoilees.Add(JoueurActuel.Deck[0]);
+                                JoueurActuel.Deck.RemoveAt(0);
                             }
-                            //Dans tous les cas, la carte est ajoutée à la List des cartes dévoilées, puis supprimée du Deck
-                            cartesDevoilees.Add(JoueurActuel.Deck[0]);
-                            JoueurActuel.Deck.RemoveAt(0);
+                            //Si le deck est vide, on le mélange avec la défausse
+                            else
+                            { JoueurActuel.MelangerLeDeck(); }
                         }
                         //On affiche les cartes dévoilées
                         AffichageCartesDevoilees.listCartesDevoilees = cartesDevoilees;
                         AffichageCartesDevoilees form = new AffichageCartesDevoilees();
                         form.ShowDialog();
                         //Puis on met à jour les infos et la main
-                        JoueurActuel.MAJInfos();
-                        JoueurActuel.MAJMain();
+                        
                     }
                     break;
 

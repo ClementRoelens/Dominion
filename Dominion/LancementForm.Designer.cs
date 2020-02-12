@@ -49,6 +49,7 @@
             this.nomJoueur1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.nomJoueur1.Click += new System.EventHandler(this.Focus);
             this.nomJoueur1.Enter += new System.EventHandler(this.Focus);
+            this.nomJoueur1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Lancer);
             // 
             // label1
             // 
@@ -71,6 +72,7 @@
             this.nomJoueur2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.nomJoueur2.Click += new System.EventHandler(this.Focus);
             this.nomJoueur2.Enter += new System.EventHandler(this.Focus);
+            this.nomJoueur2.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Lancer);
             // 
             // nomJoueur3
             // 
@@ -84,6 +86,7 @@
             this.nomJoueur3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.nomJoueur3.Click += new System.EventHandler(this.Focus);
             this.nomJoueur3.Enter += new System.EventHandler(this.Focus);
+            this.nomJoueur3.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Lancer);
             // 
             // nomJoueur4
             // 
@@ -97,6 +100,7 @@
             this.nomJoueur4.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.nomJoueur4.Click += new System.EventHandler(this.Focus);
             this.nomJoueur4.Enter += new System.EventHandler(this.Focus);
+            this.nomJoueur4.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Lancer);
             // 
             // checkBoxJoueur3
             // 
@@ -129,6 +133,7 @@
             this.goButton.Text = "Lancer la partie";
             this.goButton.UseVisualStyleBackColor = true;
             this.goButton.Click += new System.EventHandler(this.GoButton_Click);
+            this.goButton.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Lancer);
             // 
             // LancementForm
             // 

@@ -18,6 +18,7 @@ namespace Dominion
         public int AchatDispo = 1;
         public int MonnaieDispo = 0;
         public int JetonVictoireDispo = 0;
+        public int Points;
 
 
         public Joueur(string Nom)
@@ -30,7 +31,7 @@ namespace Dominion
         {
             if (this.Deck.Count == 0)
             {
-                this.Deck = new List<Carte>(this.Defausse);
+                this.Deck.AddRange(this.Defausse);
                 this.Defausse.Clear();
             }
             //S'il n'y a qu'une carte dans le deck, nul besoin de le mélanger...
@@ -94,7 +95,7 @@ namespace Dominion
             }
         }
 
-        public void Devoiler(int nombre)
+        public void Révéler(int nombre)
         {
 
         }
@@ -144,8 +145,9 @@ namespace Dominion
             //La partie s'achève quand : une des piles Colonie ou Province est vide, ou quand 3 piles au total sont vides
             if (mapListe[i].nombre == 0)
             {
-                //Tout d'abord, si la pile de la carte venant d'être reçue tombe à 0, alors on efface l'image et on incrémente le compteur de piles vides
-                mapListe[i].carte.PictureBox.ImageLocation = "";
+                //Tout d'abord, si la pile de la carte venant d'être reçue tombe à 0, alors on efface l'image, on désactive le PictureBox et on incrémente le compteur de piles vides
+                mapListe[i].carte.PictureBox.ImageLocation = @"C:\Users\ohne6\Desktop\Dominion\Images\dosDeCarte.jpg";
+                mapListe[i].carte.PictureBox.Enabled = false;
                 PartieForm.nbPileVide++;
                 //Et ensuite on teste si la partie s'arrête
                 if ((mapListe[i].carte.Nom == "Province") || (mapListe[i].carte.Nom == "Colonie") || (PartieForm.nbPileVide == 3))
@@ -187,7 +189,7 @@ namespace Dominion
             bool flag = false;
             while ((i < listPictureBoxMain.Count) & (!flag))
             {
-                if (listPictureBoxMain[i].ImageLocation == "")
+                if (listPictureBoxMain[i].ImageLocation == default)
                 { flag = true; }
                 else
                 {
@@ -201,6 +203,19 @@ namespace Dominion
 
         public void MAJInfos()
         {
+            PartieForm.tourTB.Text = "Tour de " + this.Nom;
+            PartieForm.achatDispoTB.Text = this.AchatDispo.ToString() + " achat(s)";
+            PartieForm.actionDispoTB.Text = this.ActionDispo.ToString() + " action(s)";
+            PartieForm.monnaieDispoTB.Text = "Monnaie dispo : " + this.MonnaieDispo.ToString();
+            int monnaietotale = 0;
+            foreach (Carte carte in this.Main)
+            {
+                if ((carte.Type.Contains("Trésor")) && !(carte.EnJeu))
+                { monnaietotale += carte.MonnaieDonnee; }
+            }
+            PartieForm.monnaieTotaleTB.Text = $"Monnaie totale en main : {monnaietotale.ToString()}";
+            PartieForm.jetonsTB.Text = this.JetonVictoireDispo.ToString() + " jeton(s) victoire";
+
             PartieForm.deckPB.ImageLocation = (this.Deck.Count > 0) ? default : "";
             PartieForm.deckTB.Text = $"Deck : {this.Deck.Count}";
             PartieForm.defaussePB.ImageLocation = (this.Defausse.Count > 0) ? this.Defausse[this.Defausse.Count - 1].Image : "";

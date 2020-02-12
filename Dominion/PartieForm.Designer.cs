@@ -30,6 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PartieForm));
             this.mapLayout = new System.Windows.Forms.TableLayoutPanel();
+            this.pictureBox5 = new System.Windows.Forms.PictureBox();
             this.layout10eCarte = new System.Windows.Forms.TableLayoutPanel();
             this.pictureBox18 = new System.Windows.Forms.PictureBox();
             this.pictureBox16 = new System.Windows.Forms.PictureBox();
@@ -43,7 +44,6 @@
             this.pictureBox8 = new System.Windows.Forms.PictureBox();
             this.pictureBox7 = new System.Windows.Forms.PictureBox();
             this.pictureBox6 = new System.Windows.Forms.PictureBox();
-            this.pictureBox5 = new System.Windows.Forms.PictureBox();
             this.pictureBox4 = new System.Windows.Forms.PictureBox();
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
@@ -104,6 +104,7 @@
             this.monnaieTotaleTextBox = new System.Windows.Forms.TextBox();
             this.button1 = new System.Windows.Forms.Button();
             this.mapLayout.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
             this.layout10eCarte.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox18)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox16)).BeginInit();
@@ -117,7 +118,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox8)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
@@ -176,6 +176,7 @@
             this.mapLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 12.5F));
             this.mapLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 12.5F));
             this.mapLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 12.5F));
+            this.mapLayout.Controls.Add(this.pictureBox5, 4, 0);
             this.mapLayout.Controls.Add(this.layout10eCarte, 4, 2);
             this.mapLayout.Controls.Add(this.pictureBox16, 7, 1);
             this.mapLayout.Controls.Add(this.pictureBox15, 6, 1);
@@ -188,7 +189,6 @@
             this.mapLayout.Controls.Add(this.pictureBox8, 7, 0);
             this.mapLayout.Controls.Add(this.pictureBox7, 6, 0);
             this.mapLayout.Controls.Add(this.pictureBox6, 5, 0);
-            this.mapLayout.Controls.Add(this.pictureBox5, 4, 0);
             this.mapLayout.Controls.Add(this.pictureBox4, 3, 0);
             this.mapLayout.Controls.Add(this.pictureBox3, 2, 0);
             this.mapLayout.Controls.Add(this.pictureBox2, 1, 0);
@@ -204,6 +204,18 @@
             this.mapLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.mapLayout.Size = new System.Drawing.Size(805, 509);
             this.mapLayout.TabIndex = 0;
+            // 
+            // pictureBox5
+            // 
+            this.pictureBox5.Cursor = System.Windows.Forms.Cursors.Default;
+            this.pictureBox5.Location = new System.Drawing.Point(403, 3);
+            this.pictureBox5.Name = "pictureBox5";
+            this.pictureBox5.Size = new System.Drawing.Size(90, 155);
+            this.pictureBox5.TabIndex = 18;
+            this.pictureBox5.TabStop = false;
+            this.pictureBox5.Click += new System.EventHandler(this.Achat);
+            this.pictureBox5.MouseEnter += new System.EventHandler(this.Hover);
+            this.pictureBox5.MouseLeave += new System.EventHandler(this.Unhover);
             // 
             // layout10eCarte
             // 
@@ -365,18 +377,6 @@
             this.pictureBox6.Click += new System.EventHandler(this.Achat);
             this.pictureBox6.MouseEnter += new System.EventHandler(this.Hover);
             this.pictureBox6.MouseLeave += new System.EventHandler(this.Unhover);
-            // 
-            // pictureBox5
-            // 
-            this.pictureBox5.Cursor = System.Windows.Forms.Cursors.Default;
-            this.pictureBox5.Location = new System.Drawing.Point(403, 3);
-            this.pictureBox5.Name = "pictureBox5";
-            this.pictureBox5.Size = new System.Drawing.Size(90, 145);
-            this.pictureBox5.TabIndex = 4;
-            this.pictureBox5.TabStop = false;
-            this.pictureBox5.Click += new System.EventHandler(this.Achat);
-            this.pictureBox5.MouseEnter += new System.EventHandler(this.Hover);
-            this.pictureBox5.MouseLeave += new System.EventHandler(this.Unhover);
             // 
             // pictureBox4
             // 
@@ -1336,6 +1336,7 @@
             this.Text = "PartieForm";
             this.Load += new System.EventHandler(this.PartieForm_Load);
             this.mapLayout.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).EndInit();
             this.layout10eCarte.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox18)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox16)).EndInit();
@@ -1349,7 +1350,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox8)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
@@ -1417,7 +1417,6 @@
         private System.Windows.Forms.PictureBox pictureBox8;
         private System.Windows.Forms.PictureBox pictureBox7;
         private System.Windows.Forms.PictureBox pictureBox6;
-        private System.Windows.Forms.PictureBox pictureBox5;
         private System.Windows.Forms.PictureBox pictureBox4;
         private System.Windows.Forms.PictureBox pictureBox3;
         private System.Windows.Forms.PictureBox pictureBox2;
@@ -1478,5 +1477,6 @@
         private System.Windows.Forms.PictureBox carteMain14;
         private System.Windows.Forms.TextBox monnaieTotaleTextBox;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.PictureBox pictureBox5;
     }
 }

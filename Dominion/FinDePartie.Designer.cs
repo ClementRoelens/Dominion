@@ -39,46 +39,50 @@
             // 
             // labelVainqueur
             // 
-            this.labelVainqueur.Cursor = System.Windows.Forms.Cursors.No;
+            this.labelVainqueur.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.labelVainqueur.Font = new System.Drawing.Font("Microsoft Sans Serif", 22F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelVainqueur.Location = new System.Drawing.Point(216, 41);
+            this.labelVainqueur.Location = new System.Drawing.Point(216, 23);
+            this.labelVainqueur.Multiline = true;
             this.labelVainqueur.Name = "labelVainqueur";
             this.labelVainqueur.ReadOnly = true;
-            this.labelVainqueur.Size = new System.Drawing.Size(381, 41);
+            this.labelVainqueur.Size = new System.Drawing.Size(381, 77);
             this.labelVainqueur.TabIndex = 0;
+            this.labelVainqueur.TabStop = false;
             this.labelVainqueur.Text = "Joueur gagne la partie!";
             this.labelVainqueur.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // joueur1Points
             // 
             this.joueur1Points.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.joueur1Points.Cursor = System.Windows.Forms.Cursors.No;
+            this.joueur1Points.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.joueur1Points.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.joueur1Points.Location = new System.Drawing.Point(197, 132);
             this.joueur1Points.Name = "joueur1Points";
             this.joueur1Points.ReadOnly = true;
             this.joueur1Points.Size = new System.Drawing.Size(111, 22);
             this.joueur1Points.TabIndex = 1;
+            this.joueur1Points.TabStop = false;
             this.joueur1Points.Text = "Joueur 1 : 50";
             this.joueur1Points.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // joueur2Points
             // 
             this.joueur2Points.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.joueur2Points.Cursor = System.Windows.Forms.Cursors.No;
+            this.joueur2Points.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.joueur2Points.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.joueur2Points.Location = new System.Drawing.Point(467, 132);
             this.joueur2Points.Name = "joueur2Points";
             this.joueur2Points.ReadOnly = true;
             this.joueur2Points.Size = new System.Drawing.Size(111, 22);
             this.joueur2Points.TabIndex = 2;
+            this.joueur2Points.TabStop = false;
             this.joueur2Points.Text = "Joueur 1 : 50";
             this.joueur2Points.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // joueur3Points
             // 
             this.joueur3Points.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.joueur3Points.Cursor = System.Windows.Forms.Cursors.No;
+            this.joueur3Points.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.joueur3Points.Enabled = false;
             this.joueur3Points.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.joueur3Points.Location = new System.Drawing.Point(197, 195);
@@ -93,7 +97,7 @@
             // joueur4Points
             // 
             this.joueur4Points.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.joueur4Points.Cursor = System.Windows.Forms.Cursors.No;
+            this.joueur4Points.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.joueur4Points.Enabled = false;
             this.joueur4Points.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.joueur4Points.Location = new System.Drawing.Point(467, 195);
@@ -142,6 +146,7 @@
             this.Controls.Add(this.labelVainqueur);
             this.Name = "FinDePartie";
             this.Text = "FinDePartie";
+            this.Load += new System.EventHandler(this.FinDePartie_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

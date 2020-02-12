@@ -29,6 +29,12 @@ namespace Dominion
         public static PictureBox deckPB;
         public static TextBox deckTB;
         public static TextBox infoActionTB;
+        public static TextBox tourTB;
+        public static TextBox achatDispoTB;
+        public static TextBox actionDispoTB;
+        public static TextBox monnaieDispoTB;
+        public static TextBox monnaieTotaleTB;
+        public static TextBox jetonsTB;
 
         //Pour les choix de cartes
         public static Joueur tempJoueur;
@@ -82,6 +88,12 @@ namespace Dominion
             {
                 if ((carte.Type == "Trésor") || (carte.Type == "Victoire"))
                 {
+                    //DEBUG
+                    if (carte.Nom == "Domaine")
+                    {
+                        Console.WriteLine($"Domaine est la pile {i}");
+                    }
+                    //DEBUG
                     Pile pile = new Pile(carte);
                     i++;
                     mapListe.Add(pile);
@@ -112,6 +124,13 @@ namespace Dominion
             i = 0;
             foreach (Pile pile in mapListe)
             {
+                //DEBUG
+                if (pile.carte.Nom == "Domaine")
+                {
+                    Console.WriteLine($"Affectation de la PictureBox de la carte Domaine à mapListe[{i}]");
+
+                }
+                //DEBUG
                 pile.carte.PictureBox = listPicturebox[i];
                 pile.carte.PictureBox.ImageLocation = pile.carte.Image;
                 pile.carte.PictureBox.Dock = DockStyle.Fill;
@@ -175,12 +194,18 @@ namespace Dominion
             defaussePB = defausseImage;
             defausseTB = defausseLabel;
             infoActionTB = infoActionTextBox;
+            tourTB = tourLabel;
+            achatDispoTB = achatDispoTextBox;
+            actionDispoTB = actionDispoTextBox;
+            monnaieDispoTB = monnaieDispoTextBox;
+            monnaieTotaleTB = monnaieTotaleTextBox;
+            jetonsTB = jetonsTextBox;
 
-            //Les tours vont se succéder jusqu'à ce qu'un événement déclenche la fin de la partie
-            NouveauTour();
 
             #endregion
 
+            //Les tours vont se succéder jusqu'à ce qu'un événement déclenche la fin de la partie
+            NouveauTour();
         }
 
         private void NouveauTour()
@@ -195,21 +220,21 @@ namespace Dominion
             JoueurActuel.ActionDispo = 1;
             JoueurActuel.MonnaieDispo = 0;
             //On affiche les infos et la main du joueur
-            MAJInfos();
+            JoueurActuel.MAJInfos();
             JoueurActuel.MAJMain();
 
-            //Et on met également à jour les affichages du deck et de la défausse
-            if (JoueurActuel.Deck.Count > 0)
-            { deckImage.ImageLocation = default; }
-            else
-            { deckImage.ImageLocation = ""; }
-            deckLabel.Text = $"Deck : +{JoueurActuel.Deck.Count.ToString()}";
-            if (JoueurActuel.Defausse.Count > 0)
-            { defausseImage.ImageLocation = JoueurActuel.Defausse[JoueurActuel.Defausse.Count - 1].Image; }
-            else
-            { defausseImage.ImageLocation = ""; }
+            ////Et on met également à jour les affichages du deck et de la défausse
+            //if (JoueurActuel.Deck.Count > 0)
+            //{ deckImage.ImageLocation = default; }
+            //else
+            //{ deckImage.ImageLocation = ""; }
+            //deckLabel.Text = $"Deck : +{JoueurActuel.Deck.Count.ToString()}";
+            //if (JoueurActuel.Defausse.Count > 0)
+            //{ defausseImage.ImageLocation = JoueurActuel.Defausse[JoueurActuel.Defausse.Count - 1].Image; }
+            //else
+            //{ defausseImage.ImageLocation = ""; }
 
-            defausseLabel.Text = $"Défausse : +{JoueurActuel.Defausse.Count.ToString()}";
+            //defausseLabel.Text = $"Défausse : +{JoueurActuel.Defausse.Count.ToString()}";
         }
 
         private void Hover(object sender, EventArgs e)
@@ -404,13 +429,12 @@ namespace Dominion
             //Cela se traduit par la PictureBox avec un Anchor à bottom
             if (selectedPB.Anchor != AnchorStyles.Bottom)
             {
-                //On va ensuite boucler jusqu'à trouver la carte correspondante dans la main, en se basant donc sur l'image de la carte
+                //On va ensuite boucler jusqu'à trouver la carte correspondante dans la main
                 bool flag = false;
                 int i = 0;
                 while (!flag)
                 {
-                    //La carte correspond si elle a la même image mais aussi qu'elle n'a pas déjà été jouée
-                    if ((selectedPB.ImageLocation == JoueurActuel.Main[i].Image) && (!JoueurActuel.Main[i].EnJeu))
+                    if (selectedPB == JoueurActuel.Main[i].PictureBox)
                     {
                         //Une fois trouvé, on lève le flag pour sortir de la boucle
                         flag = true;
@@ -441,7 +465,8 @@ namespace Dominion
                                 //Et on lance l'effet
                                 JoueurActuel.Main[i].Effet();
                                 //Et on met à jour les infos
-                                MAJInfos();
+                                JoueurActuel.MAJMain();
+                                JoueurActuel.MAJInfos();
                             }
                         }
                     }
@@ -536,8 +561,8 @@ namespace Dominion
                                 //Si oui, on refait une boucle pour trouver les PictureBox correspondantes et les déplacer vers le bas, ainsi que pour activer les cartes
                                 foreach (Carte carte in tresorsSelectionnes)
                                 {
-                                   //On doit chercher une image correspondante dans la main
-                                    foreach(Carte carte2 in JoueurActuel.Main)
+                                    //On doit chercher une image correspondante dans la main
+                                    foreach (Carte carte2 in JoueurActuel.Main)
                                     {
                                         //On cherche l'image correspondante oui, mais elle ne doit pas déjà avoir été activée
                                         if ((carte2.Image == carte.Image) && !(carte2.EnJeu))
@@ -547,17 +572,6 @@ namespace Dominion
                                             break;
                                         }
                                     }
-
-                                    //for (int j = 0, c = JoueurActuel.Main.Count; j < c; j++)
-                                    //{
-                                    //    //On cherche l'image correspondante oui, mais elle ne doit pas déjà avoir été activée
-                                    //    if ((listPictureBoxMain[j].ImageLocation == carte.Image) && (listPictureBoxMain[j].Anchor != AnchorStyles.Bottom))
-                                    //    {
-                                    //        listPictureBoxMain[j].Anchor = AnchorStyles.Bottom;
-                                    //        //On utilise un break pour sortir de la boucle dès qu'une carte a été sélectionnée, afin de ne bien décaler qu'une PictureBox par carte...
-                                    //        break;
-                                    //    }
-                                    //}
                                 }
                                 //On ajoute le total de monnaie des cartes activées à la monnaie dispo du joueur
                                 JoueurActuel.MonnaieDispo += monnaieSelectionnee;
@@ -571,46 +585,13 @@ namespace Dominion
                 if (continuer)
                 {
                     JoueurActuel.Recevoir(mapListe[i].carte);
-                    ////On crée une nouvelle instance de la carte qu'on va ajouter à la défausse
-                    //Carte tempCarte = (Carte)PartieForm.mapListe[i].carte.Clone();
-                    //JoueurActuel.Defausse.Add(tempCarte);
-                    ////Bien entendu on met à jour l'affichage de la défausse
-                    //defausseImage.ImageLocation = selectedPB.ImageLocation;
-                    //defausseLabel.Text = "Défausse : " + JoueurActuel.Defausse.Count.ToString();
-                    ////Et on désincrémente le nombre de cartes dans la pile
-                    //mapListe[i].nombre--;
-                    ////Et on lance la vérification pour savoir si on achève la partie
-                    //if (mapListe[i].nombre == 0)
-                    //{
-                    //    mapListe[i].pictureBox.ImageLocation = "";
-                    //    if ((mapListe[i].carte.Nom == "Province") || (mapListe[i].carte.Nom == "Colonie") || (nbPileVide == 3))
-                    //    {
-                    //        FinDePartie finDePartie = new FinDePartie();
-                    //        finDePartie.ShowDialog();
-                    //    }
-                    //}
+
                     //Et bien sûr on désincrémente également le nombre d'achats et la monnaie disponibles et on met à jour l'affichage
                     JoueurActuel.AchatDispo--;
                     JoueurActuel.MonnaieDispo -= mapListe[i].carte.Cout;
-                    MAJInfos();
+                    JoueurActuel.MAJInfos();
                 }
             }
-        }
-
-        private void MAJInfos()
-        {
-            tourLabel.Text = "Tour de " + JoueurActuel.Nom;
-            achatDispoTextBox.Text = JoueurActuel.AchatDispo.ToString() + " achat(s)";
-            actionDispoTextBox.Text = JoueurActuel.ActionDispo.ToString() + " action(s)";
-            monnaieDispoTextBox.Text = "Monnaie dispo : " + JoueurActuel.MonnaieDispo.ToString();
-            int monnaietotale = 0;
-            foreach (Carte carte in JoueurActuel.Main)
-            {
-                if (carte.Type.Contains("Trésor"))
-                { monnaietotale += carte.MonnaieDonnee; }
-            }
-            monnaieTotaleTextBox.Text = "Monnaie totale en main : " + monnaietotale.ToString();
-            jetonsTextBox.Text = JoueurActuel.JetonVictoireDispo.ToString() + " jeton(s) victoire";
         }
 
         private void FinDeTour(object sender, EventArgs e)
@@ -637,11 +618,14 @@ namespace Dominion
 
         private void Button1_Click_1(object sender, EventArgs e)
         {
-            Carte test = new Carte("Agrandissement", @"C:\Users\ohne6\Desktop\Dominion\Images\6GrandMarche.png", 6, "Action", "gfreg", 0, 0, 0, 0, 0, 0);
-            JoueurActuel.Main.Add(new Carte("Or", @"C:\Users\ohne6\Desktop\Dominion\Images\Or.jpg", 6, "Trésor", "rgr", 6, 0, 0, 0, 0, 0));
-            JoueurActuel.Main.Add(new Carte("Domaine", @"C:\Users\ohne6\Desktop\Dominion\Images\Domaine.jpg", 0, "Trésor", "rgr", 6, 0, 0, 0, 0, 0));
-            JoueurActuel.Main.Add(new Carte("Or", @"C:\Users\ohne6\Desktop\Dominion\Images\Or.jpg", 6, "Trésor", "rgr", 6, 0, 0, 0, 0, 0));
-            test.Effet();
+            FinDePartie fin = new FinDePartie();
+            fin.ShowDialog();
+
+            //Carte test = new Carte("Agrandissement", @"C:\Users\ohne6\Desktop\Dominion\Images\6GrandMarche.png", 6, "Action", "gfreg", 0, 0, 0, 0, 0, 0);
+            //JoueurActuel.Main.Add(new Carte("Or", @"C:\Users\ohne6\Desktop\Dominion\Images\Or.jpg", 6, "Trésor", "rgr", 6, 0, 0, 0, 0, 0));
+            //JoueurActuel.Main.Add(new Carte("Domaine", @"C:\Users\ohne6\Desktop\Dominion\Images\Domaine.jpg", 0, "Trésor", "rgr", 6, 0, 0, 0, 0, 0));
+            //JoueurActuel.Main.Add(new Carte("Or", @"C:\Users\ohne6\Desktop\Dominion\Images\Or.jpg", 6, "Trésor", "rgr", 6, 0, 0, 0, 0, 0));
+            //test.Effet();
 
             ////Ce booléen va déterminer si oui ou non on saute l'étape de sélection de la monnaie
             //bool continuer = false;
