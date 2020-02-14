@@ -95,20 +95,29 @@ namespace Dominion
             }
         }
 
-        public void Révéler(int nombre)
+        public void Devoiler(int nombre, bool action)
         {
+            List<Carte> cartesDevoilees = new List<Carte>();
+            for (int i = 0; i < nombre; i++)
+            { cartesDevoilees.Add(this.Deck[i]); }
+            if (!action)
+            {
+                AffichageCartesDevoilees.listCartesDevoilees = cartesDevoilees;
+                AffichageCartesDevoilees devoilement = new AffichageCartesDevoilees();
+                devoilement.ShowDialog();
+            }
+            else
+            {
 
+            }
         }
 
         public void Defausser(Carte cible)
         {
-            //Si la carte est en jeu, on doit d'abord passer le "En Jeu" à false
-            if (cible.EnJeu)
-            { cible.EnJeu = false; }
             //On ajoute la carte à la List de défausse
             this.Defausse.Add(cible);
             //Puis on supprime de la main
-            this.Main.RemoveAt(this.Main.FindIndex(x => (x.Nom == cible.Nom) && (x.EnJeu == false)));
+            this.Main.RemoveAt(this.Main.FindIndex(x => x == cible));
 
             //Si le joueur qui défausse a la main, on doit supprimer l'image de sa main et l'ajouter dans la défausse
             if (this == PartieForm.JoueurActuel)
@@ -118,42 +127,72 @@ namespace Dominion
             }
         }
 
-        public void Recevoir(Carte cible)
+        public void Recevoir(Carte cible, bool enMain = false)
         {
 
             //On crée une nouvelle instance de la carte qu'on va ajouter à la défausse
             Carte tempCarte = (Carte)cible.Clone();
-            this.Defausse.Add(tempCarte);
-            //Bien entendu on met à jour l'affichage de la défausse
-            PartieForm.defaussePB.ImageLocation = cible.Image;
-            PartieForm.defausseTB.Text = $"Défausse : {this.Defausse.Count.ToString()}";
-            //Et on désincrémente le nombre de cartes dans la pile
-            //En cherchant la carte avant-tout...
-            List<Pile> mapListe = PartieForm.mapListe;
-            bool flag = false;
-            int i = 0;
-            while (!flag)
-            {
-                if (mapListe[i].carte.Nom == cible.Nom)
-                { flag = true; }
-                else
-                { i++; }
-            }
-            mapListe[i].nombre--;
 
-            //Et on lance la vérification pour savoir si on achève la partie
-            //La partie s'achève quand : une des piles Colonie ou Province est vide, ou quand 3 piles au total sont vides
-            if (mapListe[i].nombre == 0)
+            if (enMain)
             {
-                //Tout d'abord, si la pile de la carte venant d'être reçue tombe à 0, alors on efface l'image, on désactive le PictureBox et on incrémente le compteur de piles vides
-                mapListe[i].carte.PictureBox.ImageLocation = @"C:\Users\ohne6\Desktop\Dominion\Images\dosDeCarte.jpg";
-                mapListe[i].carte.PictureBox.Enabled = false;
-                PartieForm.nbPileVide++;
-                //Et ensuite on teste si la partie s'arrête
-                if ((mapListe[i].carte.Nom == "Province") || (mapListe[i].carte.Nom == "Colonie") || (PartieForm.nbPileVide == 3))
+                this.Main.Add(tempCarte);
+                if (this == PartieForm.JoueurActuel)
                 {
-                    FinDePartie finDePartie = new FinDePartie();
-                    finDePartie.ShowDialog();
+                    this.MAJMain();
+                    this.MAJInfos();
+                }
+            }
+            else
+            {
+                this.Defausse.Add(tempCarte);
+                //Bien entendu on met à jour l'affichage de la défausse
+                PartieForm.defaussePB.ImageLocation = cible.Image;
+                PartieForm.defausseTB.Text = $"Défausse : {this.Defausse.Count.ToString()}";
+            }
+            if (cible.Nom != "Malédiction")
+            {
+                //Et on désincrémente le nombre de cartes dans la pile si la carte n'est pas une Malédiction (car elle n'est pas dans les piles)
+                //En cherchant la carte avant-tout...
+                List<Pile> mapListe = PartieForm.mapListe;
+                bool flag = false;
+                int i = 0;
+                while (!flag)
+                {
+                    if (mapListe[i].carte.Nom == cible.Nom)
+                    { flag = true; }
+                    else
+                    { i++; }
+                }
+                mapListe[i].nombre--;
+
+                //Et on lance la vérification pour savoir si on achève la partie
+                //La partie s'achève quand : une des piles Colonie ou Province est vide, ou quand 3 piles au total sont vides
+                if (mapListe[i].nombre == 0)
+                {
+                    //Tout d'abord, si la pile de la carte venant d'être reçue tombe à 0, alors on efface l'image, on désactive le PictureBox et on incrémente le compteur de piles vides
+                    mapListe[i].carte.PictureBox.ImageLocation = @"C:\Users\ohne6\Desktop\Dominion\Images\dosDeCarte.jpg";
+                    mapListe[i].carte.PictureBox.Enabled = false;
+                    PartieForm.nbPileVide++;
+                    //Et ensuite on teste si la partie s'arrête
+                    if ((mapListe[i].carte.Nom == "Province") || (mapListe[i].carte.Nom == "Colonie") || (PartieForm.nbPileVide == 3))
+                    {
+                        FinDePartie finDePartie = new FinDePartie();
+                        finDePartie.ShowDialog();
+                    }
+                }
+            }
+            //Si quelqu'un reçoit une Province, un autre joueur peut activer Or des fous
+            if (tempCarte.Nom == "Province")
+            {
+                foreach (Joueur joueur in LancementForm.listeJoueurs.FindAll(x => x != this))
+                {
+                    List<Carte> orsDesFous = joueur.Main.FindAll(x => x.Nom == "Or des fous");
+                    if (orsDesFous.Count > 0)
+                    {
+                        PartieForm.tempJoueur = this;
+                        foreach (Carte carte in orsDesFous)
+                        { carte.Reagir(); }
+                    }
                 }
             }
         }
@@ -166,10 +205,6 @@ namespace Dominion
             //Si le joueur qui défausse a la main, on doit supprimer l'image de sa main
             if (this == PartieForm.JoueurActuel)
             { this.MAJMain(); }
-            //DEBUG
-            Console.WriteLine("_________\nFonction d'écartement");
-            Console.WriteLine(this.Nom + " écarte " + cible.Nom + "\n______________");
-            //DEBUG
         }
 
         public void MAJMain()
@@ -222,14 +257,27 @@ namespace Dominion
             PartieForm.defausseTB.Text = $"Défausse : {this.Defausse.Count}";
         }
 
+        public string ChoisirUnePossibilite(string possibilite1, string possibilite2)
+        {
+            PartieForm.tempJoueur = this;
+            ChoixForm.typeChoix = "Possibilité";
+            ChoixForm.bouton1 = possibilite1;
+            ChoixForm.bouton2 = possibilite2;
+
+            ChoixForm choixForm = new ChoixForm();
+            choixForm.ShowDialog();
+
+            return ChoixForm.possibiliteChoisie;
+        }
+
         public Carte ChoisirUneCarte(string type, List<Carte> choix, bool obligation)
         {
             //On assigne les variables nécessaires 
             PartieForm.tempJoueur = this;
-            PartieForm.typeChoix = type;
-            PartieForm.listeChoix = choix;
-            PartieForm.obligation = obligation;
-            PartieForm.nbCarte = 1;
+            ChoixForm.typeChoix = type;
+            ChoixForm.listeChoix = choix;
+            ChoixForm.obligation = obligation;
+            ChoixForm.nbCarte = 1;
 
             ChoixForm choixForm = new ChoixForm();
             choixForm.ShowDialog();
@@ -244,11 +292,11 @@ namespace Dominion
         public List<Carte> ChoisirDesCartes(string type, List<Carte> choix, int nbCarte, bool obligation)
         {
             //On assigne les variables nécessaires 
-            PartieForm.tempJoueur = this;
-            PartieForm.typeChoix = type;
-            PartieForm.listeChoix = choix;
-            PartieForm.obligation = obligation;
-            PartieForm.nbCarte = nbCarte;
+            ChoixForm.tempJoueur = this;
+            ChoixForm.typeChoix = type;
+            ChoixForm.listeChoix = choix;
+            ChoixForm.obligation = obligation;
+            ChoixForm.nbCarte = nbCarte;
 
             ChoixForm choixForm = new ChoixForm();
             choixForm.ShowDialog();

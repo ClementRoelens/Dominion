@@ -31,7 +31,6 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PartieForm));
             this.mapLayout = new System.Windows.Forms.TableLayoutPanel();
             this.pictureBox5 = new System.Windows.Forms.PictureBox();
-            this.layout10eCarte = new System.Windows.Forms.TableLayoutPanel();
             this.pictureBox18 = new System.Windows.Forms.PictureBox();
             this.pictureBox16 = new System.Windows.Forms.PictureBox();
             this.pictureBox15 = new System.Windows.Forms.PictureBox();
@@ -48,8 +47,6 @@
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.layout9eCarte = new System.Windows.Forms.TableLayoutPanel();
-            this.pictureBox17 = new System.Windows.Forms.PictureBox();
             this.focusLayout = new System.Windows.Forms.TableLayoutPanel();
             this.focusNbPile = new System.Windows.Forms.TextBox();
             this.layoutDetailFocus = new System.Windows.Forms.TableLayoutPanel();
@@ -103,9 +100,11 @@
             this.infoActionTextBox = new System.Windows.Forms.TextBox();
             this.monnaieTotaleTextBox = new System.Windows.Forms.TextBox();
             this.button1 = new System.Windows.Forms.Button();
+            this.pictureBox17 = new System.Windows.Forms.PictureBox();
+            this.layout9eCarte = new System.Windows.Forms.TableLayoutPanel();
+            this.layout10eCarte = new System.Windows.Forms.TableLayoutPanel();
             this.mapLayout.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
-            this.layout10eCarte.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox18)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox16)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox15)).BeginInit();
@@ -122,8 +121,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            this.layout9eCarte.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox17)).BeginInit();
             this.focusLayout.SuspendLayout();
             this.layoutDetailFocus.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.focusCout)).BeginInit();
@@ -163,6 +160,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.carteMain13)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.defausseImage)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.deckImage)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox17)).BeginInit();
+            this.layout9eCarte.SuspendLayout();
+            this.layout10eCarte.SuspendLayout();
             this.SuspendLayout();
             // 
             // mapLayout
@@ -216,23 +216,6 @@
             this.pictureBox5.Click += new System.EventHandler(this.Achat);
             this.pictureBox5.MouseEnter += new System.EventHandler(this.Hover);
             this.pictureBox5.MouseLeave += new System.EventHandler(this.Unhover);
-            // 
-            // layout10eCarte
-            // 
-            this.layout10eCarte.ColumnCount = 3;
-            this.mapLayout.SetColumnSpan(this.layout10eCarte, 4);
-            this.layout10eCarte.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 36.34085F));
-            this.layout10eCarte.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 28.57143F));
-            this.layout10eCarte.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 35.33834F));
-            this.layout10eCarte.Controls.Add(this.pictureBox18, 1, 0);
-            this.layout10eCarte.Cursor = System.Windows.Forms.Cursors.Default;
-            this.layout10eCarte.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.layout10eCarte.Location = new System.Drawing.Point(403, 341);
-            this.layout10eCarte.Name = "layout10eCarte";
-            this.layout10eCarte.RowCount = 1;
-            this.layout10eCarte.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.layout10eCarte.Size = new System.Drawing.Size(399, 165);
-            this.layout10eCarte.TabIndex = 17;
             // 
             // pictureBox18
             // 
@@ -427,35 +410,6 @@
             this.pictureBox1.Click += new System.EventHandler(this.Achat);
             this.pictureBox1.MouseEnter += new System.EventHandler(this.Hover);
             this.pictureBox1.MouseLeave += new System.EventHandler(this.Unhover);
-            // 
-            // layout9eCarte
-            // 
-            this.layout9eCarte.ColumnCount = 3;
-            this.mapLayout.SetColumnSpan(this.layout9eCarte, 4);
-            this.layout9eCarte.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33F));
-            this.layout9eCarte.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 27.91878F));
-            this.layout9eCarte.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 39.0863F));
-            this.layout9eCarte.Controls.Add(this.pictureBox17, 1, 0);
-            this.layout9eCarte.Cursor = System.Windows.Forms.Cursors.Default;
-            this.layout9eCarte.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.layout9eCarte.Location = new System.Drawing.Point(3, 341);
-            this.layout9eCarte.Name = "layout9eCarte";
-            this.layout9eCarte.RowCount = 1;
-            this.layout9eCarte.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.layout9eCarte.Size = new System.Drawing.Size(394, 165);
-            this.layout9eCarte.TabIndex = 16;
-            // 
-            // pictureBox17
-            // 
-            this.pictureBox17.Cursor = System.Windows.Forms.Cursors.Default;
-            this.pictureBox17.Location = new System.Drawing.Point(133, 3);
-            this.pictureBox17.Name = "pictureBox17";
-            this.pictureBox17.Size = new System.Drawing.Size(103, 159);
-            this.pictureBox17.TabIndex = 0;
-            this.pictureBox17.TabStop = false;
-            this.pictureBox17.Click += new System.EventHandler(this.Achat);
-            this.pictureBox17.MouseEnter += new System.EventHandler(this.Hover);
-            this.pictureBox17.MouseLeave += new System.EventHandler(this.Unhover);
             // 
             // focusLayout
             // 
@@ -1214,7 +1168,7 @@
             // 
             this.defausseImage.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.defausseImage.Cursor = System.Windows.Forms.Cursors.Default;
-            this.defausseImage.Location = new System.Drawing.Point(142, 567);
+            this.defausseImage.Location = new System.Drawing.Point(142, 575);
             this.defausseImage.Name = "defausseImage";
             this.defausseImage.Size = new System.Drawing.Size(112, 175);
             this.defausseImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -1226,7 +1180,7 @@
             this.defausseLabel.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.defausseLabel.Cursor = System.Windows.Forms.Cursors.Default;
             this.defausseLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.defausseLabel.Location = new System.Drawing.Point(152, 539);
+            this.defausseLabel.Location = new System.Drawing.Point(152, 547);
             this.defausseLabel.Name = "defausseLabel";
             this.defausseLabel.ReadOnly = true;
             this.defausseLabel.Size = new System.Drawing.Size(92, 16);
@@ -1239,7 +1193,7 @@
             this.deckLabel.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.deckLabel.Cursor = System.Windows.Forms.Cursors.Default;
             this.deckLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.deckLabel.Location = new System.Drawing.Point(22, 540);
+            this.deckLabel.Location = new System.Drawing.Point(22, 548);
             this.deckLabel.Name = "deckLabel";
             this.deckLabel.ReadOnly = true;
             this.deckLabel.Size = new System.Drawing.Size(88, 16);
@@ -1252,7 +1206,7 @@
             this.deckImage.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.deckImage.Cursor = System.Windows.Forms.Cursors.Default;
             this.deckImage.Image = ((System.Drawing.Image)(resources.GetObject("deckImage.Image")));
-            this.deckImage.Location = new System.Drawing.Point(12, 568);
+            this.deckImage.Location = new System.Drawing.Point(12, 576);
             this.deckImage.Name = "deckImage";
             this.deckImage.Size = new System.Drawing.Size(112, 175);
             this.deckImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -1311,6 +1265,52 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.Button1_Click_1);
             // 
+            // pictureBox17
+            // 
+            this.pictureBox17.Cursor = System.Windows.Forms.Cursors.Default;
+            this.pictureBox17.Location = new System.Drawing.Point(133, 3);
+            this.pictureBox17.Name = "pictureBox17";
+            this.pictureBox17.Size = new System.Drawing.Size(103, 159);
+            this.pictureBox17.TabIndex = 0;
+            this.pictureBox17.TabStop = false;
+            this.pictureBox17.Click += new System.EventHandler(this.Achat);
+            this.pictureBox17.MouseEnter += new System.EventHandler(this.Hover);
+            this.pictureBox17.MouseLeave += new System.EventHandler(this.Unhover);
+            // 
+            // layout9eCarte
+            // 
+            this.layout9eCarte.ColumnCount = 3;
+            this.mapLayout.SetColumnSpan(this.layout9eCarte, 4);
+            this.layout9eCarte.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33F));
+            this.layout9eCarte.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 27.91878F));
+            this.layout9eCarte.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 39.0863F));
+            this.layout9eCarte.Controls.Add(this.pictureBox17, 1, 0);
+            this.layout9eCarte.Cursor = System.Windows.Forms.Cursors.Default;
+            this.layout9eCarte.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.layout9eCarte.Location = new System.Drawing.Point(3, 341);
+            this.layout9eCarte.Name = "layout9eCarte";
+            this.layout9eCarte.RowCount = 1;
+            this.layout9eCarte.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.layout9eCarte.Size = new System.Drawing.Size(394, 165);
+            this.layout9eCarte.TabIndex = 16;
+            // 
+            // layout10eCarte
+            // 
+            this.layout10eCarte.ColumnCount = 3;
+            this.mapLayout.SetColumnSpan(this.layout10eCarte, 4);
+            this.layout10eCarte.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 36.34085F));
+            this.layout10eCarte.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 28.57143F));
+            this.layout10eCarte.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 35.33834F));
+            this.layout10eCarte.Controls.Add(this.pictureBox18, 1, 0);
+            this.layout10eCarte.Cursor = System.Windows.Forms.Cursors.Default;
+            this.layout10eCarte.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.layout10eCarte.Location = new System.Drawing.Point(403, 341);
+            this.layout10eCarte.Name = "layout10eCarte";
+            this.layout10eCarte.RowCount = 1;
+            this.layout10eCarte.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.layout10eCarte.Size = new System.Drawing.Size(399, 165);
+            this.layout10eCarte.TabIndex = 17;
+            // 
             // PartieForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1337,7 +1337,6 @@
             this.Load += new System.EventHandler(this.PartieForm_Load);
             this.mapLayout.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).EndInit();
-            this.layout10eCarte.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox18)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox16)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox15)).EndInit();
@@ -1354,8 +1353,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            this.layout9eCarte.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox17)).EndInit();
             this.focusLayout.ResumeLayout(false);
             this.focusLayout.PerformLayout();
             this.layoutDetailFocus.ResumeLayout(false);
@@ -1397,6 +1394,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.carteMain13)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.defausseImage)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.deckImage)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox17)).EndInit();
+            this.layout9eCarte.ResumeLayout(false);
+            this.layout10eCarte.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1405,7 +1405,6 @@
         #endregion
 
         private System.Windows.Forms.TableLayoutPanel mapLayout;
-        private System.Windows.Forms.TableLayoutPanel layout10eCarte;
         private System.Windows.Forms.PictureBox pictureBox16;
         private System.Windows.Forms.PictureBox pictureBox15;
         private System.Windows.Forms.PictureBox pictureBox14;
@@ -1421,9 +1420,7 @@
         private System.Windows.Forms.PictureBox pictureBox3;
         private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.TableLayoutPanel layout9eCarte;
         private System.Windows.Forms.PictureBox pictureBox18;
-        private System.Windows.Forms.PictureBox pictureBox17;
         private System.Windows.Forms.TableLayoutPanel focusLayout;
         private System.Windows.Forms.PictureBox focusPictureBox;
         private System.Windows.Forms.TableLayoutPanel layoutDetailFocus;
@@ -1478,5 +1475,8 @@
         private System.Windows.Forms.TextBox monnaieTotaleTextBox;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.PictureBox pictureBox5;
+        private System.Windows.Forms.TableLayoutPanel layout9eCarte;
+        private System.Windows.Forms.PictureBox pictureBox17;
+        private System.Windows.Forms.TableLayoutPanel layout10eCarte;
     }
 }

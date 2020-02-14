@@ -15,7 +15,14 @@ namespace Dominion
         public static List<Carte> listeCartesChoisies;
         List<PictureBox> listPB = new List<PictureBox>();
         public static bool estValide;
-        List<Carte> listeChoix = new List<Carte>();
+        public static bool obligation;
+        public static string typeChoix = "Défaut";
+        public static int nbCarte = int.MaxValue;
+        public static List<Carte> listeChoix = new List<Carte>();
+        public static Carte carteAacheter;
+        public static string bouton1;
+        public static string bouton2;
+        public static string possibiliteChoisie;
 
         public ChoixForm()
         {
@@ -24,97 +31,110 @@ namespace Dominion
 
         private void ChoixForm_Load(object sender, EventArgs e)
         {
-            //Avant-tout, on réinitialise notre List de cartes choisis
-            listeCartesChoisies = new List<Carte>();
-            //On indique qui va choisir et ce qu'il doit choisir
-            joueurLabel.Text = PartieForm.tempJoueur.Nom.ToString() + " : choisissez";
-            if (PartieForm.nbCarte == 1)
-            { joueurLabel.Text += " la carte "; }
-            else
-            { joueurLabel.Text += " les cartes "; }
-            switch (PartieForm.typeChoix)
+            //On gère à part le choix de possibilités, puisqu'elle n'implique aucune carte
+            if (typeChoix != "Possibilité")
             {
-                case "Achat":
-                    joueurLabel.Text = PartieForm.tempJoueur.Nom.ToString() + " : choisissez les trésors à utiliser pour payer.";
-                    break;
-                case "Ecarter":
-                    joueurLabel.Text += "à écarter.";
-                    break;
-                case "Défausser":
-                    joueurLabel.Text += "à défausser.";
-                    break;
-                case "Recevoir":
-                    joueurLabel.Text += "que vous voulez.";
-                    break;
-            }
-
-
-            //Puis pour choisir on fait une List de PictureBox comme d'hab
-            listPB.Add(pictureBox1);
-            listPB.Add(pictureBox2);
-            listPB.Add(pictureBox3);
-            listPB.Add(pictureBox4);
-            listPB.Add(pictureBox5);
-            listPB.Add(pictureBox6);
-            listPB.Add(pictureBox7);
-            listPB.Add(pictureBox8);
-            listPB.Add(pictureBox9);
-            listPB.Add(pictureBox10);
-            listPB.Add(pictureBox11);
-            listPB.Add(pictureBox12);
-            listPB.Add(pictureBox13);
-            listPB.Add(pictureBox14);
-            listPB.Add(pictureBox15);
-            listPB.Add(pictureBox16);
-            //Et on affiche la main (ou autre liste de cartes) comme d'hab aussi , et sans afficher les cartes en jeu
-            listeChoix = PartieForm.listeChoix.FindAll(x => x.EnJeu == false);
-            //Si c'est un achat, on n'affiche également que les cartes Trésor
-            if (PartieForm.typeChoix == "Achat")
-            { listeChoix = listeChoix.FindAll(x => x.Type == "Trésor"); }
-            int i = 0;
-            try
-            {
-                foreach (Carte carte in listeChoix)
+                //Avant-tout, on réinitialise notre List de cartes choisis
+                listeCartesChoisies = new List<Carte>();
+                //On affiche la main (ou autre liste de cartes) comme d'hab aussi , et sans afficher les cartes en jeu
+                listeChoix = listeChoix.FindAll(x => x.EnJeu == false);
+                //On indique qui va choisir et ce qu'il doit choisir, et on restreint le choix selon le type de choix
+                joueurLabel.Text = PartieForm.tempJoueur.Nom.ToString() + " : choisissez";
+                if (nbCarte == 1)
+                { joueurLabel.Text += " la carte "; }
+                else
+                { joueurLabel.Text += " les cartes "; }
+                switch (typeChoix)
                 {
-                    listPB[i].ImageLocation = carte.Image;
-                    listPB[i].Enabled = true;
-                    i++;
+                    case "Achat":
+                        joueurLabel.Text = PartieForm.tempJoueur.Nom.ToString() + " : choisissez les trésors à utiliser pour payer.";
+                        listeChoix = listeChoix.FindAll(x => x.Type == "Trésor");
+                        break;
+                    case "Ecarter":
+                        joueurLabel.Text += "à écarter.";
+                        break;
+                    case "Défausser":
+                        joueurLabel.Text += "à défausser.";
+                        break;
+                    case "Recevoir":
+                        joueurLabel.Text += "que vous voulez.";
+                        break;
+                    case "Réaction":
+                        joueurLabel.Text += " si vous voulez réagir.";
+                        listeChoix = listeChoix.FindAll(x => x.Type.Contains("Réaction"));
+                        break;
                 }
-            }
-            catch (ArgumentOutOfRangeException)
-            { MessageBox.Show("Oups, il n'y a pas assez de places pour afficher toutes les cartes... Shame on the developer!"); }
-            //On désactive le bouton d'annulation si le choix est obligatoire
-            if (PartieForm.obligation)
-            { buttonCancel.Enabled = false; }
-            //De même avec le bouton de validation si le choix n'est que d'une carte
-            if (PartieForm.nbCarte == 1)
-            { validerButton.Enabled = false; }
-            //Et par défaut on remet la valeur de validation à false
-            estValide = false;
 
-            #region Présélection des trésors
+                //Puis pour choisir on fait une List de PictureBox comme d'hab
+                listPB.Add(pictureBox1);
+                listPB.Add(pictureBox2);
+                listPB.Add(pictureBox3);
+                listPB.Add(pictureBox4);
+                listPB.Add(pictureBox5);
+                listPB.Add(pictureBox6);
+                listPB.Add(pictureBox7);
+                listPB.Add(pictureBox8);
+                listPB.Add(pictureBox9);
+                listPB.Add(pictureBox10);
+                listPB.Add(pictureBox11);
+                listPB.Add(pictureBox12);
+                listPB.Add(pictureBox13);
+                listPB.Add(pictureBox14);
+                listPB.Add(pictureBox15);
+                listPB.Add(pictureBox16);
 
-            //Mais en cas d'achat, on va également présélectionner les trésors pour le joueur
-            if (PartieForm.typeChoix == "Achat")
-            {
-                int monnaiePreSelectionnee = 0;
-                bool flag = false;
-                i = 0;
-                while ((!flag) && (i < listeChoix.Count))
+                int i = 0;
+                try
                 {
-                    if (monnaiePreSelectionnee < PartieForm.carteAacheter.Cout)
+                    foreach (Carte carte in listeChoix)
                     {
-                        listPB[i].Anchor = AnchorStyles.Bottom;
-                        listeCartesChoisies.Add(listeChoix[i]);
-                        monnaiePreSelectionnee += listeChoix[i].MonnaieDonnee;
+                        listPB[i].ImageLocation = carte.Image;
+                        listPB[i].Enabled = true;
                         i++;
                     }
-                    else
-                    { flag = true; }
                 }
-            }
+                catch (ArgumentOutOfRangeException)
+                { MessageBox.Show("Oups, il n'y a pas assez de places pour afficher toutes les cartes... Shame on the developer!"); }
+                //On désactive le bouton d'annulation si le choix est obligatoire
+                if (obligation)
+                { buttonCancel.Enabled = false; }
+                //De même avec le bouton de validation si le choix n'est que d'une carte
+                if (nbCarte == 1)
+                { validerButton.Enabled = false; }
+                //Et par défaut on remet la valeur de validation à false
+                estValide = false;
 
-            #endregion
+                #region Présélection des trésors
+
+                //Mais en cas d'achat, on va également présélectionner les trésors pour le joueur
+                if (typeChoix == "Achat")
+                {
+                    int monnaiePreSelectionnee = 0;
+                    bool flag = false;
+                    i = 0;
+                    while ((!flag) && (i < listeChoix.Count))
+                    {
+                        if (monnaiePreSelectionnee < carteAacheter.Cout)
+                        {
+                            listPB[i].Anchor = AnchorStyles.Bottom;
+                            listeCartesChoisies.Add(listeChoix[i]);
+                            monnaiePreSelectionnee += listeChoix[i].MonnaieDonnee;
+                            i++;
+                        }
+                        else
+                        { flag = true; }
+                    }
+                }
+
+                #endregion
+            }
+            //Si le joueur doit choisir une possibilité, on change juste le texte des boutons
+            else
+            {
+                joueurLabel.Text = PartieForm.tempJoueur.Nom.ToString() + " : choisissez une possibilité.";
+                buttonCancel.Text = bouton1;
+                validerButton.Text = bouton2;
+            }
         }
 
         private void Choix(object sender, EventArgs e)
@@ -133,16 +153,10 @@ namespace Dominion
             //Les images des cartes et les Cartes elles-mêmes sont dans le même ordre, donc on a trouvé l'index de la Carte correspondante
 
             //Si le joueur ne peut choisir qu'une seule carte, on transmet la carte et on ferme la Form
-            if (PartieForm.nbCarte == 1)
+            if (nbCarte == 1)
             {
                 listeCartesChoisies.Add(listeChoix[i]);
                 estValide = true;
-                //DEBUG
-                Console.WriteLine("_____________\nChoix fait");
-                Console.Write(PartieForm.tempJoueur.Nom + " choisit ");
-                if (!(listeCartesChoisies is null))
-                { Console.WriteLine(listeCartesChoisies[0].Nom); }
-                //DEBUG
                 this.Close();
             }
             //Sinon, on ajoute juste la carte à la List qui sera transmise quand le joueur appuie sur le bouton de validation
@@ -178,20 +192,17 @@ namespace Dominion
         {
             estValide = true;
             this.Close();
+            if (typeChoix == "Possibilité")
+            { possibiliteChoisie = bouton2; }
         }
 
         private void ButtonCancel_Click(object sender, EventArgs e)
         {
             estValide = false;
             listeCartesChoisies = null;
-            //DEBUG
-            Console.WriteLine("______________\nAnnulation du choix");
-            Console.WriteLine(PartieForm.tempJoueur.Nom + " ne choisit rien.");
-            if (!(listeCartesChoisies is null))
-            { Console.WriteLine("Problème : la carte choisie est " + listeCartesChoisies[0].Nom + "\n______________"); }
-            else { Console.WriteLine("_____________"); }
-            //DEBUG
             this.Close();
+            if (typeChoix == "Possibilité")
+            { possibiliteChoisie = bouton1; }
         }
     }
 }

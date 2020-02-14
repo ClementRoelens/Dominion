@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,8 +28,9 @@ namespace Dominion
         {
 
             //Configuration et connexion
-            string connectPath = @".\SQLEXPRESS01";
-            SqlConnection conn = new SqlConnection("Data Source=" + connectPath + @"; integrated security = true; Initial catalog = DominionBD");
+            //string connectPath = @".\SQLEXPRESS01";
+            string path = Path.GetFullPath(Path.Combine(Application.StartupPath, @"..\.."));
+            SqlConnection conn = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename="+path+@"\BD_cartes.mdf;Integrated Security=True");
             SqlCommand cmd;
             string sSQL = "SELECT* FROM [dbo].[Cartes]";
             cmd = new SqlCommand(sSQL, conn);
@@ -43,9 +45,17 @@ namespace Dominion
             //Puis on passe à la carte suivante
             while (dataRead.Read())
             {
-                tempCarte = new Carte(dataRead["Nom"].ToString(), dataRead["Image"].ToString(), int.Parse(dataRead["Cout"].ToString()), dataRead["Type"].ToString()
-                    , dataRead["Effet"].ToString(), int.Parse(dataRead["MonnaieDonne"].ToString()), int.Parse(dataRead["CarteDonnee"].ToString()), int.Parse(dataRead["ActionDonnee"].ToString()),
-                    int.Parse(dataRead["AchatDonne"].ToString()), int.Parse(dataRead["JetonPointDonne"].ToString()), int.Parse(dataRead["PointDonne"].ToString()));
+                tempCarte = new Carte
+                    (dataRead["Nom"].ToString(), 
+                    path+@"\Images\"+dataRead["Image"].ToString(), 
+                    int.Parse(dataRead["Cout"].ToString()), dataRead["Type"].ToString(), 
+                    dataRead["Effet"].ToString(), 
+                    int.Parse(dataRead["MonnaieDonne"].ToString()), 
+                    int.Parse(dataRead["CarteDonnee"].ToString()), 
+                    int.Parse(dataRead["ActionDonnee"].ToString()),
+                    int.Parse(dataRead["AchatDonne"].ToString()), 
+                    int.Parse(dataRead["JetonPointDonne"].ToString()), 
+                    int.Parse(dataRead["PointDonne"].ToString()));
                 listeCartes.Add(tempCarte);
             }
             dataRead.Close();

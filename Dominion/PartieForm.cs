@@ -21,6 +21,7 @@ namespace Dominion
         List<TextBox> focusDetailsList = new List<TextBox>();
         List<PictureBox> focusIcones = new List<PictureBox>();
         List<Joueur> listeJoueurs = LancementForm.listeJoueurs;
+
         public static Random rand = new Random();
         public static Joueur JoueurActuel;
         public static List<PictureBox> listPictureBoxMain = new List<PictureBox>();
@@ -35,14 +36,10 @@ namespace Dominion
         public static TextBox monnaieDispoTB;
         public static TextBox monnaieTotaleTB;
         public static TextBox jetonsTB;
-
-        //Pour les choix de cartes
         public static Joueur tempJoueur;
-        public static bool obligation;
-        public static string typeChoix = "Défaut";
-        public static int nbCarte = int.MaxValue;
-        public static List<Carte> listeChoix = new List<Carte>();
-        public static Carte carteAacheter;
+        public static Carte Malediction;
+        Pile PileMalediction;
+
 
         public PartieForm()
         {
@@ -88,21 +85,20 @@ namespace Dominion
             {
                 if ((carte.Type == "Trésor") || (carte.Type == "Victoire"))
                 {
-                    //DEBUG
-                    if (carte.Nom == "Domaine")
-                    {
-                        Console.WriteLine($"Domaine est la pile {i}");
-                    }
-                    //DEBUG
                     Pile pile = new Pile(carte);
                     i++;
                     mapListe.Add(pile);
                 }
-                else
+                else if (carte.Type != "Malédiction")
                 { cartesAction.Add(carte); }
+                else
+                {
+                    Malediction = carte;
+                    PileMalediction = new Pile(Malediction);
+                }
             }
 
-            //Maintenant que nous avons ajouté toutes les cartes Trésor et Victoire, on va mélanger la List des Actions et ajouter les 10 premières.
+            //Maintenant que nous avons ajouté toutes les cartes Trésor et Victoire , on va mélanger la List des Actions et ajouter les 10 premières.
             //Pour ce faire, on va rajouter aléatoirement une carte de notre première List à une List temporaire de cartes Action (pour ensuite les trier)
             List<Carte> tempActions = new List<Carte>();
             for (int j = 0; j < 10; j++)
@@ -124,13 +120,6 @@ namespace Dominion
             i = 0;
             foreach (Pile pile in mapListe)
             {
-                //DEBUG
-                if (pile.carte.Nom == "Domaine")
-                {
-                    Console.WriteLine($"Affectation de la PictureBox de la carte Domaine à mapListe[{i}]");
-
-                }
-                //DEBUG
                 pile.carte.PictureBox = listPicturebox[i];
                 pile.carte.PictureBox.ImageLocation = pile.carte.Image;
                 pile.carte.PictureBox.Dock = DockStyle.Fill;
@@ -243,22 +232,28 @@ namespace Dominion
 
             //On commence par sélectionner la PictureBox pointée
             PictureBox selectedPictureBox = (PictureBox)sender;
-            //Puis on va boucler sur toute la liste de Pile jusqu'à trouver la PictureBox pointée
-            //Une fois trouvée, notre variable globale focusPile prendra la valeur de cette Pile
-            bool flag = false;
-            int i = 0;
-            while (!flag)
+            //Puis, si ce n'est pas la Malédiction, on va boucler sur toute la liste de Pile jusqu'à trouver la PictureBox pointée 
+            if (Malediction.PictureBox.ImageLocation != selectedPictureBox.ImageLocation)
             {
-                //On utilise la propriété ImageLocation de la PictureBox et non pas l'instance elle-même
-                //car la fonction s'applique autant aux cartes de la map qu'aux cartes dans la main
-                if (mapListe[i].carte.Image == selectedPictureBox.ImageLocation)
+                //Une fois trouvée, notre variable globale focusPile prendra la valeur de cette Pile
+                bool flag = false;
+                int i = 0;
+                while (!flag)
                 {
-                    flag = true;
-                    focusPile = mapListe[i];
+                    //On utilise la propriété ImageLocation de la PictureBox et non pas l'instance elle-même
+                    //car la fonction s'applique autant aux cartes de la map qu'aux cartes dans la main
+                    if (mapListe[i].carte.Image == selectedPictureBox.ImageLocation)
+                    {
+                        flag = true;
+                        focusPile = mapListe[i];
+                    }
+                    else
+                    { i++; }
                 }
-                else
-                { i++; }
             }
+            else
+            { focusPile = PileMalediction; }
+
             //Infos communes à toutes les cartes
             focusNom.Text = focusPile.carte.Nom.ToUpper();
             focusPictureBox.ImageLocation = focusPile.carte.Image;
@@ -289,7 +284,7 @@ namespace Dominion
                 ligne++;
             }
             //Ainsi de suite pour chaque caractéristique de carte...
-            if (focusPile.carte.ActionDonnee > 0)
+            if (focusPile.carte.ActionDonnee != 0)
             {
                 TextBox focusActionDonnee = new TextBox();
                 focusActionDonnee.Text = "+ " + focusPile.carte.ActionDonnee.ToString() + " action(s)";
@@ -301,10 +296,11 @@ namespace Dominion
                 ligne++;
             }
 
-            if (focusPile.carte.AchatDonne > 0)
+            if (focusPile.carte.AchatDonne != 0)
             {
                 TextBox focusAchatDonne = new TextBox();
-                focusAchatDonne.Text = "+ " + focusPile.carte.ActionDonnee.ToString() + " achat(s)";
+                focusAchatDonne.Text = (focusPile.carte.AchatDonne > 0) ? "+ " : "";
+                focusAchatDonne.Text += focusPile.carte.ActionDonnee.ToString() + " achat(s)";
                 focusAchatDonne.BorderStyle = BorderStyle.None;
                 layoutDetailFocus.Controls.Add(focusAchatDonne, 0, ligne);
                 layoutDetailFocus.SetColumnSpan(focusAchatDonne, 2);
@@ -313,10 +309,11 @@ namespace Dominion
                 ligne++;
             }
 
-            if (focusPile.carte.MonnaieDonnee > 0)
+            if (focusPile.carte.MonnaieDonnee != 0)
             {
                 TextBox focusMonnaieDonnee = new TextBox();
-                focusMonnaieDonnee.Text = "+ " + focusPile.carte.MonnaieDonnee.ToString();
+                focusMonnaieDonnee.Text = (focusPile.carte.MonnaieDonnee > 0) ? "+ " : "";
+                focusMonnaieDonnee.Text += focusPile.carte.MonnaieDonnee.ToString();
                 focusMonnaieDonnee.BorderStyle = BorderStyle.None;
                 focusMonnaieDonnee.Anchor = AnchorStyles.None;
                 layoutDetailFocus.Controls.Add(focusMonnaieDonnee, 0, ligne);
@@ -335,10 +332,11 @@ namespace Dominion
                 ligne++;
             }
 
-            if (focusPile.carte.JetonPointDonne > 0)
+            if (focusPile.carte.JetonPointDonne != 0)
             {
                 TextBox focusJetonPointDonne = new TextBox();
-                focusJetonPointDonne.Text = "+ " + focusPile.carte.JetonPointDonne.ToString();
+                focusJetonPointDonne.Text = (focusPile.carte.JetonPointDonne > 0) ? "+ " : "";
+                focusJetonPointDonne.Text += focusPile.carte.JetonPointDonne.ToString();
                 focusJetonPointDonne.BorderStyle = BorderStyle.None;
                 focusJetonPointDonne.Anchor = AnchorStyles.None;
                 layoutDetailFocus.Controls.Add(focusJetonPointDonne, 0, ligne);
@@ -355,10 +353,11 @@ namespace Dominion
                 ligne++;
             }
 
-            if (focusPile.carte.PointDonne > 0)
+            if (focusPile.carte.PointDonne != 0)
             {
                 TextBox focusPointDonne = new TextBox();
-                focusPointDonne.Text = "+ " + focusPile.carte.PointDonne.ToString() + " point(s) de victoire";
+                focusPointDonne.Text = (focusPile.carte.PointDonne > 0) ? "+ " : "";
+                focusPointDonne.Text += focusPile.carte.PointDonne.ToString() + " point(s) de victoire";
                 focusPointDonne.BorderStyle = BorderStyle.None;
                 layoutDetailFocus.Controls.Add(focusPointDonne, 0, ligne);
                 layoutDetailFocus.SetColumnSpan(focusPointDonne, 2);
@@ -438,36 +437,38 @@ namespace Dominion
                     {
                         //Une fois trouvé, on lève le flag pour sortir de la boucle
                         flag = true;
-                        //On a donc trouvé notre carte.  On va tester si cette carte est une carte Action (Contains car il y a des types multiples)
-                        if (JoueurActuel.Main[i].Type.Contains("Action"))
+                        //On a donc trouvé notre carte.  On va tester si cette carte est une carte Action ou Trésor (Contains car il y a des types multiples)
+                        if (JoueurActuel.Main[i].Type.Contains("Action") || (JoueurActuel.Main[i].Type.Contains("Trésor")))
                         {
-                            //On teste donc si une action est disponible. Sinon on le dit au joueur et on sort de la boucle
-                            if (JoueurActuel.ActionDispo < 1)
-                            { MessageBox.Show("Vous n'avez plus d'action disponible"); }
-                            else
+                            //Si la carte est une action, il faut une procédure plus précise
+                            if (JoueurActuel.Main[i].Type.Contains("Action"))
                             {
-                                //Si oui, on désincrémente le nombre d'actions disponibles et on passe la carte en jeu
-                                JoueurActuel.ActionDispo--;
-                                JoueurActuel.Main[i].EnJeu = true;
-                                //Et on le signale
-                                actionDispoTextBox.Text = JoueurActuel.ActionDispo.ToString() + " action(s)";
-                                //Et on le signale graphiquement en la décalant vers le bas
-                                selectedPB.Anchor = AnchorStyles.Bottom;
-                                //Puis on ajoute les possibilités données
-                                JoueurActuel.MonnaieDispo += JoueurActuel.Main[i].MonnaieDonnee;
-                                JoueurActuel.AchatDispo += JoueurActuel.Main[i].AchatDonne;
-                                JoueurActuel.ActionDispo += JoueurActuel.Main[i].ActionDonnee;
-                                JoueurActuel.JetonVictoireDispo += JoueurActuel.Main[i].JetonPointDonne;
-                                JoueurActuel.Piocher(JoueurActuel.Main[i].CarteDonnee);
-                                //DEBUG
-                                Console.WriteLine(JoueurActuel.Nom + " joue " + JoueurActuel.Main[i].Nom);
-                                //DEBUG
-                                //Et on lance l'effet
-                                JoueurActuel.Main[i].Effet();
-                                //Et on met à jour les infos
-                                JoueurActuel.MAJMain();
-                                JoueurActuel.MAJInfos();
+                                //On teste donc si une action est disponible. Sinon on le dit au joueur et on sort de la boucle
+                                if (JoueurActuel.ActionDispo < 1)
+                                { MessageBox.Show("Vous n'avez plus d'action disponible"); }
+                                else
+                                {
+                                    //Si oui, on désincrémente le nombre d'actions disponibles et on passe la carte en jeu
+                                    JoueurActuel.ActionDispo--;
+                                    //Et on le signale
+                                    actionDispoTextBox.Text = JoueurActuel.ActionDispo.ToString() + " action(s)";
+                                }
                             }
+                            //On code les procédures communes aux Trésors et aux Actions
+                            JoueurActuel.Main[i].EnJeu = true;
+                            //Et on le signale graphiquement en la décalant vers le bas
+                            selectedPB.Anchor = AnchorStyles.Bottom;
+                            JoueurActuel.MonnaieDispo += JoueurActuel.Main[i].MonnaieDonnee;
+                            //Des trésors peuvent donner ça aussi?
+                            JoueurActuel.AchatDispo += JoueurActuel.Main[i].AchatDonne;
+                            JoueurActuel.ActionDispo += JoueurActuel.Main[i].ActionDonnee;
+                            JoueurActuel.JetonVictoireDispo += JoueurActuel.Main[i].JetonPointDonne;
+                            JoueurActuel.Piocher(JoueurActuel.Main[i].CarteDonnee);
+                            //Oon lance l'effet
+                            JoueurActuel.Main[i].Effet();
+                            //Et on met à jour les infos
+                            JoueurActuel.MAJMain();
+                            JoueurActuel.MAJInfos();
                         }
                     }
                     else
@@ -510,7 +511,7 @@ namespace Dominion
                 else
                 {
                     //On va appeler une fonction ouvrant notre formulaire de choix, et on doit donc lui passer la carte devant être achetée, pour avoir son coût
-                    carteAacheter = mapListe[i].carte;
+                    ChoixForm.carteAacheter = mapListe[i].carte;
                     //La fonction retourne une liste de carte, on crée donc une nouvelle List
                     List<Carte> tresorsSelectionnes = JoueurActuel.ChoisirDesCartes("Achat", JoueurActuel.Main, int.MaxValue, false);
                     //Ensuite, on continue l'action seulement si le formulaire a bien été validé (si non, continuer == false et donc l'achat ne sera pas finalisé)
@@ -518,7 +519,7 @@ namespace Dominion
                     {
                         //Vérification nécessaire pour la carte Grand marché
                         bool grandMarche = true;
-                        if (carteAacheter.Nom == "Grand marché")
+                        if (ChoixForm.carteAacheter.Nom == "Grand marché")
                         {
                             //Les trésors sélectionnés ne doivent pas contenir de carte Cuivre
                             if (!(tresorsSelectionnes.Find(x => x.Nom == "Cuivre") is null))
@@ -592,6 +593,9 @@ namespace Dominion
                     JoueurActuel.MAJInfos();
                 }
             }
+            //Certaines cartes ont des effets quand on les achète
+            if (mapListe[i].carte.Nom == "Noble brigand")
+            { mapListe[i].carte.Effet(); }
         }
 
         private void FinDeTour(object sender, EventArgs e)
@@ -618,14 +622,11 @@ namespace Dominion
 
         private void Button1_Click_1(object sender, EventArgs e)
         {
-            FinDePartie fin = new FinDePartie();
-            fin.ShowDialog();
-
-            //Carte test = new Carte("Agrandissement", @"C:\Users\ohne6\Desktop\Dominion\Images\6GrandMarche.png", 6, "Action", "gfreg", 0, 0, 0, 0, 0, 0);
-            //JoueurActuel.Main.Add(new Carte("Or", @"C:\Users\ohne6\Desktop\Dominion\Images\Or.jpg", 6, "Trésor", "rgr", 6, 0, 0, 0, 0, 0));
-            //JoueurActuel.Main.Add(new Carte("Domaine", @"C:\Users\ohne6\Desktop\Dominion\Images\Domaine.jpg", 0, "Trésor", "rgr", 6, 0, 0, 0, 0, 0));
-            //JoueurActuel.Main.Add(new Carte("Or", @"C:\Users\ohne6\Desktop\Dominion\Images\Or.jpg", 6, "Trésor", "rgr", 6, 0, 0, 0, 0, 0));
-            //test.Effet();
+            Carte test = new Carte("Or des fous", @"C:\Users\ohne6\source\repos\Dominion\Dominion\Images\Acoder\5Tortionnaire.jpg", 6, "Trésor", "gfreg", 0, 0, 0, 0, 0, 0);
+            Carte ordesfous = new Carte("Or des fous", @"C:\Users\ohne6\source\repos\Dominion\Dominion\Images\Acoder\5Tortionnaire.jpg", 6, "Trésor", "gfreg", 0, 0, 0, 0, 0, 0);
+            JoueurActuel.Main.Add(ordesfous);
+            ordesfous.EnJeu = true;
+            test.Effet();
 
             ////Ce booléen va déterminer si oui ou non on saute l'étape de sélection de la monnaie
             //bool continuer = false;

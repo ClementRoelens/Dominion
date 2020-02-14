@@ -11,14 +11,13 @@ namespace Dominion
     {
         public Carte carte;
         public int nombre;
-        public PictureBox pictureBox;
 
         public Pile()
         { }
 
-        public Pile(Carte pCarte)
+        public Pile(Carte Carte)
         {
-            this.carte = pCarte;
+            this.carte = Carte;
 
             switch (this.carte.Type)
             {
@@ -31,7 +30,9 @@ namespace Dominion
                 case "Trésor":
                     this.nombre = 50;
                     break;
-
+                case "Malédiction":
+                    this.nombre = 15;
+                    break;
             }
         }
     }
