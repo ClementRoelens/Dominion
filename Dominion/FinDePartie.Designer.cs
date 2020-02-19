@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FinDePartie));
             this.labelVainqueur = new System.Windows.Forms.TextBox();
             this.joueur1Points = new System.Windows.Forms.TextBox();
             this.joueur2Points = new System.Windows.Forms.TextBox();
@@ -144,8 +145,9 @@
             this.Controls.Add(this.joueur2Points);
             this.Controls.Add(this.joueur1Points);
             this.Controls.Add(this.labelVainqueur);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FinDePartie";
-            this.Text = "FinDePartie";
+            this.Text = "Fin de partie";
             this.Load += new System.EventHandler(this.FinDePartie_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

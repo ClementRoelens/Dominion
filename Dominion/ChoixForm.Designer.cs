@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ChoixForm));
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.pictureBox16 = new System.Windows.Forms.PictureBox();
             this.pictureBox15 = new System.Windows.Forms.PictureBox();
@@ -288,7 +289,6 @@
             this.joueurLabel.Size = new System.Drawing.Size(345, 63);
             this.joueurLabel.TabIndex = 1;
             this.joueurLabel.TabStop = false;
-            this.joueurLabel.Text = "Joueur choisissez";
             this.joueurLabel.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // buttonCancel
@@ -321,8 +321,9 @@
             this.Controls.Add(this.buttonCancel);
             this.Controls.Add(this.joueurLabel);
             this.Controls.Add(this.tableLayoutPanel1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "ChoixForm";
-            this.Text = "ChoixForm";
+            this.Text = "Faites un choix";
             this.Load += new System.EventHandler(this.ChoixForm_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox16)).EndInit();

@@ -13,6 +13,7 @@ namespace Dominion
     public partial class AffichageCartesDevoilees : Form
     {
         public static List<Carte> listCartesDevoilees = new List<Carte>();
+        public static Joueur joueurDevoilant = new Joueur();
 
         public AffichageCartesDevoilees()
         {
@@ -47,6 +48,8 @@ namespace Dominion
                 listPB[i].Visible = true;
                 i++;
             }
+
+            titre.Text = $"Carte dévoilées par {joueurDevoilant.Nom} :";
         }
 
         private void Button1_Click(object sender, EventArgs e)

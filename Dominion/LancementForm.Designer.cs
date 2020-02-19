@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LancementForm));
             this.nomJoueur1 = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.nomJoueur2 = new System.Windows.Forms.TextBox();
@@ -148,8 +149,9 @@
             this.Controls.Add(this.nomJoueur2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.nomJoueur1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "LancementForm";
-            this.Text = "Form1";
+            this.Text = "Choisissez les joueurs";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

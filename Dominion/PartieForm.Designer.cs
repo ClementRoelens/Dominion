@@ -31,6 +31,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PartieForm));
             this.mapLayout = new System.Windows.Forms.TableLayoutPanel();
             this.pictureBox5 = new System.Windows.Forms.PictureBox();
+            this.layout10eCarte = new System.Windows.Forms.TableLayoutPanel();
             this.pictureBox18 = new System.Windows.Forms.PictureBox();
             this.pictureBox16 = new System.Windows.Forms.PictureBox();
             this.pictureBox15 = new System.Windows.Forms.PictureBox();
@@ -47,6 +48,8 @@
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.layout9eCarte = new System.Windows.Forms.TableLayoutPanel();
+            this.pictureBox17 = new System.Windows.Forms.PictureBox();
             this.focusLayout = new System.Windows.Forms.TableLayoutPanel();
             this.focusNbPile = new System.Windows.Forms.TextBox();
             this.layoutDetailFocus = new System.Windows.Forms.TableLayoutPanel();
@@ -97,14 +100,11 @@
             this.deckLabel = new System.Windows.Forms.TextBox();
             this.deckImage = new System.Windows.Forms.PictureBox();
             this.jetonsTextBox = new System.Windows.Forms.TextBox();
-            this.infoActionTextBox = new System.Windows.Forms.TextBox();
             this.monnaieTotaleTextBox = new System.Windows.Forms.TextBox();
             this.button1 = new System.Windows.Forms.Button();
-            this.pictureBox17 = new System.Windows.Forms.PictureBox();
-            this.layout9eCarte = new System.Windows.Forms.TableLayoutPanel();
-            this.layout10eCarte = new System.Windows.Forms.TableLayoutPanel();
             this.mapLayout.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
+            this.layout10eCarte.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox18)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox16)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox15)).BeginInit();
@@ -121,6 +121,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.layout9eCarte.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox17)).BeginInit();
             this.focusLayout.SuspendLayout();
             this.layoutDetailFocus.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.focusCout)).BeginInit();
@@ -160,9 +162,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.carteMain13)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.defausseImage)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.deckImage)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox17)).BeginInit();
-            this.layout9eCarte.SuspendLayout();
-            this.layout10eCarte.SuspendLayout();
             this.SuspendLayout();
             // 
             // mapLayout
@@ -216,6 +215,23 @@
             this.pictureBox5.Click += new System.EventHandler(this.Achat);
             this.pictureBox5.MouseEnter += new System.EventHandler(this.Hover);
             this.pictureBox5.MouseLeave += new System.EventHandler(this.Unhover);
+            // 
+            // layout10eCarte
+            // 
+            this.layout10eCarte.ColumnCount = 3;
+            this.mapLayout.SetColumnSpan(this.layout10eCarte, 4);
+            this.layout10eCarte.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 36.34085F));
+            this.layout10eCarte.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 28.57143F));
+            this.layout10eCarte.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 35.33834F));
+            this.layout10eCarte.Controls.Add(this.pictureBox18, 1, 0);
+            this.layout10eCarte.Cursor = System.Windows.Forms.Cursors.Default;
+            this.layout10eCarte.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.layout10eCarte.Location = new System.Drawing.Point(403, 341);
+            this.layout10eCarte.Name = "layout10eCarte";
+            this.layout10eCarte.RowCount = 1;
+            this.layout10eCarte.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.layout10eCarte.Size = new System.Drawing.Size(399, 165);
+            this.layout10eCarte.TabIndex = 17;
             // 
             // pictureBox18
             // 
@@ -411,11 +427,40 @@
             this.pictureBox1.MouseEnter += new System.EventHandler(this.Hover);
             this.pictureBox1.MouseLeave += new System.EventHandler(this.Unhover);
             // 
+            // layout9eCarte
+            // 
+            this.layout9eCarte.ColumnCount = 3;
+            this.mapLayout.SetColumnSpan(this.layout9eCarte, 4);
+            this.layout9eCarte.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33F));
+            this.layout9eCarte.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 27.91878F));
+            this.layout9eCarte.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 39.0863F));
+            this.layout9eCarte.Controls.Add(this.pictureBox17, 1, 0);
+            this.layout9eCarte.Cursor = System.Windows.Forms.Cursors.Default;
+            this.layout9eCarte.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.layout9eCarte.Location = new System.Drawing.Point(3, 341);
+            this.layout9eCarte.Name = "layout9eCarte";
+            this.layout9eCarte.RowCount = 1;
+            this.layout9eCarte.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.layout9eCarte.Size = new System.Drawing.Size(394, 165);
+            this.layout9eCarte.TabIndex = 16;
+            // 
+            // pictureBox17
+            // 
+            this.pictureBox17.Cursor = System.Windows.Forms.Cursors.Default;
+            this.pictureBox17.Location = new System.Drawing.Point(133, 3);
+            this.pictureBox17.Name = "pictureBox17";
+            this.pictureBox17.Size = new System.Drawing.Size(103, 159);
+            this.pictureBox17.TabIndex = 0;
+            this.pictureBox17.TabStop = false;
+            this.pictureBox17.Click += new System.EventHandler(this.Achat);
+            this.pictureBox17.MouseEnter += new System.EventHandler(this.Hover);
+            this.pictureBox17.MouseLeave += new System.EventHandler(this.Unhover);
+            // 
             // focusLayout
             // 
             this.focusLayout.ColumnCount = 2;
             this.focusLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.focusLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 303F));
+            this.focusLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 437F));
             this.focusLayout.Controls.Add(this.focusNbPile, 0, 3);
             this.focusLayout.Controls.Add(this.layoutDetailFocus, 1, 2);
             this.focusLayout.Controls.Add(this.focusPictureBox, 0, 1);
@@ -424,11 +469,11 @@
             this.focusLayout.Name = "focusLayout";
             this.focusLayout.RowCount = 4;
             this.focusLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.focusLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 14F));
-            this.focusLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 358F));
+            this.focusLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 21F));
+            this.focusLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 351F));
             this.focusLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 77F));
             this.focusLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.focusLayout.Size = new System.Drawing.Size(552, 495);
+            this.focusLayout.Size = new System.Drawing.Size(651, 495);
             this.focusLayout.TabIndex = 1;
             // 
             // focusNbPile
@@ -441,7 +486,7 @@
             this.focusNbPile.Multiline = true;
             this.focusNbPile.Name = "focusNbPile";
             this.focusNbPile.ReadOnly = true;
-            this.focusNbPile.Size = new System.Drawing.Size(243, 39);
+            this.focusNbPile.Size = new System.Drawing.Size(208, 39);
             this.focusNbPile.TabIndex = 2;
             this.focusNbPile.TabStop = false;
             this.focusNbPile.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -451,13 +496,13 @@
             this.layoutDetailFocus.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.layoutDetailFocus.ColumnCount = 2;
             this.layoutDetailFocus.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.layoutDetailFocus.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 264F));
+            this.layoutDetailFocus.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 393F));
             this.layoutDetailFocus.Controls.Add(this.focusType, 1, 6);
             this.layoutDetailFocus.Controls.Add(this.focusCout, 0, 6);
             this.layoutDetailFocus.Controls.Add(this.focusNom, 1, 0);
             this.layoutDetailFocus.Cursor = System.Windows.Forms.Cursors.Default;
             this.layoutDetailFocus.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.251F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.layoutDetailFocus.Location = new System.Drawing.Point(252, 63);
+            this.layoutDetailFocus.Location = new System.Drawing.Point(218, 70);
             this.layoutDetailFocus.Name = "layoutDetailFocus";
             this.layoutDetailFocus.RowCount = 7;
             this.focusLayout.SetRowSpan(this.layoutDetailFocus, 2);
@@ -469,7 +514,7 @@
             this.layoutDetailFocus.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 7F));
             this.layoutDetailFocus.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 52F));
             this.layoutDetailFocus.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.layoutDetailFocus.Size = new System.Drawing.Size(297, 299);
+            this.layoutDetailFocus.Size = new System.Drawing.Size(428, 299);
             this.layoutDetailFocus.TabIndex = 1;
             // 
             // focusType
@@ -478,10 +523,10 @@
             this.focusType.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.focusType.Cursor = System.Windows.Forms.Cursors.Default;
             this.focusType.Font = new System.Drawing.Font("DejaVu Sans Light", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.focusType.Location = new System.Drawing.Point(71, 261);
+            this.focusType.Location = new System.Drawing.Point(87, 261);
             this.focusType.Name = "focusType";
             this.focusType.ReadOnly = true;
-            this.focusType.Size = new System.Drawing.Size(187, 23);
+            this.focusType.Size = new System.Drawing.Size(288, 23);
             this.focusType.TabIndex = 5;
             this.focusType.TabStop = false;
             this.focusType.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -490,7 +535,7 @@
             // 
             this.focusCout.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.focusCout.Cursor = System.Windows.Forms.Cursors.Default;
-            this.focusCout.Location = new System.Drawing.Point(3, 259);
+            this.focusCout.Location = new System.Drawing.Point(4, 259);
             this.focusCout.Name = "focusCout";
             this.focusCout.Size = new System.Drawing.Size(27, 27);
             this.focusCout.TabIndex = 6;
@@ -502,11 +547,11 @@
             this.focusNom.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.focusNom.Cursor = System.Windows.Forms.Cursors.Default;
             this.focusNom.Font = new System.Drawing.Font("DejaVu Sans Light", 17F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.focusNom.Location = new System.Drawing.Point(36, 7);
+            this.focusNom.Location = new System.Drawing.Point(38, 7);
             this.focusNom.Multiline = true;
             this.focusNom.Name = "focusNom";
             this.focusNom.ReadOnly = true;
-            this.focusNom.Size = new System.Drawing.Size(258, 26);
+            this.focusNom.Size = new System.Drawing.Size(387, 26);
             this.focusNom.TabIndex = 0;
             this.focusNom.TabStop = false;
             this.focusNom.Text = "EXEMPLE";
@@ -518,7 +563,7 @@
             this.focusPictureBox.Location = new System.Drawing.Point(3, 49);
             this.focusPictureBox.Name = "focusPictureBox";
             this.focusLayout.SetRowSpan(this.focusPictureBox, 2);
-            this.focusPictureBox.Size = new System.Drawing.Size(243, 366);
+            this.focusPictureBox.Size = new System.Drawing.Size(208, 366);
             this.focusPictureBox.TabIndex = 0;
             this.focusPictureBox.TabStop = false;
             // 
@@ -1228,18 +1273,6 @@
             this.jetonsTextBox.Text = "jeton";
             this.jetonsTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // infoActionTextBox
-            // 
-            this.infoActionTextBox.Cursor = System.Windows.Forms.Cursors.Default;
-            this.infoActionTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 17F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.infoActionTextBox.Location = new System.Drawing.Point(880, 291);
-            this.infoActionTextBox.Multiline = true;
-            this.infoActionTextBox.Name = "infoActionTextBox";
-            this.infoActionTextBox.ReadOnly = true;
-            this.infoActionTextBox.Size = new System.Drawing.Size(226, 106);
-            this.infoActionTextBox.TabIndex = 16;
-            this.infoActionTextBox.TabStop = false;
-            // 
             // monnaieTotaleTextBox
             // 
             this.monnaieTotaleTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
@@ -1257,59 +1290,15 @@
             // 
             // button1
             // 
+            this.button1.Enabled = false;
             this.button1.Location = new System.Drawing.Point(919, 36);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 43);
             this.button1.TabIndex = 18;
             this.button1.Text = "teeeeeeeest";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Visible = false;
             this.button1.Click += new System.EventHandler(this.Button1_Click_1);
-            // 
-            // pictureBox17
-            // 
-            this.pictureBox17.Cursor = System.Windows.Forms.Cursors.Default;
-            this.pictureBox17.Location = new System.Drawing.Point(133, 3);
-            this.pictureBox17.Name = "pictureBox17";
-            this.pictureBox17.Size = new System.Drawing.Size(103, 159);
-            this.pictureBox17.TabIndex = 0;
-            this.pictureBox17.TabStop = false;
-            this.pictureBox17.Click += new System.EventHandler(this.Achat);
-            this.pictureBox17.MouseEnter += new System.EventHandler(this.Hover);
-            this.pictureBox17.MouseLeave += new System.EventHandler(this.Unhover);
-            // 
-            // layout9eCarte
-            // 
-            this.layout9eCarte.ColumnCount = 3;
-            this.mapLayout.SetColumnSpan(this.layout9eCarte, 4);
-            this.layout9eCarte.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33F));
-            this.layout9eCarte.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 27.91878F));
-            this.layout9eCarte.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 39.0863F));
-            this.layout9eCarte.Controls.Add(this.pictureBox17, 1, 0);
-            this.layout9eCarte.Cursor = System.Windows.Forms.Cursors.Default;
-            this.layout9eCarte.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.layout9eCarte.Location = new System.Drawing.Point(3, 341);
-            this.layout9eCarte.Name = "layout9eCarte";
-            this.layout9eCarte.RowCount = 1;
-            this.layout9eCarte.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.layout9eCarte.Size = new System.Drawing.Size(394, 165);
-            this.layout9eCarte.TabIndex = 16;
-            // 
-            // layout10eCarte
-            // 
-            this.layout10eCarte.ColumnCount = 3;
-            this.mapLayout.SetColumnSpan(this.layout10eCarte, 4);
-            this.layout10eCarte.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 36.34085F));
-            this.layout10eCarte.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 28.57143F));
-            this.layout10eCarte.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 35.33834F));
-            this.layout10eCarte.Controls.Add(this.pictureBox18, 1, 0);
-            this.layout10eCarte.Cursor = System.Windows.Forms.Cursors.Default;
-            this.layout10eCarte.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.layout10eCarte.Location = new System.Drawing.Point(403, 341);
-            this.layout10eCarte.Name = "layout10eCarte";
-            this.layout10eCarte.RowCount = 1;
-            this.layout10eCarte.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.layout10eCarte.Size = new System.Drawing.Size(399, 165);
-            this.layout10eCarte.TabIndex = 17;
             // 
             // PartieForm
             // 
@@ -1318,7 +1307,6 @@
             this.ClientSize = new System.Drawing.Size(1904, 921);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.monnaieTotaleTextBox);
-            this.Controls.Add(this.infoActionTextBox);
             this.Controls.Add(this.jetonsTextBox);
             this.Controls.Add(this.deckLabel);
             this.Controls.Add(this.deckImage);
@@ -1332,11 +1320,14 @@
             this.Controls.Add(this.mainLayout);
             this.Controls.Add(this.focusLayout);
             this.Controls.Add(this.mapLayout);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximizeBox = false;
             this.Name = "PartieForm";
-            this.Text = "PartieForm";
+            this.Text = "Partie en cours";
             this.Load += new System.EventHandler(this.PartieForm_Load);
             this.mapLayout.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).EndInit();
+            this.layout10eCarte.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox18)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox16)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox15)).EndInit();
@@ -1353,6 +1344,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.layout9eCarte.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox17)).EndInit();
             this.focusLayout.ResumeLayout(false);
             this.focusLayout.PerformLayout();
             this.layoutDetailFocus.ResumeLayout(false);
@@ -1394,9 +1387,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.carteMain13)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.defausseImage)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.deckImage)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox17)).EndInit();
-            this.layout9eCarte.ResumeLayout(false);
-            this.layout10eCarte.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1452,7 +1442,6 @@
         private System.Windows.Forms.TextBox deckLabel;
         private System.Windows.Forms.PictureBox deckImage;
         private System.Windows.Forms.TextBox jetonsTextBox;
-        private System.Windows.Forms.TextBox infoActionTextBox;
         private System.Windows.Forms.PictureBox carteMain32;
         private System.Windows.Forms.PictureBox carteMain31;
         private System.Windows.Forms.PictureBox carteMain30;

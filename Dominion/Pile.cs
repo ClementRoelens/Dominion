@@ -10,28 +10,52 @@ namespace Dominion
     public class Pile
     {
         public Carte carte;
-        public int nombre;
+        public int nombre = 15;
 
         public Pile()
         { }
 
         public Pile(Carte Carte)
         {
+            //Le constructeur de la pile sert à indiquer de quelle Cartes est composée la pile
             this.carte = Carte;
-
-            switch (this.carte.Type)
+            //Mais également le nombre de ces cartes
+            switch (this.carte.Nom)
             {
-                case "Action":
-                    this.nombre = 10;
-                    break;
-                case "Victoire":
-                    this.nombre = 15;
-                    break;
-                case "Trésor":
+                case "Cuivre":
                     this.nombre = 50;
                     break;
+                case "Argent":
+                    this.nombre = 40;
+                    break;
+                case "Or":
+                    this.nombre = 30;
+                    break;
+                case "Platine":
+                    this.nombre = 12;
+                    break;
+                case "Domaine":
+                case "Duché":
+                case "Province":
+                case "Colonie":
+                    this.nombre = (LancementForm.ListeJoueurs.Count > 2) ? 12 : 8;
+                    break;
                 case "Malédiction":
-                    this.nombre = 15;
+                    switch (LancementForm.ListeJoueurs.Count)
+                    {
+                        case 2:
+                            this.nombre = 10;
+                            break;
+                        case 3:
+                            this.nombre = 20;
+                            break;
+                        case 4:
+                            this.nombre = 30;
+                            break;
+                    }
+                    break;
+                default:
+                    this.nombre = 10;
                     break;
             }
         }

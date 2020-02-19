@@ -25,14 +25,22 @@ namespace Dominion
         private void FinDePartie_Load(object sender, EventArgs e)
         {
             //On va compter les points de chaque joueur
-            List<Joueur> listeJoueurs = LancementForm.listeJoueurs;
+            List<Joueur> listeJoueurs = LancementForm.ListeJoueurs;
             //Pour ça, pour chaque joueur, on va ajouter la défausse et la main au deck et compter les points donnés par chaque carte
             foreach (Joueur joueur in listeJoueurs)
             {
                 joueur.Deck.AddRange(joueur.Defausse);
                 joueur.Deck.AddRange(joueur.Main);
-                foreach (Carte carte in joueur.Deck)
-                { joueur.Points += carte.PointDonne; }
+                foreach (Carte carte in joueur.Deck.FindAll(x=>x.Type.Contains("Victoire")))
+                {
+                    joueur.Points += carte.PointDonne;
+                    //Et si la carte a un gain de point de victoire dynamique, on le compte également
+                    if (carte.EffetText != "")
+                    {
+                        PartieForm.tempJoueur = joueur;
+                        carte.CompterPointsDeVictoire();
+                    }
+                }
                 //Et on ajoute les jetons
                 joueur.Points += joueur.JetonVictoireDispo;
             }

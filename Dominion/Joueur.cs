@@ -10,7 +10,7 @@ namespace Dominion
     public class Joueur
     {
         public string Nom;
-        public List<Carte> Deck;
+        public List<Carte> Deck = new List<Carte>();
         public List<Carte> Main = new List<Carte>();
         //public List<Carte> EnJeu = new List<Carte>();
         public List<Carte> Defausse = new List<Carte>();
@@ -20,12 +20,12 @@ namespace Dominion
         public int JetonVictoireDispo = 0;
         public int Points;
 
+        public Joueur() { }
 
         public Joueur(string Nom)
         {
             this.Nom = Nom;
         }
-
 
         public void MelangerLeDeck()
         {
@@ -95,29 +95,32 @@ namespace Dominion
             }
         }
 
-        public void Devoiler(int nombre, bool action)
+        public List<Carte> Devoiler(int nombre)
         {
             List<Carte> cartesDevoilees = new List<Carte>();
             for (int i = 0; i < nombre; i++)
-            { cartesDevoilees.Add(this.Deck[i]); }
-            if (!action)
-            {
-                AffichageCartesDevoilees.listCartesDevoilees = cartesDevoilees;
-                AffichageCartesDevoilees devoilement = new AffichageCartesDevoilees();
-                devoilement.ShowDialog();
+            {//Au cas où le joueur n'aurait plus de cartes dans son deck...
+                if (this.Deck.Count == 0)
+                { this.MelangerLeDeck(); }
+                //Ensuite on ajoute la carte dans la liste et on la supprime du deck
+                cartesDevoilees.Add(this.Deck[0]);
+                this.Deck.RemoveAt(0);
             }
-            else
-            {
+            //Ensuite on passe la List à la variable globale et on lance l'autre fenêtre
+            AffichageCartesDevoilees.listCartesDevoilees = cartesDevoilees;
+            AffichageCartesDevoilees.joueurDevoilant = this;
+            AffichageCartesDevoilees affichage = new AffichageCartesDevoilees();
+            affichage.ShowDialog();
 
-            }
+            return cartesDevoilees;
         }
 
         public void Defausser(Carte cible)
         {
-            //On ajoute la carte à la List de défausse
+            //On désactive la carte puis on l'ajoute à la List de défausse, et on la supprime de la main
+            cible.EnJeu = false;
             this.Defausse.Add(cible);
-            //Puis on supprime de la main
-            this.Main.RemoveAt(this.Main.FindIndex(x => x == cible));
+            this.Main.Remove(this.Main.Find(x => x == cible));
 
             //Si le joueur qui défausse a la main, on doit supprimer l'image de sa main et l'ajouter dans la défausse
             if (this == PartieForm.JoueurActuel)
@@ -127,31 +130,47 @@ namespace Dominion
             }
         }
 
-        public void Recevoir(Carte cible, bool enMain = false)
+        public void Recevoir(Carte cible, string zone = "Défausse")
         {
 
             //On crée une nouvelle instance de la carte qu'on va ajouter à la défausse
             Carte tempCarte = (Carte)cible.Clone();
 
-            if (enMain)
+            //Si la cible est un campement nomade, elle est forcément reçue sur le deck
+            if (cible.Nom == "Campement nomade")
+            { zone = "Deck"; }
+
+            //On ajoute la carte à la zone spécifiée et on met à jour les infos
+            switch (zone)
             {
-                this.Main.Add(tempCarte);
-                if (this == PartieForm.JoueurActuel)
-                {
-                    this.MAJMain();
-                    this.MAJInfos();
-                }
+                case "En main":
+                    this.Main.Add(tempCarte);
+                    if (this == PartieForm.JoueurActuel)
+                    {
+                        this.MAJMain();
+                        this.MAJInfos();
+                    }
+                    break;
+
+                case "Défausse":
+                    this.Defausse.Add(tempCarte);
+                    //Bien entendu on met à jour l'affichage de la défausse si le joueur ayant reçu la carte est le joueur actuel
+                    if (this == PartieForm.JoueurActuel)
+                    {
+                        PartieForm.defaussePB.ImageLocation = cible.Image;
+                        PartieForm.defausseTB.Text = $"Défausse : {this.Defausse.Count.ToString()}";
+                    }
+                    break;
+
+                case "Deck":
+                    this.Deck.Insert(0, cible);
+                    PartieForm.deckTB.Text = $"Deck : {this.Deck.Count.ToString()}";
+                    break;
             }
-            else
-            {
-                this.Defausse.Add(tempCarte);
-                //Bien entendu on met à jour l'affichage de la défausse
-                PartieForm.defaussePB.ImageLocation = cible.Image;
-                PartieForm.defausseTB.Text = $"Défausse : {this.Defausse.Count.ToString()}";
-            }
+
+            //Et on désincrémente le nombre de cartes dans la pile si la carte n'est pas une Malédiction (car elle n'est pas dans les piles)
             if (cible.Nom != "Malédiction")
             {
-                //Et on désincrémente le nombre de cartes dans la pile si la carte n'est pas une Malédiction (car elle n'est pas dans les piles)
                 //En cherchant la carte avant-tout...
                 List<Pile> mapListe = PartieForm.mapListe;
                 bool flag = false;
@@ -180,20 +199,65 @@ namespace Dominion
                         finDePartie.ShowDialog();
                     }
                 }
+
+                Console.WriteLine($"{this.Nom} reçoit {cible.Nom}"); 
             }
-            //Si quelqu'un reçoit une Province, un autre joueur peut activer Or des fous
-            if (tempCarte.Nom == "Province")
+            //Certaines cartes déclenchent des effets spécifiques quand elles sont reçues
+            switch (tempCarte.Nom)
             {
-                foreach (Joueur joueur in LancementForm.listeJoueurs.FindAll(x => x != this))
-                {
-                    List<Carte> orsDesFous = joueur.Main.FindAll(x => x.Nom == "Or des fous");
-                    if (orsDesFous.Count > 0)
+
+                case "Province":
                     {
-                        PartieForm.tempJoueur = this;
-                        foreach (Carte carte in orsDesFous)
-                        { carte.Reagir(); }
+                        //Si quelqu'un reçoit une Province, un autre joueur peut activer Or des fous
+
+                        foreach (Joueur joueur in LancementForm.ListeJoueurs.FindAll(x => x != this))
+                        {
+                            List<Carte> orsDesFous = new List<Carte>();
+                            orsDesFous.AddRange(joueur.Main.FindAll(x => x.Nom == "Or des fous"));
+                            if (orsDesFous.Count > 0)
+                            {
+                                PartieForm.tempJoueur = LancementForm.ListeJoueurs.Find(x => x != this);
+                                foreach (Carte carte in orsDesFous)
+                                { carte.Reagir(); }
+                            }
+                        }
                     }
-                }
+                    break;
+
+                case "Ambassade":
+                    {
+                        //Quand un joueur reçoit une Ambassade, les autres reçoivent un argent
+
+                        foreach (Joueur joueur in LancementForm.ListeJoueurs.FindAll(x => x != this))
+                        {
+                            joueur.Recevoir(PartieForm.mapListe.Find(x => x.carte.Nom == "Argent").carte);
+                        }
+                    }
+                    break;
+
+                case "Mandarin":
+                    {
+                        //Le joueur va placer tous ses trésors en jeu sur son deck, dans l'ordre qu'il souhaite
+
+                        //On commence par créer la liste des trésors en jeu
+                        List<Carte> aPlacer = this.Main.FindAll(x => (x.Type.Contains("Trésor") && (x.EnJeu)));
+                        MessageBox.Show("Vous allez placer vos trésors en jeu sur votre deck, un par un.");
+                        //Puis on demande de placer un trésor sur le deck jusqu'à qu'ils soient tous lacés
+                        for (int i = 0, c = aPlacer.Count - 1; i < c; i++)
+                        {
+                            Carte carteAplacer = this.ChoisirUneCarte("Deck", aPlacer, true);
+                            carteAplacer.EnJeu = false;
+                            this.Deck.Insert(0, carteAplacer);
+                            this.Main.Remove(carteAplacer);
+                            aPlacer.Remove(carteAplacer);
+                        }
+                        //On place la dernière carte automatiquement, puisqu'il n'y a plus de choix à faire
+                        aPlacer[0].EnJeu = false;
+                        this.Deck.Insert(0, aPlacer[0]);
+                        this.Main.Remove(aPlacer[0]);
+                        this.MAJMain();
+                    }
+                    break;
             }
         }
 
@@ -292,7 +356,7 @@ namespace Dominion
         public List<Carte> ChoisirDesCartes(string type, List<Carte> choix, int nbCarte, bool obligation)
         {
             //On assigne les variables nécessaires 
-            ChoixForm.tempJoueur = this;
+            PartieForm.tempJoueur = this;
             ChoixForm.typeChoix = type;
             ChoixForm.listeChoix = choix;
             ChoixForm.obligation = obligation;
